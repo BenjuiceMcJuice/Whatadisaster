@@ -1012,16 +1012,16 @@
     <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;text-transform:uppercase;margin:1rem 0 0.5rem;color:var(--gold)">🏅 Command Structure</h3>
     <div class="jesip-wheel">
       <div class="jesip-principle" style="--principle-color:var(--gold)">
-        <div class="jesip-p-title">⬛ Gold — Strategic</div>
-        <div class="jesip-p-body">Sets overall objectives, resources, policy. Usually off-scene.</div>
+        <div class="jesip-p-title">⬛ Gold — Strategic Commander</div>
+        <div class="jesip-p-body">Sets overall objectives, resources, policy. Leads the Strategic Coordination Group (SCG). Usually off-scene.</div>
       </div>
       <div class="jesip-principle" style="--principle-color:var(--silver)">
-        <div class="jesip-p-title">🔘 Silver — Tactical</div>
-        <div class="jesip-p-body">Translates Gold aims into action. Coordinates agencies at scene.</div>
+        <div class="jesip-p-title">🔘 Silver — Tactical Commander</div>
+        <div class="jesip-p-body">Translates Gold aims into action. Leads the Tactical Coordination Group. Coordinates agencies at or near scene.</div>
       </div>
       <div class="jesip-principle" style="--principle-color:var(--bronze)">
-        <div class="jesip-p-title">🔷 Bronze — Operational</div>
-        <div class="jesip-p-body">Hands-on delivery. Manages specific tasks, sectors, resources.</div>
+        <div class="jesip-p-title">🔷 Bronze — Operational Commander</div>
+        <div class="jesip-p-body">Hands-on delivery at scene. Manages specific tasks, sectors, and resources on the ground.</div>
       </div>
       <div class="jesip-principle" style="--principle-color:var(--blue)">
         <div class="jesip-p-title">🤝 JESIP</div>
@@ -1106,15 +1106,15 @@
     <div class="command-levels">
       <div class="cmd-level gold" id="cmdGold">
         ⬛ Gold
-        <div class="cmd-sub" id="goldSub">Strategic</div>
+        <div class="cmd-sub" id="goldSub">Strategic / SCG</div>
       </div>
       <div class="cmd-level silver" id="cmdSilver">
         🔘 Silver
-        <div class="cmd-sub" id="silverSub">Tactical</div>
+        <div class="cmd-sub" id="silverSub">Tactical / TCG</div>
       </div>
       <div class="cmd-level bronze active" id="cmdBronze">
         🔷 Bronze
-        <div class="cmd-sub" id="bronzeSub">Operational</div>
+        <div class="cmd-sub" id="bronzeSub">Operational / At Scene</div>
       </div>
     </div>
   </div>
@@ -1256,7 +1256,7 @@ const questions = [
     feedback: {
       title: 'Major Incident Declaration',
       body: 'Under UK emergency planning, any Category 1 responder can declare a Major Incident when the incident exceeds routine capacity. This triggers: activation of the Major Incident Plan, Silver Command establishment, and LRF notification.',
-      jesip: 'Once declared, JESIP\'s Joint Decision Model (JDM) kicks in. Silver commanders from all agencies should establish a Forward Command Post and begin joint decision-making within the JDM framework — information gathering, assess risks, consider options, decide, act, review.',
+      jesip: 'Once declared, JESIP\'s Joint Decision Model (JDM) kicks in. Silver commanders from all agencies should establish a Tactical Coordination Group (TCG) and begin joint decision-making within the JDM framework — information gathering, assess risks, consider options, decide, act, review.',
       points: 20
     }
   },
@@ -1275,15 +1275,15 @@ const questions = [
     agencies: { fire: true, police: true, ambulance: true, council: true },
     question: 'Bristol City Council has activated. What is their PRIMARY role at this stage?',
     options: [
-      { text: 'Take command of fire service operations and direct resource deployment', result: 'Incorrect — local authorities do not command the emergency services. They have their own statutory duties in support of the response.', points: 2 },
-      { text: 'Open an emergency rest centre, coordinate welfare support, and activate the Community Recovery Plan', result: 'Correct — BCC\'s primary role is community welfare, rest centres, vulnerable person registers, and long-term recovery planning.', points: 20, best: true },
-      { text: 'Contact national media and issue press releases', result: 'Comms is important but it\'s not the immediate priority. Welfare of affected residents comes first. Joint media strategy comes through Gold Command.', points: 5 },
-      { text: 'Provide additional firefighters from council parks staff', result: 'Council parks staff are not qualified firefighters. The council\'s role is welfare, logistics, and coordination — not operational fire response.', points: 3 }
+      { text: 'Take command of fire service operations and direct resource deployment', result: 'Incorrect — local authorities do not command the emergency services. As a Category 1 responder they have their own statutory duties, but operational command is not one of them.', points: 2 },
+      { text: 'Stand up the council\'s command and control structure, activate incident coordination, and begin assessing vulnerable people and potential welfare needs', result: 'Correct — the first priority is establishing the council\'s own incident coordination. From there they assess vulnerable people, consider whether a rest centre is needed, and coordinate their wider response.', points: 20, best: true },
+      { text: 'Contact national media and issue press releases', result: 'Communications matter but they are not the immediate priority. The council must first stand up its own command structure. Joint media strategy comes through Gold / the SCG.', points: 5 },
+      { text: 'Provide additional firefighters from council parks staff', result: 'Council staff are not qualified firefighters. The council\'s role is coordination, welfare, and community support — not operational fire response.', points: 3 }
     ],
     feedback: {
       title: 'Local Authority Role in Emergencies',
-      body: 'Bristol City Council\'s duties under the Civil Contingencies Act include: opening rest centres, operating the vulnerable persons register, coordinating voluntary sector (Red Cross, Salvation Army), managing road closures alongside police, and leading recovery.',
-      jesip: 'The Local Authority activates at Silver level, feeding into the multi-agency Strategic Coordinating Group (SCG). The Emergency Director sits alongside emergency services commanders to ensure community needs are integrated into the tactical response.',
+      body: 'Local authorities are Category 1 responders under the Civil Contingencies Act 2004, responsible for planning for emergencies, supporting emergency services, protecting the public, and leading community recovery. Key duties MAY include opening rest centres, providing temporary housing, structural inspections, traffic management, and coordinating with voluntary groups — but the immediate first step is standing up the council\'s own command and control structure and incident coordination.',
+      jesip: 'The Local Authority feeds into the multi-agency Tactical Coordination Group (Silver/TCG) and Strategic Coordination Group (Gold/SCG). The Emergency Director sits alongside emergency services commanders to ensure community needs are integrated into the response — but they lead the council\'s own response, they do not command other agencies.',
       points: 20
     }
   },
@@ -1303,7 +1303,7 @@ const questions = [
     question: 'The Silver Commander needs to integrate Western Power Distribution into the response. What is the correct approach?',
     options: [
       { text: 'Ask the utility company to manage their own incident separately and update police when done', result: 'Siloed response risks duplicated action and missed hazards. Utilities must be integrated into joint command, not operate independently.', points: 3 },
-      { text: 'Invite Western Power Distribution into the Forward Command Post and ensure they have a representative in Silver command coordination', result: 'Correct — utility companies are Category 2 responders. They must be integrated into the multi-agency response, with a representative at the command level.', points: 20, best: true },
+      { text: 'Invite Western Power Distribution into the Tactical Coordination Group and ensure they have a representative in Silver command coordination', result: 'Correct — utility companies are Category 2 responders. They must be integrated into the multi-agency response, with a representative at the command level.', points: 20, best: true },
       { text: 'Wait until the power line is actually hit before involving utilities', result: 'Reactive engagement is too late. Pre-positioning utility resources and sharing information early prevents escalation.', points: 0 },
       { text: 'Have the fire service manage the power line risk using their training', result: 'Fire services are trained in electrical hazard awareness but isolation of live 33kV lines must be done by the Distribution Network Operator — it\'s both legally required and safety critical.', points: 7 }
     ],
