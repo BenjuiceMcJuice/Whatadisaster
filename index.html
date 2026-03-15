@@ -396,54 +396,6 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
     <button class="btn" onclick="closeModal()" style="max-width:none;margin-top:.75rem">Continue →</button>
   </div>
 </div>
-
-
-<div id="splash" class="screen active">
-  <div class="fbg"></div><div id="embers"></div>
-  <div class="sc">
-    <div class="fi">🔥</div>
-    <div class="badge">Emergency Exercise · Bristol 2025</div>
-    <h1 class="st">Operation<br><span>Ashdown</span></h1>
-    <p class="ss">Multi-Agency Wildfire Response</p>
-    <div class="scard"><strong>📍 Dundry Hill, South Bristol — 14:30, August</strong><br>A wildfire spreads from Dundry Hill toward Ashfield estate. The A38, Meridian House tower block, a gas substation, and Northgate General Hospital are at risk. <strong>Each role faces different decisions</strong> — replay as different roles for a genuinely fresh exercise.</div>
-    <button class="btn" onclick="showScreen('roleSelect')">START EXERCISE</button>
-    <button class="btn2" onclick="showScreen('briefing')">📋 Pre-Exercise Briefing</button>
-  </div>
-</div>
-
-<!-- ROLE SELECT -->
-<div id="roleSelect" class="screen">
-  <div class="sh"><h2>🎭 Select Your Role</h2><p>Each role faces unique decisions — choose your perspective</p></div>
-  <div class="rg" id="roleGrid"></div>
-</div>
-
-<!-- BRIEFING -->
-<div id="briefing" class="screen">
-  <div class="sh"><h2>📋 Pre-Exercise Briefing</h2><p>OPERATION ASHDOWN</p></div>
-  <div class="bc2">
-    <div class="ib"><strong>This exercise</strong><br>Tabletop — no real emergency. Decisions have consequences that compound. Early mistakes make later situations worse. Final outcome uses the UK National Risk Assessment impact scale.</div>
-    <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;text-transform:uppercase;margin:1rem 0 .5rem;color:var(--gold)">🏅 Command Structure</h3>
-    <div class="jw">
-      <div class="jp" style="--pc:var(--gold)"><div class="jt">⬛ Gold — Strategic</div><div class="jb">Sets objectives. Leads the SCG. Off-scene.</div></div>
-      <div class="jp" style="--pc:var(--silver)"><div class="jt">🔘 Silver — Tactical</div><div class="jb">Translates aims to action. Leads TCG.</div></div>
-      <div class="jp" style="--pc:var(--bronze)"><div class="jt">🔷 Bronze — Operational</div><div class="jb">Hands-on delivery at scene.</div></div>
-      <div class="jp" style="--pc:var(--blue)"><div class="jt">🤝 JESIP</div><div class="jb">Joint Emergency Services Interoperability Principles.</div></div>
-    </div>
-    <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;text-transform:uppercase;margin:1rem 0 .5rem;color:var(--fire)">🔥 Wildfire Behaviour</h3>
-    <div class="tl2"><div class="tt" style="color:#FF6B35">Spotting</div><div class="tb">Embers carried ahead of the fire front can land up to 2km away, starting spot fires. A wildfire can effectively <strong>jump roads</strong> via airborne embers — road clearance does not guarantee safety.</div></div>
-    <div class="tl2"><div class="tt" style="color:#FF6B35">Urban WUI</div><div class="tb">Where wildland meets urban areas (WUI), fire behaviour is unpredictable. Garden fences, sheds, gas meters, and parked vehicles all become fuel. Fire can enter buildings through roof vents and gaps.</div></div>
-    <div class="tl2"><div class="tt" style="color:#FF6B35">Wind effect</div><div class="tb">A 25mph wind can double or triple the rate of fire spread and dramatically increase ember cast distance. Wind direction shifts can cut off crews. <strong>Crew safety and dynamic risk assessment are paramount.</strong></div></div>
-    <div class="tl2"><div class="tt" style="color:#FF6B35">Slope</div><div class="tb">Fire travels uphill faster than downhill — up to 4x faster on steep slopes. Dundry Hill's north-facing slope means fire descending toward Ashfield has gravity working in its favour.</div></div>
-    <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;text-transform:uppercase;margin:1rem 0 .5rem;color:var(--fire)">📊 UK Impact Scale</h3>
-    <div class="tl2"><div class="tt" style="color:var(--green)">NEGL.</div><div class="tb"><strong>Negligible</strong> — Managed effectively, no preventable harm</div></div>
-    <div class="tl2"><div class="tt" style="color:#8BC34A">LIMITED</div><div class="tb"><strong>Limited</strong> — Mostly well managed, minor preventable harm</div></div>
-    <div class="tl2"><div class="tt" style="color:var(--amber)">SIGNIF.</div><div class="tb"><strong>Significant</strong> — Coordination gaps, avoidable harm</div></div>
-    <div class="tl2"><div class="tt" style="color:var(--fire)">SERIOUS</div><div class="tb"><strong>Serious</strong> — Major failures, preventable casualties</div></div>
-    <div class="tl2"><div class="tt" style="color:var(--red)">CATASTR.</div><div class="tb"><strong>Catastrophic</strong> — Systemic breakdown, lives lost</div></div>
-    <div style="margin-top:1.5rem"><button class="btn" onclick="showScreen('roleSelect')" style="max-width:none">Choose Your Role →</button></div>
-  </div>
-</div>
-
 <!-- FIRE MAP (between phases) -->
 <div id="fireMap" class="screen">
   <div class="fms">
