@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>How It Works — Emergency Exercise Simulator</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--fire:#FF4500;--gold:#FFB800;--silver:#C0C0C0;--bronze:#CD7F32;--dark:#0D0D0D;--dark2:#1A1A1A;--dark3:#252525;--card:#1E1E1E;--text:#F0EDE8;--dim:#9A9080;--green:#2ECC71;--red:#E74C3C;--blue:#3498DB;--amber:#F39C12;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{background:var(--dark);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh;overflow-x:hidden;}
+
+/* HEADER */
+.header{background:linear-gradient(160deg,#1a0800,#0D0D0D 60%);border-bottom:1px solid rgba(255,69,0,.2);padding:1.25rem 1.5rem 1rem;}
+.back{display:inline-flex;align-items:center;gap:.4rem;color:var(--dim);font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;margin-bottom:1rem;transition:color .2s;}
+.back:hover{color:var(--fire);}
+.back::before{content:'←';font-size:1rem;}
+.hbadge{display:inline-block;background:rgba(255,69,0,.15);border:1px solid rgba(255,69,0,.4);color:#FF6B35;font-family:'Barlow Condensed',sans-serif;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;padding:.3rem .8rem;border-radius:2px;margin-bottom:.75rem;}
+.htitle{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2.2rem;line-height:.95;text-transform:uppercase;margin-bottom:.4rem;}
+.htitle span{color:var(--fire);}
+.hsub{font-size:.9rem;color:var(--dim);line-height:1.5;}
+
+/* TABS */
+.tab-bar{display:flex;overflow-x:auto;border-bottom:1px solid rgba(255,255,255,.07);background:var(--dark2);gap:0;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.tab-bar::-webkit-scrollbar{display:none;}
+.tab{flex:0 0 auto;padding:.75rem 1.1rem;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;}
+.tab.active{color:var(--fire);border-bottom-color:var(--fire);}
+
+/* PANELS */
+.panel{display:none;padding:1.5rem;max-width:680px;margin:0 auto;}
+.panel.active{display:block;}
+
+/* SHARED ELEMENTS */
+h2{font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:900;text-transform:uppercase;margin-bottom:.75rem;line-height:1.1;}
+h3{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;text-transform:uppercase;margin-bottom:.4rem;color:var(--text);}
+p{font-size:.9rem;line-height:1.65;color:var(--dim);margin-bottom:.9rem;}
+p strong{color:var(--text);}
+ul,ol{margin:.5rem 0 .9rem 1.1rem;}
+li{font-size:.88rem;line-height:1.6;color:var(--dim);margin-bottom:.2rem;}
+li strong{color:var(--text);}
+
+.card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:1rem 1.25rem;margin-bottom:.75rem;}
+.card-fire{background:rgba(255,69,0,.06);border:1px solid rgba(255,69,0,.2);border-radius:8px;padding:1rem 1.25rem;margin-bottom:.75rem;}
+.card-gold{background:rgba(255,184,0,.06);border:1px solid rgba(255,184,0,.2);border-radius:8px;padding:1rem 1.25rem;margin-bottom:.75rem;}
+.card-blue{background:rgba(52,152,219,.06);border:1px solid rgba(52,152,219,.2);border-radius:8px;padding:1rem 1.25rem;margin-bottom:.75rem;}
+.card-green{background:rgba(46,204,113,.06);border:1px solid rgba(46,204,113,.2);border-radius:8px;padding:1rem 1.25rem;margin-bottom:.75rem;}
+
+.label{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.2rem .55rem;border-radius:2px;margin-right:.4rem;margin-bottom:.2rem;}
+.label-fire{background:rgba(255,69,0,.2);color:#FF6B35;border:1px solid rgba(255,69,0,.35);}
+.label-gold{background:rgba(255,184,0,.2);color:var(--gold);border:1px solid rgba(255,184,0,.35);}
+.label-silver{background:rgba(192,192,192,.15);color:var(--silver);border:1px solid rgba(192,192,192,.3);}
+.label-bronze{background:rgba(205,127,50,.2);color:var(--bronze);border:1px solid rgba(205,127,50,.35);}
+.label-green{background:rgba(46,204,113,.2);color:var(--green);border:1px solid rgba(46,204,113,.35);}
+.label-amber{background:rgba(243,156,18,.2);color:var(--amber);border:1px solid rgba(243,156,18,.35);}
+.label-red{background:rgba(231,76,60,.2);color:var(--red);border:1px solid rgba(231,76,60,.35);}
+
+/* PHASE TIMELINE */
+.phase-list{display:flex;flex-direction:column;gap:.75rem;}
+.phase-item{display:flex;gap:.75rem;align-items:flex-start;}
+.phase-dot{flex:0 0 auto;width:32px;height:32px;border-radius:50%;background:var(--dark3);border:2px solid var(--fire);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:900;color:var(--fire);margin-top:.1rem;}
+.phase-line{display:flex;flex-direction:column;gap:.1rem;}
+.phase-title{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;text-transform:uppercase;color:var(--text);}
+.phase-desc{font-size:.85rem;color:var(--dim);line-height:1.5;}
+
+/* OPTION TYPES */
+.opt-row{border-radius:6px;padding:.8rem 1rem;margin-bottom:.5rem;display:flex;align-items:flex-start;gap:.75rem;}
+.opt-row.best{background:rgba(255,184,0,.1);border:1px solid rgba(255,184,0,.35);}
+.opt-row.partial{background:rgba(46,204,113,.08);border:1px solid rgba(46,204,113,.25);}
+.opt-row.poor{background:rgba(231,76,60,.1);border:1px solid rgba(231,76,60,.25);}
+.opt-icon{font-size:1.1rem;min-width:24px;margin-top:.1rem;}
+.opt-text h4{font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:700;text-transform:uppercase;margin-bottom:.2rem;}
+.opt-text p{font-size:.83rem;margin-bottom:0;line-height:1.5;}
+.opt-row.best h4{color:var(--gold);}
+.opt-row.partial h4{color:var(--green);}
+.opt-row.poor h4{color:var(--red);}
+
+/* ROLES GRID */
+.roles-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;}
+.role-card{background:var(--card);border-radius:8px;padding:.85rem;border-top:3px solid;}
+.role-card.gold{border-top-color:var(--gold);}
+.role-card.silver{border-top-color:var(--silver);}
+.role-card.bronze{border-top-color:var(--bronze);}
+.role-icon{font-size:1.5rem;margin-bottom:.35rem;}
+.role-name{font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:700;text-transform:uppercase;margin-bottom:.15rem;}
+.role-agency{font-size:.72rem;color:var(--dim);margin-bottom:.3rem;}
+.role-focus{font-size:.75rem;color:var(--dim);line-height:1.4;font-style:italic;}
+
+/* METRICS */
+.metric-row{display:flex;align-items:center;gap:.75rem;padding:.7rem 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.metric-row:last-child{border-bottom:none;}
+.metric-bar-wrap{flex:1;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;}
+.metric-bar{height:100%;border-radius:3px;}
+.metric-name{font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:700;text-transform:uppercase;min-width:110px;color:var(--text);}
+.metric-desc{font-size:.78rem;color:var(--dim);flex:1.5;}
+
+/* SCORE TABLE */
+.score-table{width:100%;border-collapse:collapse;margin-bottom:.75rem;}
+.score-table td{padding:.5rem .75rem;font-size:.83rem;border-bottom:1px solid rgba(255,255,255,.05);}
+.score-table td:first-child{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;text-align:right;min-width:40px;}
+.score-table td:nth-child(2){min-width:90px;}
+.score-table tr:last-child td{border-bottom:none;}
+
+/* TIPS */
+.tip{display:flex;gap:.75rem;align-items:flex-start;padding:.75rem 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.tip:last-child{border-bottom:none;}
+.tip-num{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:900;color:var(--fire);min-width:24px;}
+.tip-body h4{font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:700;text-transform:uppercase;color:var(--text);margin-bottom:.2rem;}
+.tip-body p{font-size:.84rem;margin-bottom:0;}
+
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:2px;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <a href="index.html" class="back">Back to Exercise</a>
+  <div class="hbadge">Participant Guide</div>
+  <h1 class="htitle">How It <span>Works</span></h1>
+  <p class="hsub" style="margin-bottom:0">Everything you need to get the most out of the Emergency Exercise Simulator.</p>
+</div>
+
+<div class="tab-bar">
+  <div class="tab active" onclick="showTab('overview')">Overview</div>
+  <div class="tab" onclick="showTab('phases')">The 4 Phases</div>
+  <div class="tab" onclick="showTab('decisions')">Decisions</div>
+  <div class="tab" onclick="showTab('roles')">Roles</div>
+  <div class="tab" onclick="showTab('scoring')">Scoring</div>
+  <div class="tab" onclick="showTab('tips')">Tips</div>
+</div>
+
+<!-- OVERVIEW -->
+<div id="tab-overview" class="panel active">
+  <h2>What Is This Exercise?</h2>
+  <p>The Emergency Exercise Simulator is a <strong>tabletop decision-making exercise</strong> for multi-agency emergency response teams. It puts you in the seat of a specific responder role during a realistic incident and asks you to make the decisions that role actually faces — under time pressure, with incomplete information, and with consequences that carry forward.</p>
+  <p>It is designed to be <strong>picked up off the shelf</strong> with no facilitator, no prior preparation, and no specialist knowledge required. A single run takes around 20–30 minutes.</p>
+
+  <div class="card-gold">
+    <h3 style="color:var(--gold)">Two Scenarios</h3>
+    <p style="margin-bottom:.5rem"><strong>Operation Ashdown</strong> — A wildfire on Brynmoor Hill threatens residential areas, critical infrastructure, and a care home. You manage the response from initial activation through to recovery.</p>
+    <p style="margin-bottom:0"><strong>Operation Solstice</strong> — A severe Level 4 heatwave event triggers a city-wide public health emergency, with mass heat casualties, vulnerable residents at risk, and cooling centre demand outstripping supply.</p>
+  </div>
+
+  <div class="card-blue">
+    <h3 style="color:var(--blue)">What It Tests</h3>
+    <ul style="margin-top:.4rem">
+      <li><strong>JESIP principles</strong> — Joint decision-making, shared situational awareness, and co-location</li>
+      <li><strong>Command structure knowledge</strong> — Gold/Silver/Bronze roles and who decides what</li>
+      <li><strong>Prioritisation under pressure</strong> — Timed questions with real consequences for delay</li>
+      <li><strong>Inter-agency coordination</strong> — How your decisions affect partner agencies</li>
+      <li><strong>Business continuity awareness</strong> — Prompts to consider your own organisation's resilience</li>
+    </ul>
+  </div>
+
+  <div class="card-fire">
+    <h3 style="color:var(--fire)">Worst Case Scenarios</h3>
+    <p style="margin-bottom:.5rem">Before play begins, you are shown two framing scenarios: a <strong>Strategic Worst Case</strong> (the catastrophic ceiling — full Gold/SCG activation, mass casualty, critical infrastructure loss) and a <strong>Tactical Realistic Worst Case</strong> (the scenario you actually play — serious but manageable, with resource pressure and time stress).</p>
+    <p style="margin-bottom:0">This framing helps you calibrate your response — neither overreacting nor underplaying the incident.</p>
+  </div>
+
+  <p>Decisions compound. A poor call in Phase 1 will follow you into Phase 3. The exercise is designed to reward <strong>early, proportionate action</strong> — exactly as real incidents do.</p>
+</div>
+
+<!-- PHASES -->
+<div id="tab-phases" class="panel">
+  <h2>The 4 Phases</h2>
+  <p>Each scenario is structured into four phases that mirror the lifecycle of a real multi-agency incident — from the first alert through to recovery handover. Each phase presents a set of decisions appropriate to that stage.</p>
+
+  <div class="phase-list" style="margin-bottom:1.25rem">
+    <div class="phase-item">
+      <div class="phase-dot">1</div>
+      <div class="phase-line">
+        <div class="phase-title">Activation &amp; Initial Response</div>
+        <div class="phase-desc">The incident is declared. You are activating your agency's response structure, establishing situational awareness, and making the first critical resource decisions. Speed and proportionality matter most here — early correct decisions prevent downstream harm.</div>
+      </div>
+    </div>
+    <div class="phase-item">
+      <div class="phase-dot">2</div>
+      <div class="phase-line">
+        <div class="phase-title">Tactical Escalation</div>
+        <div class="phase-desc">The situation develops. Resources are under pressure, new information arrives, and inter-agency coordination becomes critical. This is where command structure knowledge is tested — who is responsible for what, and how do conflicts get resolved?</div>
+      </div>
+    </div>
+    <div class="phase-item">
+      <div class="phase-dot">3</div>
+      <div class="phase-line">
+        <div class="phase-title">Peak Pressure</div>
+        <div class="phase-desc">The incident reaches its most complex point. Multiple workstreams are running simultaneously. Any gaps in earlier decisions become visible here — consequence bars reflect the cumulative effect of your previous choices. Timed questions are most common in this phase.</div>
+      </div>
+    </div>
+    <div class="phase-item">
+      <div class="phase-dot">4</div>
+      <div class="phase-line">
+        <div class="phase-title">Recovery &amp; Drawdown</div>
+        <div class="phase-desc">The immediate threat is resolved. Decisions now focus on transition to recovery — housing, welfare, communications with the public, and standing down the response structure safely. Recovery decisions are as consequential as response ones.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>How Phases Carry Forward</h3>
+    <p style="margin-bottom:.4rem">Some Phase 3 and Phase 4 scenarios are <strong>branched</strong> — meaning the situation you face is partly determined by the decisions you made earlier. A poor Phase 1 activation decision, for example, might result in Phase 3 presenting a more constrained resource picture.</p>
+    <p style="margin-bottom:0">This is intentional. It reflects how real incidents work: early decisions foreclose later options. The exercise is designed so that players who get the early phases right have more tools available when the pressure peaks.</p>
+  </div>
+
+  <div class="card-fire">
+    <h3 style="color:var(--fire)">Between Phases: Fire Maps</h3>
+    <p style="margin-bottom:0">In Operation Ashdown, a <strong>fire progression map</strong> appears between phases, showing how the fire has spread and which assets are now at risk. These maps are not decorative — they provide the situational update that real Gold and Silver commanders would receive at a command briefing, and the next phase's decisions reflect the updated picture.</p>
+  </div>
+</div>
+
+<!-- DECISIONS -->
+<div id="tab-decisions" class="panel">
+  <h2>Making Decisions</h2>
+  <p>Each question presents a situation and three options. There are no trick answers. Every option reflects a real approach that has been used in actual incidents — some better than others.</p>
+
+  <h3 style="margin-bottom:.6rem">The Three Option Types</h3>
+  <div class="opt-row best">
+    <div class="opt-icon">★</div>
+    <div class="opt-text">
+      <h4>Best Decision — 20 pts</h4>
+      <p>The textbook response: proportionate, timely, and aligned with JESIP and national guidance. Typically improves one or more of the four consequence bars. Explained in the feedback with the reasoning behind it.</p>
+    </div>
+  </div>
+  <div class="opt-row partial">
+    <div class="opt-icon">~</div>
+    <div class="opt-text">
+      <h4>Partial Credit — 8–12 pts</h4>
+      <p>A defensible decision that is not wrong, but misses the optimal response — often because it is too slow, too cautious, or addresses only part of the problem. Consequence bars may shift slightly. Common in ambiguous situations where the evidence supports multiple approaches.</p>
+    </div>
+  </div>
+  <div class="opt-row poor">
+    <div class="opt-icon">✗</div>
+    <div class="opt-text">
+      <h4>Poor Decision — 0–5 pts</h4>
+      <p>An approach that is actively harmful, bypasses the command structure, or reflects a common misunderstanding of agency responsibilities. Consequence bars shift unfavourably. Detailed feedback explains what went wrong and why.</p>
+    </div>
+  </div>
+
+  <div style="margin-top:1rem">
+    <h3 style="margin-bottom:.6rem">Branching Decisions</h3>
+    <p>A small number of questions are <strong>branching points</strong>. The situation you face in a later phase will be subtly different depending on which option you chose here. Branching is not telegraphed — you will not know at the time that a question is a branch trigger. This is deliberate: real decisions rarely come with a warning that they will constrain future options.</p>
+    <p>After the exercise, the debrief screen identifies questions where branching occurred and explains what changed as a result.</p>
+  </div>
+
+  <div class="card-fire" style="margin-top:.25rem">
+    <h3 style="color:var(--fire)">Timed Questions</h3>
+    <p style="margin-bottom:.5rem">Some questions have a <strong>countdown timer</strong>, shown as a red bar draining across the top of the screen. These simulate decisions that have a real deadline — a resource that must be pre-positioned, a window of opportunity that closes.</p>
+    <p style="margin-bottom:.5rem">If the timer expires before you choose, the question is scored as a <strong>timeout</strong> — equivalent to making no decision. In real incidents, not deciding in time is itself a decision with consequences. Timeout answers appear in your debrief in red.</p>
+    <p style="margin-bottom:0">Timed questions are most common in Phases 2 and 3. The timer duration reflects the realistic decision window for that type of choice — some are 30 seconds, some are 90.</p>
+  </div>
+
+  <div class="card-blue">
+    <h3 style="color:var(--blue)">Feedback After Each Question</h3>
+    <p style="margin-bottom:.4rem">After every answer, you receive a <strong>feedback card</strong> explaining why the best option was optimal, what the others got wrong, and — where applicable — the JESIP principle or national guidance that underpins the decision.</p>
+    <p style="margin-bottom:0">Feedback is a core part of the learning experience. Even if you chose correctly, read it — the reasoning is often as valuable as the answer.</p>
+  </div>
+</div>
+
+<!-- ROLES -->
+<div id="tab-roles" class="panel">
+  <h2>The 8 Roles</h2>
+  <p>The exercise uses the <strong>Gold/Silver/Bronze</strong> command structure used in UK emergency response. Gold commands strategically, Silver coordinates tactically, Bronze delivers operationally. Each level has different decisions, different information, and different responsibilities.</p>
+
+  <div class="card-gold" style="margin-bottom:1rem">
+    <span class="label label-gold">Gold</span>
+    <p style="margin-bottom:0;margin-top:.4rem">Sets overall strategy and authorises resources beyond normal capacity. Chairs the Strategic Coordinating Group (SCG). Makes decisions the public and ministers will later scrutinise. Does not manage tactical detail.</p>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--silver);margin-bottom:1rem">
+    <span class="label label-silver">Silver</span>
+    <p style="margin-bottom:0;margin-top:.4rem">Translates Gold strategy into coordinated tactical action. Chairs the Tactical Coordinating Group (TCG). Resolves conflicts between Bronze agencies. Manages the operational picture across the scene.</p>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--bronze);margin-bottom:1rem">
+    <span class="label label-bronze">Bronze</span>
+    <p style="margin-bottom:0;margin-top:.4rem">Delivers the response on the ground — fire suppression, cordon management, casualty treatment, infrastructure isolation. Reports upward to Silver. Makes fast operational decisions within the tactical framework set by Silver.</p>
+  </div>
+
+  <h3 style="margin:1rem 0 .6rem">Role Directory</h3>
+  <div class="roles-grid">
+    <div class="role-card gold">
+      <div class="role-icon">🌐</div>
+      <div class="role-name">Strategic Commander</div>
+      <div class="role-agency">Multi-Agency SCG</div>
+      <span class="label label-gold" style="margin-bottom:.4rem">Gold</span>
+      <div class="role-focus">SCG decisions, mutual aid authorisation, media strategy, recovery transition</div>
+    </div>
+    <div class="role-card silver">
+      <div class="role-icon">🎯</div>
+      <div class="role-name">Tactical Commander</div>
+      <div class="role-agency">Multi-Agency TCG</div>
+      <span class="label label-silver" style="margin-bottom:.4rem">Silver</span>
+      <div class="role-focus">TCG coordination, joint decisions, resolving agency conflicts</div>
+    </div>
+    <div class="role-card silver">
+      <div class="role-icon">🏛️</div>
+      <div class="role-name">LA Incident Commander</div>
+      <div class="role-agency">Bristol City Council</div>
+      <span class="label label-silver" style="margin-bottom:.4rem">Silver</span>
+      <div class="role-focus">Vulnerable people, rest centres, welfare, recovery lead</div>
+    </div>
+    <div class="role-card silver">
+      <div class="role-icon">🏥</div>
+      <div class="role-name">NHS Lead</div>
+      <div class="role-agency">NHS Integrated Care</div>
+      <span class="label label-silver" style="margin-bottom:.4rem">Silver</span>
+      <div class="role-focus">Hospital activation, surge capacity, patient safety decisions</div>
+    </div>
+    <div class="role-card bronze">
+      <div class="role-icon">🚒</div>
+      <div class="role-name">Fire Commander</div>
+      <div class="role-agency">Avon Fire &amp; Rescue</div>
+      <span class="label label-bronze" style="margin-bottom:.4rem">Bronze</span>
+      <div class="role-focus">Crew safety, sector command, fire tactics and suppression</div>
+    </div>
+    <div class="role-card bronze">
+      <div class="role-icon">🚔</div>
+      <div class="role-name">Police Lead</div>
+      <div class="role-agency">Avon &amp; Somerset Police</div>
+      <span class="label label-bronze" style="margin-bottom:.4rem">Bronze</span>
+      <div class="role-focus">Cordons, road closures, evacuation support, scene control</div>
+    </div>
+    <div class="role-card bronze">
+      <div class="role-icon">⚡</div>
+      <div class="role-name">Utilities Lead</div>
+      <div class="role-agency">Western Power / Wessex Water</div>
+      <span class="label label-bronze" style="margin-bottom:.4rem">Bronze</span>
+      <div class="role-focus">Substation safety, network isolation, supply continuity</div>
+    </div>
+    <div class="role-card bronze">
+      <div class="role-icon">🚑</div>
+      <div class="role-name">Ambulance Lead</div>
+      <div class="role-agency">South West Ambulance</div>
+      <span class="label label-bronze" style="margin-bottom:.4rem">Bronze</span>
+      <div class="role-focus">Pre-hospital staging, HART deployment, casualty management</div>
+    </div>
+  </div>
+
+  <div class="card-blue" style="margin-top:1rem">
+    <h3 style="color:var(--blue)">Choosing Your Role</h3>
+    <p style="margin-bottom:0">Each role faces a completely different set of decisions — playing the same scenario as two different roles is a very different exercise. For group use, consider assigning roles to match participants' actual jobs, or deliberately assigning unfamiliar roles to build cross-agency empathy. The exercise works for both.</p>
+  </div>
+</div>
+
+<!-- SCORING -->
+<div id="tab-scoring" class="panel">
+  <h2>Scoring</h2>
+  <p>Your performance is tracked in two ways: a <strong>points score</strong> for your individual decisions, and four <strong>consequence bars</strong> that represent the cumulative impact of your choices on the incident outcome.</p>
+
+  <h3 style="margin-bottom:.75rem">Consequence Bars</h3>
+  <p>Four bars run continuously during the exercise, starting at a low baseline and rising or falling with each decision. They represent real dimensions of incident harm:</p>
+
+  <div class="card" style="padding:.75rem 1.25rem">
+    <div class="metric-row">
+      <div class="metric-name">Life Safety</div>
+      <div class="metric-bar-wrap"><div class="metric-bar" style="width:30%;background:var(--green)"></div></div>
+      <div class="metric-desc" style="margin-left:.75rem">Risk to life — civilians, responders, and vulnerable people. The most critical bar.</div>
+    </div>
+    <div class="metric-row">
+      <div class="metric-name">Infrastructure</div>
+      <div class="metric-bar-wrap"><div class="metric-bar" style="width:45%;background:var(--amber)"></div></div>
+      <div class="metric-desc" style="margin-left:.75rem">Damage to critical assets — power, water, transport, key buildings.</div>
+    </div>
+    <div class="metric-row">
+      <div class="metric-name">Community</div>
+      <div class="metric-bar-wrap"><div class="metric-bar" style="width:25%;background:var(--green)"></div></div>
+      <div class="metric-desc" style="margin-left:.75rem">Public welfare, displacement, communications, trust in the response.</div>
+    </div>
+    <div class="metric-row" style="border-bottom:none">
+      <div class="metric-name">Coordination</div>
+      <div class="metric-bar-wrap"><div class="metric-bar" style="width:55%;background:var(--amber)"></div></div>
+      <div class="metric-desc" style="margin-left:.75rem">Inter-agency cohesion — how well the command structure is functioning.</div>
+    </div>
+  </div>
+
+  <p>If a bar reaches a critical level, <strong>a threshold event triggers</strong> — a branching consequence that changes the scenario you face. A high Life Safety score, for example, might trigger a mass casualty event in the next phase. These triggers are not announced in advance.</p>
+
+  <h3 style="margin-top:1rem;margin-bottom:.75rem">Points &amp; Outcome Labels</h3>
+  <p>Each question scores 0–20 points. Your total score across all questions maps to an outcome label:</p>
+
+  <table class="score-table">
+    <tr><td style="color:var(--green)">20</td><td><span class="label label-green">Textbook JESIP</span></td><td style="color:var(--dim);font-size:.82rem">Optimal response — exactly right</td></tr>
+    <tr><td style="color:var(--green)">16</td><td><span class="label label-green">Excellent Call</span></td><td style="color:var(--dim);font-size:.82rem">Strong decision with minor trade-offs</td></tr>
+    <tr><td style="color:var(--amber)">12</td><td><span class="label label-amber">Solid Decision</span></td><td style="color:var(--dim);font-size:.82rem">Good but not optimal</td></tr>
+    <tr><td style="color:var(--amber)">8</td><td><span class="label label-amber">Costly Delay</span></td><td style="color:var(--dim);font-size:.82rem">Defensible but creates downstream problems</td></tr>
+    <tr><td style="color:var(--red)">4</td><td><span class="label label-red">Serious Error</span></td><td style="color:var(--dim);font-size:.82rem">Actively harmful or structurally wrong</td></tr>
+    <tr><td style="color:var(--red)">0</td><td><span class="label label-red">Critical Failure</span></td><td style="color:var(--dim);font-size:.82rem">Catastrophic — undermines the whole response</td></tr>
+    <tr><td style="color:#f66">—</td><td><span class="label" style="background:rgba(120,0,0,.3);color:#ff6666;border:1px solid rgba(200,0,0,.4)">Time Expired</span></td><td style="color:var(--dim);font-size:.82rem">No decision made — treated as critical failure</td></tr>
+  </table>
+
+  <div class="card-fire">
+    <h3 style="color:var(--fire)">Overall Outcome</h3>
+    <p style="margin-bottom:0">At the end of the exercise, your total points across all questions produce a final outcome rating — from <strong>Exemplary Command</strong> down to <strong>Systemic Failure</strong>. This is based on the percentage of maximum possible score, not a fixed threshold, so a difficult role played well is recognised as such.</p>
+  </div>
+</div>
+
+<!-- TIPS -->
+<div id="tab-tips" class="panel">
+  <h2>Getting the Most Out of It</h2>
+
+  <div class="card" style="padding:1rem 1.25rem">
+    <div class="tip">
+      <div class="tip-num">1</div>
+      <div class="tip-body">
+        <h4>Read the situation text carefully</h4>
+        <p>Each question includes a situation panel showing current conditions, resource status, and time of day. The right answer often depends on details buried in that panel — what resources are already deployed, what the scene commander has already reported, how many hours have elapsed.</p>
+      </div>
+    </div>
+    <div class="tip">
+      <div class="tip-num">2</div>
+      <div class="tip-body">
+        <h4>Watch the consequence bars, not just your score</h4>
+        <p>A decision that scores partial credit can still push a consequence bar into the critical zone, triggering a threshold event. A high score with a spiked coordination bar is a different outcome from a high score with all bars green. The bars are the real performance measure.</p>
+      </div>
+    </div>
+    <div class="tip">
+      <div class="tip-num">3</div>
+      <div class="tip-body">
+        <h4>Don't treat it as a multiple choice quiz</h4>
+        <p>There is no guessing pattern — the best answer is never always A, B, or C. Approach each question as you would in a real briefing: what does this situation actually require, and what is within my role's authority to decide?</p>
+      </div>
+    </div>
+    <div class="tip">
+      <div class="tip-num">4</div>
+      <div class="tip-body">
+        <h4>Know your command level</h4>
+        <p>Gold does not manage Bronze. Bronze does not set strategic objectives. Many poor answers involve stepping outside your command level — making Gold decisions as a Bronze commander, or micromanaging operations as a Gold commander. If an answer feels like it belongs to a different level, it probably does.</p>
+      </div>
+    </div>
+    <div class="tip">
+      <div class="tip-num">5</div>
+      <div class="tip-body">
+        <h4>Act early and proportionately</h4>
+        <p>The exercise consistently rewards early, proportionate action over cautious delay. Waiting for certainty before mobilising resources, convening SCG, or issuing warnings is the most common way to accumulate poor scores. In emergency response, late-but-correct is usually worse than early-and-slightly-over.</p>
+      </div>
+    </div>
+    <div class="tip">
+      <div class="tip-num">6</div>
+      <div class="tip-body">
+        <h4>Use it for group discussion</h4>
+        <p>The exercise works well as a group debrief tool: play solo, then compare answers with colleagues. Disagreements about the correct option are often the most productive conversations — especially across agency boundaries, where role assumptions diverge. The debrief screen exports a full answer log to share.</p>
+      </div>
+    </div>
+    <div class="tip">
+      <div class="tip-num">7</div>
+      <div class="tip-body">
+        <h4>Try a second role after your first run</h4>
+        <p>Playing as the Tactical Commander after playing as the Fire Commander — or vice versa — reveals how decisions look different depending on where you sit in the command structure. This cross-role perspective is one of the most effective things you can do with the exercise in a team setting.</p>
+      </div>
+    </div>
+    <div class="tip">
+      <div class="tip-num">8</div>
+      <div class="tip-body">
+        <h4>Use the business continuity prompts</h4>
+        <p>The exercise includes prompts to consider your own organisation's emergency response plan and business continuity arrangements. These are not rhetorical — bring your actual plan to the table and test it against the scenario. The gaps you find are the most useful output of the exercise.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-blue" style="margin-top:.5rem">
+    <h3 style="color:var(--blue)">After the Exercise</h3>
+    <p style="margin-bottom:.4rem">The <strong>debrief screen</strong> appears automatically when you finish. It shows your score breakdown by question, all consequence bar final values, the full answer log with feedback, and an option to export results for a facilitator-led debrief.</p>
+    <p style="margin-bottom:0">If you are using this as part of a planned exercise, share the export with your exercise lead — it provides a structured record of decision quality that can be used to identify training priorities across your team.</p>
+  </div>
+
+  <div style="text-align:center;padding:1.5rem 0 .5rem">
+    <a href="index.html" style="display:inline-block;background:var(--fire);color:#fff;padding:.9rem 2.5rem;font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border-radius:4px;text-decoration:none;box-shadow:0 4px 20px rgba(255,69,0,.3);">Start the Exercise →</a>
+  </div>
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.getElementById('tab-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+</script>
+</body>
+</html>
