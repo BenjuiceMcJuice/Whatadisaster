@@ -217,7 +217,7 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
 
     <div style="margin-bottom:.4rem;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);text-align:left">Select Scenario</div>
     <div style="display:flex;gap:.75rem;margin-bottom:.5rem">
-    <button class="btn" onclick="G.scenario='ashdown';showScreen('roleSelect')" style="flex:1;max-width:none;background:linear-gradient(135deg,#FF4500,#c0392b)">&#128293; Operation Ashdown<div style="font-size:.7rem;font-weight:400;opacity:.8;margin-top:.2rem">Wildfire · Dundry Hill</div></button>
+    <button class="btn" onclick="G.scenario='ashdown';showScreen('roleSelect')" style="flex:1;max-width:none;background:linear-gradient(135deg,#FF4500,#c0392b)">&#128293; Operation Ashdown<div style="font-size:.7rem;font-weight:400;opacity:.8;margin-top:.2rem">Wildfire · Brynmoor Hill</div></button>
     <button class="btn" onclick="G.scenario='hotwells';showScreen('roleSelect')" style="flex:1;max-width:none;background:linear-gradient(135deg,#c0392b,#8e0000)">&#9728;&#65039; Operation Solstice<div style="font-size:.7rem;font-weight:400;opacity:.8;margin-top:.2rem">Severe Heatwave · Bristol</div></button>
   </div>
     <button class="btn2" onclick="showScreen('briefing')">📋 Pre-Exercise Briefing</button>
@@ -244,9 +244,9 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
     </div>
     <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;text-transform:uppercase;margin:1rem 0 .5rem;color:var(--fire)"><span id="fireFactLabel">🔥 Wildfire Behaviour</span></h3>
     <div class="tl2"><div class="tt" style="color:#FF6B35">Spotting</div><div class="tb">Embers carried ahead of the fire front can land up to 2km away, starting spot fires. A wildfire can effectively <strong>jump roads</strong> via airborne embers — road clearance does not guarantee safety.</div></div>
-    <div class="tl2"><div class="tt" style="color:#FF6B35">Urban WUI</div><div class="tb">Where wildland meets urban areas (WUI), fire behaviour is unpredictable. Garden fences, sheds, gas meters, and parked vehicles all become fuel. Fire can enter buildings through roof vents and gaps.</div></div>
+    <div class="tl2"><div class="tt" style="color:#FF6B35">Wildland Urban Interface</div><div class="tb">At the wildland urban interface (WUI), where wildland meets urban areas, fire behaviour is unpredictable. Garden fences, sheds, gas meters, and parked vehicles all become fuel. Fire can enter buildings through roof vents and gaps.</div></div>
     <div class="tl2"><div class="tt" style="color:#FF6B35">Wind effect</div><div class="tb">A 25mph wind can double or triple the rate of fire spread and dramatically increase ember cast distance. Wind direction shifts can cut off crews. <strong>Crew safety and dynamic risk assessment are paramount.</strong></div></div>
-    <div class="tl2"><div class="tt" style="color:#FF6B35">Slope</div><div class="tb">Fire travels uphill faster than downhill — up to 4x faster on steep slopes. Dundry Hill's north-facing slope means fire descending toward Ashfield has gravity working in its favour.</div></div>
+    <div class="tl2"><div class="tt" style="color:#FF6B35">Slope</div><div class="tb">Fire travels uphill faster than downhill — up to 4x faster on steep slopes. Brynmoor Hill's north-facing slope means fire descending toward Ashfield has gravity working in its favour.</div></div>
     <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;text-transform:uppercase;margin:1rem 0 .5rem;color:var(--fire)">📊 UK Impact Scale</h3>
     <div class="tl2"><div class="tt" style="color:var(--green)">NEGL.</div><div class="tb"><strong>Negligible</strong> — Managed effectively, no preventable harm</div></div>
     <div class="tl2"><div class="tt" style="color:#8BC34A">LIMITED</div><div class="tb"><strong>Limited</strong> — Mostly well managed, minor preventable harm</div></div>
@@ -292,9 +292,9 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
     <svg class="firemap" id="svgAshdown" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
       <rect width="400" height="220" fill="#1a1a0a"/>
       <ellipse cx="200" cy="60" rx="180" ry="55" fill="#2a2a10" opacity="0.8"/>
-      <text x="200" y="38" text-anchor="middle" font-family="Barlow Condensed" font-size="11" fill="#8a8060" font-weight="700">DUNDRY HILL</text>
+      <text x="200" y="38" text-anchor="middle" font-family="Barlow Condensed" font-size="11" fill="#8a8060" font-weight="700">BRYNMOOR HILL</text>
       <rect x="0" y="130" width="400" height="10" fill="#333" rx="2"/>
-      <text x="380" y="126" text-anchor="end" font-family="Barlow Condensed" font-size="10" fill="#666">A38</text>
+      <text x="380" y="126" text-anchor="end" font-family="Barlow Condensed" font-size="10" fill="#666">B4107</text>
       <rect x="340" y="0" width="12" height="220" fill="#2a2a50" rx="2"/>
       <text x="352" y="100" font-family="Barlow Condensed" font-size="10" fill="#558" transform="rotate(90,352,100)">M5</text>
       <rect x="60" y="150" width="120" height="55" fill="#1a2a1a" rx="4" stroke="#2a4a2a" stroke-width="1"/>
@@ -463,10 +463,10 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
       <rect width="400" height="220" fill="#1a1a0a"/>
       <!-- Hill (top) -->
       <ellipse cx="200" cy="60" rx="180" ry="55" fill="#2a2a10" opacity="0.8"/>
-      <text x="200" y="38" text-anchor="middle" font-family="Barlow Condensed" font-size="11" fill="#8a8060" font-weight="700">DUNDRY HILL</text>
-      <!-- A38 road -->
+      <text x="200" y="38" text-anchor="middle" font-family="Barlow Condensed" font-size="11" fill="#8a8060" font-weight="700">BRYNMOOR HILL</text>
+      <!-- B4107 road -->
       <rect x="0" y="130" width="400" height="10" fill="#333" rx="2"/>
-      <text x="380" y="126" text-anchor="end" font-family="Barlow Condensed" font-size="10" fill="#666">A38</text>
+      <text x="380" y="126" text-anchor="end" font-family="Barlow Condensed" font-size="10" fill="#666">B4107</text>
       <!-- M5 motorway (vertical) -->
       <rect x="340" y="0" width="12" height="220" fill="#2a2a50" rx="2"/>
       <text x="352" y="100" font-family="Barlow Condensed" font-size="10" fill="#558" transform="rotate(90,352,100)">M5</text>
@@ -638,13 +638,13 @@ const QB={
 strategic:[
 
   {phase:'PHASE 1',title:'SCG Activation',rf:'As Strategic Commander, should you activate the SCG?',
-   sit:'14:45. Fire confirmed on Dundry Hill \u2014 8 hectares, growing. Meridian House tower and gas substation at risk. Tactical Commander requesting SCG activation.',
+   sit:'14:45. Fire confirmed on Brynmoor Hill \u2014 8 hectares, growing. Meridian House tower and gas substation at risk. Tactical Commander requesting SCG activation.',
    stats:[{l:'Fire: 8ha growing',t:'r'},{l:'Meridian House: at risk',t:'a'},{l:'Substation: at risk',t:'a'},{l:'TCG requesting SCG',t:'b'}],
    cmd:{g:false,s:true,b:true},ag:{fire:true,police:true,ambulance:true},
    timed:false,
    q:'The Tactical Commander is requesting SCG activation. What do you do?',
    opts:[
-     {t:'Activate SCG immediately \u2014 convene at Keynsham, notify all Gold-level agency leads',r:'Correct. Multiple agencies, infrastructure at risk, mass displacement possible \u2014 criteria clearly met. Early SCG sets the strategic framework before deterioration.',pts:20,best:true,cons:{coord:-15},fi:'pos',ft:'SCG activated \u2014 strategic framework established early.'},
+     {t:'Activate SCG immediately \u2014 convene, notify all Gold-level agency leads',r:'Correct. Multiple agencies, infrastructure at risk, mass displacement possible \u2014 criteria clearly met. Early SCG sets the strategic framework before deterioration.',pts:20,best:true,cons:{coord:-15},fi:'pos',ft:'SCG activated \u2014 strategic framework established early.'},
      {t:'Wait until a Major Incident is formally declared before convening',r:'Waiting for declaration means the SCG is reactive. Strategic direction absent when most needed.',pts:8,cons:{coord:20,life:10},fi:'neu',ft:'SCG delayed \u2014 agencies lack strategic direction during the critical early phase.'},
      {t:'Delegate activation to the Tactical Commander and continue your meeting',r:'The SCG is a Gold function \u2014 it cannot be delegated. No strategic oversight during a rapidly escalating incident.',pts:0,cons:{coord:35,life:20},fi:'neg',ft:'Strategic vacuum \u2014 no Gold oversight. Agencies operating without direction.'}
    ],
@@ -677,7 +677,7 @@ strategic:[
    sit:'Major Incident declared. 400 Ashfield residents displaced. Northgate General activated. The Leader of Bristol City Council is calling your personal mobile.',
    stats:[{l:'Major Incident: declared',t:'r'},{l:'400 residents displaced',t:'r'},{l:'Northgate General: MI Plan active',t:'a'},{l:'Council Leader: calling',t:'b'}],
    cmd:{g:true,s:true,b:true},ag:{fire:true,police:true,ambulance:true,nhs:true,council:true,utilities:true},
-   esc:{t:'Major Incident Declared \u2014 SCG Full Response',s:'All Gold agencies now active at Keynsham'},
+   esc:{t:'Major Incident Declared \u2014 SCG Full Response',s:'All Gold agencies now active and co-located'},
    timed:false,
    q:'The Council Leader is calling your personal mobile. What do you do?',
    opts:[
@@ -687,32 +687,32 @@ strategic:[
    ],
    fb:{title:'Political Interface at Gold',body:'Managing elected members is a legitimate SCG function. The Strategic Commander provides factual updates and ensures they do not interfere with operational command. The LA Incident Commander is the council\'s own conduit into the SCG.',jesip:'JESIP recognises that command operates within political contexts. Managing this interface well protects the integrity of the command structure.'}},
   {phase:'PHASE 3',title:'Substation Evacuation',rf:'A critical decision has been escalated to Gold.',
-   sit:'The Tactical Commander reports the gas substation perimeter has been breached. The Western Power engineer on scene says there is a risk of catastrophic gas pressure failure. They recommend evacuating a 500m radius \u2014 1,200 more residents and full A38 closure.',
-   stats:[{l:'Substation: perimeter breached',t:'r'},{l:'Explosion risk: engineer-confirmed',t:'r'},{l:'500m evac: 1,200 residents',t:'r'},{l:'A38: full closure required',t:'a'}],
+   sit:'The Tactical Commander reports the gas substation perimeter has been breached. The Western Power engineer on scene says there is a risk of catastrophic gas pressure failure. They recommend evacuating a 500m radius \u2014 1,200 more residents and full B4107 closure.',
+   stats:[{l:'Substation: perimeter breached',t:'r'},{l:'Explosion risk: engineer-confirmed',t:'r'},{l:'500m evac: 1,200 residents',t:'r'},{l:'B4107: full closure required',t:'a'}],
    cmd:{g:true,s:true,b:true},ag:{fire:true,police:true,ambulance:true,council:true,utilities:true},
    timed:true,timerSecs:12,
    q:'URGENT: Qualified engineer recommends 500m evacuation. Do you authorise?',
    opts:[
-     {t:'YES \u2014 authorise 500m evacuation immediately, accept A38 full closure',r:'Correct. A qualified engineer has assessed an explosion risk. Life safety takes precedence. Disruption is secondary.',pts:20,best:true,cons:{life:-25,comm:10},fi:'pos',ft:'500m evacuation authorised. Life safety protected. Engineer proceeding with controlled isolation.'},
+     {t:'YES \u2014 authorise 500m evacuation immediately, accept B4107 full closure',r:'Correct. A qualified engineer has assessed an explosion risk. Life safety takes precedence. Disruption is secondary.',pts:20,best:true,cons:{life:-25,comm:10},fi:'pos',ft:'500m evacuation authorised. Life safety protected. Engineer proceeding with controlled isolation.'},
      {t:'Request a second technical assessment before authorising \u2014 the consequences of a false evacuation are also significant',r:'No time for a second opinion when explosion risk is confirmed by the on-scene engineer. Seeking one costs lives.',pts:3,cons:{life:45,infra:35},fi:'neg',ft:'Delay in authorisation \u2014 if the substation fails during deliberation, you have failed the most basic duty of care.'},
-     {t:'Authorise a limited 200m evacuation to balance life safety against disruption to A38 and local transport',r:'The engineer assessed 500m. Reducing this on disruption grounds overrides expert technical judgement on a life safety matter.',pts:8,cons:{life:30},fi:'neg',ft:'Residents within 200-500m remain at risk of explosion.'}
+     {t:'Authorise a limited 200m evacuation to balance life safety against disruption to B4107 and local transport',r:'The engineer assessed 500m. Reducing this on disruption grounds overrides expert technical judgement on a life safety matter.',pts:8,cons:{life:30},fi:'neg',ft:'Residents within 200-500m remain at risk of explosion.'}
    ],
    fb:{title:'Acting on Technical Advice',body:'When a qualified engineer provides a life safety assessment, Gold\'s role is to authorise the protective action \u2014 not second-guess the technical judgement. Cost of "too cautious": disruption. Cost of "too dismissive": mass casualties.',jesip:'The Joint Decision Model at Gold: Information (engineer confirms risk), Options (200m/500m/delay), Decision (500m as advised), Action (authorise immediately).'}},
   {phase:'PHASE 4',title:'Recovery Transition',rf:'As Strategic Commander, you manage the response-to-recovery transition.',
-   sit:'Fire 70% contained after 20 hours. 180 Ashfield residents cannot return for 2 weeks. 6,200 homes have no gas. Temperature will drop overnight to 8\u00B0C.',
-   stats:[{l:'Fire: 70% contained',t:'a'},{l:'180 residents: long-term displaced',t:'a'},{l:'6,200 homes: no gas',t:'r'},{l:'Overnight: 8C forecast',t:'r'}],
+   sit:'Fire fully contained and handed over to the landowner after 22 hours. 180 Ashfield residents cannot return for 2 weeks. 6,200 homes have no gas. Temperature will drop overnight to 8\u00B0C.',
+   stats:[{l:'Fire: fully contained',t:'g'},{l:'180 residents: long-term displaced',t:'a'},{l:'6,200 homes: no gas',t:'r'},{l:'Overnight: 8C forecast',t:'r'}],
    cmd:{g:true,s:true,b:true},ag:{fire:true,police:true,ambulance:true,nhs:true,council:true,utilities:true,pubhealth:true,voluntary:true},
    timed:false,
    q:'What is your priority action as the incident transitions to recovery?',
    opts:[
-     {t:'Formally transition to Recovery Phase: activate council-led recovery structures, request Red Cross warming support, set overnight welfare check protocol',r:'Correct. The no-gas situation at 8C tonight is an immediate welfare risk. A deliberate recovery transition maintains momentum and accountability.',pts:20,best:true,cons:{life:-15,comm:-20},fi:'pos',ft:'Recovery Phase activated. Thermal crisis for 6,200 homes actively managed.'},
+     {t:'Formally transition to Recovery Phase: activate council-led recovery structures, request voluntary agency warming support, set overnight welfare check protocol',r:'Correct. The no-gas situation at 8C tonight is an immediate welfare risk. A deliberate recovery transition maintains momentum and accountability.',pts:20,best:true,cons:{life:-15,comm:-20},fi:'pos',ft:'Recovery Phase activated. Thermal crisis for 6,200 homes actively managed.'},
      {t:'Stand down the emergency response and allow agencies to return to normal operations \u2014 schedule a formal debrief for next week',r:'Premature stand-down. 180 residents still displaced, 6,200 homes without gas, thermal welfare risk developing overnight.',pts:2,cons:{life:30,comm:30},fi:'neg',ft:'Thermal welfare crisis overnight for 6,200 homes without heating.'},
-     {t:'Maintain the full emergency posture until fire is 100% contained and all residents are returned',r:'Full posture beyond the life safety phase wastes resources and exhausts personnel unnecessarily.',pts:8,cons:{comm:10,coord:10},fi:'neu',ft:'Resources not released \u2014 personnel fatigue without benefit.'}
+     {t:'Maintain the full emergency posture and delay transition until all 180 residents are returned home',r:'Full posture beyond the life safety phase wastes resources and exhausts personnel unnecessarily. Recovery structures are better suited to the long-term displacement challenge.',pts:8,cons:{comm:10,coord:10},fi:'neu',ft:'Resources not released \u2014 personnel fatigue without benefit. Long-term displacement managed less effectively.'}
    ],
    fb:{title:'Response to Recovery Transition',body:'The transition to recovery is a deliberate act. The Strategic Commander formally declares the transition and activates recovery structures \u2014 council-led.',jesip:'Recovery planning should begin at Phase 1. The SCG should have a recovery subgroup from Major Incident declaration \u2014 so when the transition is made, the structure is already in place.'}},
   {phase:'PHASE 3',title:'Escalating Incident Report',rf:'A critical escalation reaches Gold.',
-   sit:'The Tactical Commander reports two Bronze sectors are operating without coordination \u2014 casualty management and evacuation are in conflict at Meridian House.',
-   branch_sit:'Because the TCG was not established early, two Bronze sectors have operated without coordination from the outset. Casualty management and evacuation are in serious conflict at Meridian House.',branch_flag:'noTCG',
+   sit:'The Tactical Commander reports two bronze commanders are operating without coordination \u2014 the casualty management team and evacuation team are in conflict at Meridian House.',
+   branch_sit:'Because the TCG was not established early, two bronze commanders have operated without coordination from the outset. The casualty management team and evacuation team are in serious conflict at Meridian House.',branch_flag:'noTCG',
    stats:[{l:'Sectors: uncoordinated',t:'r'},{l:'Meridian House: conflict',t:'r'},{l:'Casualty management: delayed',t:'a'},{l:'TCG requested Gold intervention',t:'b'}],
    cmd:{g:true,s:true,b:true},ag:{fire:true,police:true,ambulance:true,nhs:true,council:true},
    timed:false,
@@ -722,7 +722,7 @@ strategic:[
      {t:'Go to Meridian House directly and issue orders to both Bronze commanders to resolve the conflict',r:'Gold issuing direct orders to Bronze bypasses Silver and collapses the command structure.',pts:3,cons:{coord:25,life:10},fi:'neg',ft:'Gold micromanaging Bronze \u2014 command architecture collapses.'},
      {t:'Pause operations at Meridian House and request the Tactical Commander escalate to a full SCG review before any action is taken',r:'A Bronze-level conflict does not warrant SCG review. Delay causes real harm at Meridian House.',pts:8,cons:{life:15,coord:10},fi:'neu',ft:'SCG review causes critical delay \u2014 conflict at Meridian House worsens.'}
    ],
-   fb:{title:'Command Architecture Under Pressure',body:'Gold commands through Silver. When Bronze sectors conflict, the Tactical Commander resolves it using the TCG. Gold intervening directly collapses the architecture precisely when it is most needed.',jesip:'JESIP command hierarchy exists for exactly this scenario. The chain Silver-TCG-Bronze is not a formality \u2014 it is what allows the SCG to maintain strategic oversight while Bronze-level problems are resolved at the right level.'}},
+   fb:{title:'Command Architecture Under Pressure',body:'Gold commands through Silver. When bronze commanders conflict, the Tactical Commander resolves it using the TCG. Gold intervening directly collapses the architecture precisely when it is most needed.',jesip:'JESIP command hierarchy exists for exactly this scenario. The chain Silver-TCG-Bronze is not a formality \u2014 it is what allows the SCG to maintain strategic oversight while Bronze-level problems are resolved at the right level.'}},
   {phase:'PHASE 4',title:'LRF Annual Exercise Review',rf:'The LRF wants to use this incident for next year\'s exercise programme.',
    sit:'The LRF Co-ordinator asks you to chair a cross-agency group to design a live exercise based on this incident. You have 6 months and a modest budget.',
    stats:[{l:'LRF: requesting exercise design',t:'b'},{l:'6 months lead time',t:'g'},{l:'Budget: modest',t:'a'},{l:'All agencies: willing to participate',t:'g'}],
@@ -739,13 +739,13 @@ strategic:[
 tactical:[
 
   {phase:'PHASE 1',title:'Establishing the TCG',rf:'Convening the TCG is your first responsibility.',
-   sit:'14:35. Wildfire confirmed, 4 hectares, wind-driven. At risk: A38, Meridian House tower (87 flats, many elderly), gas substation, Northgate General Hospital 8 miles north. Agencies awaiting coordination.',
+   sit:'14:35. Wildfire confirmed, 4 hectares, wind-driven. At risk: B4107, Meridian House tower (87 flats, many elderly), gas substation, Northgate General Hospital 8 miles north. Agencies awaiting coordination.',
    stats:[{l:'Fire: 4ha, spreading fast',t:'r'},{l:'Multiple assets at risk',t:'a'},{l:'Agencies: awaiting TCG',t:'b'}],
    cmd:{g:false,s:true,b:true},ag:{fire:true,police:true,ambulance:true},
    timed:false,
    q:'How do you establish the TCG right now?',
    opts:[
-     {t:'Convene TCG immediately \u2014 notify all agency leads, establish shared situational picture, assign Bronze commanders to each risk sector',r:'Correct. Early TCG with sector-based Bronze assignments ensures each risk has a named commander from the outset.',pts:20,best:true,cons:{coord:-20},fi:'pos',ft:'TCG established. Bronze sectors assigned. Early coordination prevents later crises.'},
+     {t:'Convene TCG immediately \u2014 notify all agency leads, establish shared situational picture, assign Bronze commanders to each risk sector',r:'Correct. Early TCG with sector-based Bronze assignments ensures each risk has a named commander from the outset.',pts:20,best:true,cons:{coord:-20},fi:'pos',ft:'TCG established. Bronze commanders assigned. Early coordination prevents later crises.'},
      {t:'Monitor the fire and reconvene agencies once it reaches 10 hectares \u2014 premature TCG activation wastes command capacity',r:'By 10 hectares in wind-driven conditions you have lost the window to pre-position resources.',pts:5,cons:{coord:25,life:15},fi:'neg',ft:'TCG delayed. When Meridian House and substation escalate, agencies scramble without coordination.'},
      {t:'Direct agencies to maintain contact via a shared command radio channel until the situation develops',r:'A radio channel is not a TCG. Without joint decision-making, agencies silo. Cross-agency issues fall through the gaps.',pts:3,cons:{coord:30,life:10},fi:'neg',ft:'No TCG. Siloed response. Critical cross-agency issues unmanaged.'}
    ],
@@ -764,15 +764,15 @@ tactical:[
    ],
    fb:{title:'Using the Lift Window',body:'The operational lift window is the single most important resource in a tower block evacuation with mobility-impaired residents. Once lifts go offline at 200m, the only option is stairwell evacuation \u2014 dangerous and potentially impossible for some residents.',jesip:'The vulnerable persons register is a joint asset. Council holds it, but the TCG must share it with all agencies immediately.'}},
   {phase:'PHASE 2',title:'Agency Conflict at TCG',rf:'You must resolve a live conflict between Bronze commanders.',
-   sit:'Fire Bronze says the A38 must stay open for engine access. Police Bronze says it must close \u2014 near-zero smoke visibility and a fuel tanker is approaching. Both are right within their remit. Deadlocked. Tanker is 3 minutes away.',
-   stats:[{l:'A38: near-zero visibility',t:'r'},{l:'Fuel tanker: 3 min away',t:'r'},{l:'Fire: needs A38 access',t:'a'},{l:'Agency deadlock: TCG',t:'r'}],
+   sit:'Fire Bronze says the B4107 must stay open for engine access. Police Bronze says it must close \u2014 near-zero smoke visibility and a fuel tanker is approaching. Both are right within their remit. Deadlocked. Tanker is 3 minutes away.',
+   stats:[{l:'B4107: near-zero visibility',t:'r'},{l:'Fuel tanker: 3 min away',t:'r'},{l:'Fire: needs B4107 access',t:'a'},{l:'Agency deadlock: TCG',t:'r'}],
    cmd:{g:true,s:true,b:true},ag:{fire:true,police:true,ambulance:true,council:true},
    timed:true,timerSecs:12,
-   q:'URGENT: Fire needs A38 open. Police need it closed. Fuel tanker 3 minutes away. Decide.',
+   q:'URGENT: Fire needs B4107 open. Police need it closed. Fuel tanker 3 minutes away. Decide.',
    opts:[
-     {t:'Close A38 to public \u2014 create a dedicated emergency vehicle corridor with police escort. Divert the tanker off now.',r:'Correct. Life safety takes precedence. A dedicated emergency corridor allows fire engines to continue. Both needs met.',pts:20,best:true,cons:{life:-15,coord:-10},fi:'pos',ft:'A38 closed. Emergency corridor active. Tanker diverted. Fire engines continuing via escorted route.'},
-     {t:'Support the Fire position \u2014 keep A38 open and issue a radio warning to the tanker driver to proceed with caution',r:'A radio warning in zero-visibility smoke is inadequate. A collision risks mass casualties and fuel spillage.',pts:3,cons:{life:40,infra:25},fi:'neg',ft:'A38 open \u2014 tanker in zero visibility. High probability of collision. Potential secondary major incident.'},
-     {t:'Support the Police position \u2014 close A38 immediately and direct Fire to re-route via the B3130',r:'The B3130 adds 20+ minutes to fire engine response. Critical assets may become unreachable. The corridor approach preserves both needs.',pts:8,cons:{infra:15,life:10},fi:'neu',ft:'Fire engine response significantly extended \u2014 critical assets may become unreachable.'}
+     {t:'Close B4107 to public \u2014 create a dedicated emergency vehicle corridor with police escort. Divert the tanker off now.',r:'Correct. Life safety takes precedence. A dedicated emergency corridor allows fire engines to continue. Both needs met.',pts:20,best:true,cons:{life:-15,coord:-10},fi:'pos',ft:'B4107 closed. Emergency corridor active. Tanker diverted. Fire engines continuing via escorted route.'},
+     {t:'Support the Fire position \u2014 keep B4107 open and issue a radio warning to the tanker driver to proceed with caution',r:'A radio warning in zero-visibility smoke is inadequate. A collision risks mass casualties and fuel spillage.',pts:3,cons:{life:40,infra:25},fi:'neg',ft:'B4107 open \u2014 tanker in zero visibility. High probability of collision. Potential secondary major incident.'},
+     {t:'Support the Police position \u2014 close B4107 immediately and direct Fire to re-route via the B3130',r:'The B3130 adds 20+ minutes to fire engine response. Critical assets may become unreachable. The corridor approach preserves both needs.',pts:8,cons:{infra:15,life:10},fi:'neu',ft:'Fire engine response significantly extended \u2014 critical assets may become unreachable.'}
    ],
    fb:{title:'Resolving Agency Conflicts',body:'One of the TCG\'s primary functions is resolving conflicts between Bronze commanders who are both correct within their remit. The emergency vehicle corridor is standard practice in exactly this scenario.',jesip:'JESIP Joint Decision Model: weigh all information, consider all options, make a joint decision that accounts for all agency needs. The Tactical Commander facilitates and decides \u2014 not defers.'}},
   {phase:'PHASE 2',title:'Hospital Notification',rf:'You must decide whether to formally notify Northgate General.',
@@ -813,17 +813,17 @@ tactical:[
    ],
    fb:{title:'Post-Incident Debrief',body:'Multi-agency debriefs are mandated under UK emergency planning guidance. A hot debrief (within 48 hours) captures immediate learning. A formal lessons-identified report feeds into LRF plan revision.',jesip:'JESIP emphasises continuous improvement. The debrief process is as important as the response itself.'}},
   {phase:'PHASE 3',title:'Resource Conflict \u2014 Two Simultaneous Crises',rf:'Two critical situations demand the same resource simultaneously.',
-   sit:'HART team is managing a complex casualty at Meridian House. Simultaneously the A38 mass casualty requires HART capability. You have one HART team.',
-   stats:[{l:'HART: committed to Meridian House',t:'r'},{l:'A38 mass casualty: 8 casualties',t:'r'},{l:'One HART team available',t:'r'},{l:'Both situations: critical',t:'r'}],
+   sit:'HART team is managing a complex casualty at Meridian House. Simultaneously the B4107 mass casualty requires HART capability. You have one HART team.',
+   stats:[{l:'HART: committed to Meridian House',t:'r'},{l:'B4107 mass casualty: 8 casualties',t:'r'},{l:'One HART team available',t:'r'},{l:'Both situations: critical',t:'r'}],
    cmd:{g:true,s:true,b:true},ag:{fire:true,police:true,ambulance:true,nhs:true},
    timed:true,timerSecs:12,
    q:'URGENT: One HART team, two critical simultaneous demands. What is your TCG decision?',
    opts:[
-     {t:'Request mutual aid for a second HART team immediately. Complete the Meridian House extraction \u2014 5 minutes from completion. Then redeploy to A38.',r:'Correct. Mutual aid buys time. Completing the near-finished task before redeployment is more efficient than abandoning mid-extraction.',pts:20,best:true,cons:{life:-10,coord:-10},fi:'pos',ft:'Mutual aid requested. HART completes Meridian House extraction then redeploys to A38.'},
-     {t:'Redeploy HART from Meridian House to the A38 immediately \u2014  8 casualties outweighs a single patient on clinical grounds',r:'Abandoning mid-extraction could be immediately fatal for the casualty being managed. Numbers alone do not determine priority \u2014 clinical stage matters.',pts:5,cons:{life:30},fi:'neg',ft:'HART abandons Meridian House mid-extraction \u2014 serious harm to patient being managed.'},
-     {t:'Split the HART team \u2014 half to Meridian House, half to the A38 to cover both simultaneously',r:'Splitting a specialist team reduces capability at both scenes below the minimum effective threshold. HART must operate as a unit.',pts:3,cons:{life:25},fi:'neg',ft:'Split HART \u2014 below minimum effective capability at both scenes. Outcomes at both worsen.'}
+     {t:'Request mutual aid for a second HART team immediately. Complete the Meridian House extraction \u2014 5 minutes from completion. Then redeploy to B4107.',r:'Correct. Mutual aid buys time. Completing the near-finished task before redeployment is more efficient than abandoning mid-extraction.',pts:20,best:true,cons:{life:-10,coord:-10},fi:'pos',ft:'Mutual aid requested. HART completes Meridian House extraction then redeploys to B4107.'},
+     {t:'Redeploy HART from Meridian House to the B4107 immediately \u2014  8 casualties outweighs a single patient on clinical grounds',r:'Abandoning mid-extraction could be immediately fatal for the casualty being managed. Numbers alone do not determine priority \u2014 clinical stage matters.',pts:5,cons:{life:30},fi:'neg',ft:'HART abandons Meridian House mid-extraction \u2014 serious harm to patient being managed.'},
+     {t:'Split the HART team \u2014 half to Meridian House, half to the B4107 to cover both simultaneously',r:'Splitting a specialist team reduces capability at both scenes below the minimum effective threshold. HART must operate as a unit.',pts:3,cons:{life:25},fi:'neg',ft:'Split HART \u2014 below minimum effective capability at both scenes. Outcomes at both worsen.'}
    ],
-   fb:{title:'Resource Conflict: Clinical Stage Matters',body:'When allocating scarce specialist resources, clinical stage is as important as casualty numbers. A resource committed and near completion should finish before redeployment. Mutual aid is the correct parallel action.',jesip:'The TCG exists for exactly this decision. No Bronze commander can resolve a conflict between two Bronze sectors requiring the same resource. This is TCG command authority being exercised correctly.'}},
+   fb:{title:'Resource Conflict: Clinical Stage Matters',body:'When allocating scarce specialist resources, clinical stage is as important as casualty numbers. A resource committed and near completion should finish before redeployment. Mutual aid is the correct parallel action.',jesip:'The TCG exists for exactly this decision. No bronze commander can resolve a conflict between two bronze commanders requiring the same resource. This is TCG command authority being exercised correctly.'}},
   {phase:'PHASE 4',title:'Hot Debrief: Honest Assessment',rf:'You are leading the multi-agency hot debrief within 48 hours.',
    sit:'In the hot debrief, a senior fire officer says the response was excellent and suggests a brief positive write-up for the LRF. Several coordination failures were privately flagged to you by junior officers.',
    stats:[{l:'Hot debrief: underway',t:'b'},{l:'Senior officer: positive spin',t:'a'},{l:'Junior officers: gaps flagged privately',t:'r'},{l:'LRF report: due in 30 days',t:'b'}],
@@ -840,7 +840,7 @@ tactical:[
 fire:[
 
   {phase:'PHASE 1',title:'First Attendance',rf:'You are the first Fire Commander on scene.',
-   sit:'14:40. You arrive on Dundry Hill. Fire is 3 hectares, wind-driven 25mph SW. Ashfield estate visible below. Gas substation 500m NE. You have 2 pumps and a 4x4 utility. Backup 20 minutes away.',
+   sit:'14:40. You arrive on Brynmoor Hill. Fire is 3 hectares, wind-driven 25mph SW. Ashfield estate visible below. Gas substation 500m NE. You have 2 pumps and a 4x4 utility. Backup 20 minutes away.',
    stats:[{l:'Fire: 3ha, fast-spreading',t:'r'},{l:'Wind: 25mph SW',t:'a'},{l:'Resources: 2 pumps + 4x4',t:'a'},{l:'Backup: 20 min',t:'b'}],
    cmd:{g:false,s:false,b:true},ag:{fire:true},
    timed:false,
@@ -850,7 +850,7 @@ fire:[
      {t:'Commit all crews to direct attack on the fire front immediately \u2014 early aggressive action is the best chance of containment',r:'Direct attack with 2 pumps on a 3-hectare wind-driven fire risks overextension. Without M/ETHANE, other agencies have no picture.',pts:5,cons:{life:20,coord:20},fi:'neg',ft:'Crews committed without M/ETHANE. No shared picture. Overextension risk.'},
      {t:'Hold position and request additional resources before committing any crews to the fire',r:'Waiting for resources loses critical time. Initial attack, M/ETHANE, and resource requests happen simultaneously.',pts:8,cons:{life:10},fi:'neu',ft:'Resource request appropriate but no initial action \u2014 fire grows unchecked during wait.'}
    ],
-   fb:{title:'M/ETHANE: First on Scene',body:'The first Bronze commander has two immediate duties: initial fire management and M/ETHANE report. These happen simultaneously. M/ETHANE ensures all agencies have a shared picture within minutes.',jesip:'Without M/ETHANE, police don\'t consider the A38, council doesn\'t check the vulnerable persons register, hospital doesn\'t prepare, utilities don\'t mobilise. Your report triggers the entire multi-agency response.'}},
+   fb:{title:'M/ETHANE: First on Scene',body:'The first Bronze commander has two immediate duties: initial fire management and M/ETHANE report. These happen simultaneously. M/ETHANE ensures all agencies have a shared picture within minutes.',jesip:'Without M/ETHANE, police don\'t consider the B4107, council doesn\'t check the vulnerable persons register, hospital doesn\'t prepare, utilities don\'t mobilise. Your report triggers the entire multi-agency response.'}},
   {phase:'PHASE 1',title:'Property Risk Assessment',rf:'Properties are directly in the fire path.',
    sit:'Two properties on Dray Lane are in the fire\'s path \u2014 fire reaches them in 20 minutes. Both appear unoccupied but unconfirmed. You can either attempt property protection or withdraw crews to focus on containing spread toward Ashfield.',
    stats:[{l:'2 properties: fire path',t:'r'},{l:'Possibly unoccupied',t:'a'},{l:'Time to reach: 20 min',t:'a'},{l:'Ashfield: wider spread risk',t:'r'}],
@@ -888,7 +888,7 @@ fire:[
    ],
    fb:{title:'Concurrent Operations: Tower Block',body:'A single barricaded resident cannot halt a 14-storey evacuation. The welfare team addresses Floor 11 while floor wardens and police continue systematically evacuating all other floors.',jesip:'The TCG must be kept informed \u2014 the Tactical Commander needs to know the building may not be clear when making decisions about lift shutdown timing.'}},
   {phase:'PHASE 3',title:'Crew Welfare Under Pressure',rf:'Your crews have been operating for 8 hours.',
-   sit:'Your crews have operated for 8 hours in hot, smoky conditions on Dundry Hill. Three firefighters report heat exhaustion symptoms. The fire is not yet contained. Relief crews are 90 minutes away.',
+   sit:'Your crews have operated for 8 hours in hot, smoky conditions on Brynmoor Hill. Three firefighters report heat exhaustion symptoms. The fire is not yet contained. Relief crews are 90 minutes away.',
    stats:[{l:'Crews: 8 hours operating',t:'r'},{l:'3 firefighters: heat exhaustion',t:'r'},{l:'Fire: not contained',t:'a'},{l:'Relief: 90 min away',t:'a'}],
    cmd:{g:true,s:true,b:true},ag:{fire:true,police:true,ambulance:true,nhs:true,council:true,utilities:true},
    timed:false,
@@ -939,27 +939,27 @@ fire:[
 police:[
 
   {phase:'PHASE 1',title:'First on Scene \u2014 Cordons',rf:'You are Police Bronze commander. First task is scene control.',
-   sit:'14:45. You arrive at the Dundry Hill access road. Members of the public have stopped to watch. A journalist is attempting to access the hillside. The A38 is 400m north and smoke is moving toward it.',
-   stats:[{l:'Public: on access road',t:'a'},{l:'Journalist: attempting access',t:'a'},{l:'A38: smoke moving toward it',t:'a'},{l:'Fire: active on hillside',t:'r'}],
+   sit:'14:45. You arrive at the Brynmoor Hill access road. Members of the public have stopped to watch. A journalist is attempting to access the hillside. The B4107 is 400m north and smoke is moving toward it.',
+   stats:[{l:'Public: on access road',t:'a'},{l:'Journalist: attempting access',t:'a'},{l:'B4107: smoke moving toward it',t:'a'},{l:'Fire: active on hillside',t:'r'}],
    cmd:{g:false,s:false,b:true},ag:{fire:true,police:true},
    timed:false,
    q:'What is your first priority as Police Bronze commander?',
    opts:[
-     {t:'Establish inner and outer cordons, assign an officer to the A38 to monitor smoke drift and prepare for immediate closure',r:'Correct. Inner and outer cordons establish scene control. Pre-positioning at the A38 means you can act immediately if smoke threatens visibility.',pts:20,best:true,cons:{coord:-15},fi:'pos',ft:'Cordons established. A38 officer in position. Scene controlled.'},
-     {t:'Deal with the journalist first \u2014 uncontrolled media access to the scene must be managed before cordons can be set',r:'The journalist is an annoyance but not the priority. An uncontrolled scene while dealing with one journalist is disproportionate.',pts:5,cons:{coord:20,life:10},fi:'neg',ft:'No cordons while dealing with journalist. Public continue accessing scene. A38 not monitored.'},
-     {t:'Clear the public from the access road, then wait for TCG direction before establishing cordons',r:'Cordons, A38 monitoring, and public management are Bronze-level decisions. Waiting for TCG wastes time.',pts:8,cons:{coord:15},fi:'neu',ft:'Access road cleared but cordons not established and A38 not monitored.'}
+     {t:'Establish inner and outer cordons, assign an officer to the B4107 to monitor smoke drift and prepare for immediate closure',r:'Correct. Inner and outer cordons establish scene control. Pre-positioning at the B4107 means you can act immediately if smoke threatens visibility.',pts:20,best:true,cons:{coord:-15},fi:'pos',ft:'Cordons established. B4107 officer in position. Scene controlled.'},
+     {t:'Deal with the journalist first \u2014 uncontrolled media access to the scene must be managed before cordons can be set',r:'The journalist is an annoyance but not the priority. An uncontrolled scene while dealing with one journalist is disproportionate.',pts:5,cons:{coord:20,life:10},fi:'neg',ft:'No cordons while dealing with journalist. Public continue accessing scene. B4107 not monitored.'},
+     {t:'Clear the public from the access road, then wait for TCG direction before establishing cordons',r:'Cordons, B4107 monitoring, and public management are Bronze-level decisions. Waiting for TCG wastes time.',pts:8,cons:{coord:15},fi:'neu',ft:'Access road cleared but cordons not established and B4107 not monitored.'}
    ],
-   fb:{title:'Police Cordons',body:'Inner cordon (emergency services only), outer cordon (exclusion zone), and a rendezvous point are the three basic police scene management tools. Establish them before TCG direction.',jesip:'Police Bronze sends regular updates to the TCG about cordon status, A38 conditions, and public management. The TCG situational picture depends on Bronze reporting in real time.'}},
-  {phase:'PHASE 1',title:'A38 Closure \u2014 Your Call',rf:'As Police Bronze, the A38 closure decision is yours.',
-   sit:'Smoke has reduced A38 visibility to near zero in a 400m section. Two vehicles have stopped in the carriageway. A fuel tanker is approaching from the south \u2014 approximately 2 minutes away. Highways England not responding.',
-   stats:[{l:'A38: near-zero visibility',t:'r'},{l:'2 vehicles: stopped in road',t:'r'},{l:'Fuel tanker: 2 min away',t:'r'},{l:'Highways England: not responding',t:'a'}],
+   fb:{title:'Police Cordons',body:'Inner cordon (emergency services only), outer cordon (exclusion zone), and a rendezvous point are the three basic police scene management tools. Establish them before TCG direction.',jesip:'Police Bronze sends regular updates to the TCG about cordon status, B4107 conditions, and public management. The TCG situational picture depends on Bronze reporting in real time.'}},
+  {phase:'PHASE 1',title:'B4107 Closure \u2014 Your Call',rf:'As Police Bronze, the B4107 closure decision is yours.',
+   sit:'Smoke has reduced B4107 visibility to near zero in a 400m section. Two vehicles have stopped in the carriageway. A fuel tanker is approaching from the south \u2014 approximately 2 minutes away. Highways England not responding.',
+   stats:[{l:'B4107: near-zero visibility',t:'r'},{l:'2 vehicles: stopped in road',t:'r'},{l:'Fuel tanker: 2 min away',t:'r'},{l:'Highways England: not responding',t:'a'}],
    cmd:{g:false,s:true,b:true},ag:{fire:true,police:true},
    timed:true,timerSecs:12,
-   q:'URGENT: Fuel tanker 2 minutes away. Near-zero visibility. Do you close the A38?',
+   q:'URGENT: Fuel tanker 2 minutes away. Near-zero visibility. Do you close the B4107?',
    opts:[
-     {t:'YES \u2014 close A38 immediately using police powers, divert tanker now. Notify TCG and Highways England simultaneously.',r:'Correct. You have powers under the Road Traffic Regulation Act. Near-zero visibility with a fuel tanker approaching stationary vehicles is exactly the situation they exist for. You do not need Highways England permission.',pts:20,best:true,cons:{life:-20},fi:'pos',ft:'A38 closed. Tanker diverted. Standing vehicles guided to safety. Mass casualty averted.'},
+     {t:'YES \u2014 close B4107 immediately using police powers, divert tanker now. Notify TCG and Highways England simultaneously.',r:'Correct. You have powers under the Road Traffic Regulation Act. Near-zero visibility with a fuel tanker approaching stationary vehicles is exactly the situation they exist for. You do not need Highways England permission.',pts:20,best:true,cons:{life:-20},fi:'pos',ft:'B4107 closed. Tanker diverted. Standing vehicles guided to safety. Mass casualty averted.'},
      {t:'Continue trying to reach Highways England \u2014 a major A-road closure requires their authorisation, not a unilateral police decision',r:'You do not need Highways England authorisation in an immediate life safety situation. Police powers are explicit. Waiting costs lives.',pts:0,cons:{life:55,infra:25},fi:'neg',ft:'CATASTROPHIC \u2014 tanker collides with standing vehicle in zero visibility. Multiple fatalities. Fuel spillage. Secondary major incident.'},
-     {t:'Block one carriageway with your patrol car to slow the tanker and wait for Highways England to confirm closure',r:'One patrol car is not adequate in zero visibility. A full closure with diversions is required.',pts:8,cons:{life:20},fi:'neu',ft:'Partial closure \u2014 near miss. A38 eventually closed but window of maximum risk extended unnecessarily.'}
+     {t:'Block one carriageway with your patrol car to slow the tanker and wait for Highways England to confirm closure',r:'One patrol car is not adequate in zero visibility. A full closure with diversions is required.',pts:8,cons:{life:20},fi:'neu',ft:'Partial closure \u2014 near miss. B4107 eventually closed but window of maximum risk extended unnecessarily.'}
    ],
    fb:{title:'Police Road Closure Powers',body:'Section 14 of the Road Traffic Regulation Act gives police the power to close roads in emergencies without Highways England authorisation. Near-zero visibility, stationary vehicles, and an approaching fuel tanker is a clear and immediate threat to life.',jesip:'Timed decisions under pressure are a reality of emergency response. Any decision other than immediate closure in this window is indefensible.'}},
   {phase:'PHASE 2',title:'Evacuation Traffic Management',rf:'You are coordinating the police role in the Ashfield evacuation.',
@@ -1038,7 +1038,7 @@ police:[
 council:[
 
   {phase:'PHASE 1',title:'Council Activation',rf:'You are the LA Incident Commander for Bristol City Council.',
-   sit:'14:50. You have been notified. Wildfire confirmed on Dundry Hill threatening Ashfield estate. A TCG is being established. You need to stand up the council\'s emergency management structure.',
+   sit:'14:50. You have been notified. Wildfire confirmed on Brynmoor Hill threatening Ashfield estate. A TCG is being established. You need to stand up the council\'s emergency management structure.',
    stats:[{l:'Wildfire: confirmed',t:'r'},{l:'TCG: being established',t:'b'},{l:'Council: not yet activated',t:'a'}],
    cmd:{g:false,s:true,b:true},ag:{fire:true,police:true,council:true},
    timed:false,
@@ -1063,29 +1063,29 @@ council:[
    ],
    fb:{title:'Vulnerable Persons Register: Multi-Agency Asset',body:'The register is a council-held asset but it is a multi-agency tool. Data protection law explicitly permits sharing personal data in life safety emergencies.',jesip:'The register should be one of the first assets activated when a TCG is established. It enables every agency to pre-position for the most vulnerable before the situation deteriorates.'}},
   {phase:'PHASE 2',title:'Meridian House Evacuation',rf:'You have a critical deployment decision at Meridian House.',
-   sit:'Fire is 300m from Meridian House. 15 residents still inside \u2014 8 with mobility needs. Fire advises the building must be clear in 20 minutes before lifts go offline. You have 2 council housing officers, 2 NHS support staff, and a Red Cross welfare team.',
+   sit:'Fire is 300m from Meridian House. 15 residents still inside \u2014 8 with mobility needs. Fire advises the building must be clear in 20 minutes before lifts go offline. You have 2 council housing officers, 2 NHS support staff, and a voluntary sector welfare team.',
    stats:[{l:'15 residents: still inside',t:'r'},{l:'8 with mobility needs',t:'r'},{l:'Fire: must clear in 20 min',t:'r'},{l:'Lifts: going offline soon',t:'a'}],
    cmd:{g:false,s:true,b:true},ag:{fire:true,police:true,nhs:true,council:true},
    timed:true,timerSecs:15,
    q:'URGENT: 15 residents inside Meridian House, 20 minutes to clear. How do you deploy your resources?',
    opts:[
-     {t:'NHS staff to mobility-impaired residents on upper floors; council officers to ground-floor logistics; Red Cross at exit with transport; police at door',r:'Correct \u2014 each resource matched to the right task. NHS capability best used for clinical complexity on upper floors.',pts:20,best:true,cons:{life:-25},fi:'pos',ft:'All 15 residents evacuated within 18 minutes. Mobility-impaired residents assisted by NHS. Red Cross transport waiting.'},
+     {t:'NHS staff to mobility-impaired residents on upper floors; council officers to ground-floor logistics; voluntary sector welfare team at exit with transport; police at door',r:'Correct \u2014 each resource matched to the right task. NHS capability best used for clinical complexity on upper floors.',pts:20,best:true,cons:{life:-25},fi:'pos',ft:'All 15 residents evacuated within 18 minutes. Mobility-impaired residents assisted by NHS. Voluntary sector transport waiting.'},
      {t:'Send all staff into the building together and evacuate as many residents as possible floor by floor',r:'Uncoordinated entry with no role assignments means duplication on some floors and no coverage on others.',pts:8,cons:{life:20},fi:'neu',ft:'12 of 15 evacuated. 3 on Floor 9 not reached \u2014 fire service forced to conduct emergency extraction.'},
      {t:'Request additional resources from the TCG before committing staff \u2014 5 people is not enough to safely evacuate 15 residents',r:'You have 5 support staff and a police officer \u2014 sufficient for 15 residents in 20 minutes with clear role assignments. Calling for more takes time you do not have.',pts:3,cons:{life:35},fi:'neg',ft:'Waiting for additional resources \u2014 fire front reaches 200m while tower still partially occupied.'}
    ],
    fb:{title:'Coordinated High-Rise Evacuation',body:'Resource deployment in a high-rise evacuation must be deliberate. Each staff member needs a clear role. With 5 staff and a police officer, 15 residents in 20 minutes is achievable with role clarity.',jesip:'The council coordinates the welfare side but does not operate alone. NHS provides clinical authority, police manage the door, fire advises on building safety. The LA Incident Commander orchestrates; the agencies deliver.'}},
   {phase:'PHASE 2',title:'Rest Centre Management',rf:'You need to open rest centres for displaced residents.',
-   sit:'350 Ashfield residents are being evacuated. Ashfield Community Centre holds 200. Barrow Vale Leisure Centre holds 400. Red Cross and Salvation Army on standby. It is 18:00.',
-   stats:[{l:'350 residents: displaced',t:'r'},{l:'Ashfield Comm. Centre: 200 capacity',t:'a'},{l:'Barrow Vale Leisure: 400 capacity',t:'b'},{l:'Red Cross / Salvation Army: standby',t:'g'}],
+   sit:'350 Ashfield residents are being evacuated. Ashfield Community Centre holds 200. Barrow Vale Leisure Centre holds 400. Voluntary agencies on standby. It is 18:00.',
+   stats:[{l:'350 residents: displaced',t:'r'},{l:'Ashfield Comm. Centre: 200 capacity',t:'a'},{l:'Barrow Vale Leisure: 400 capacity',t:'b'},{l:'Voluntary agencies: standby',t:'g'}],
    cmd:{g:false,s:true,b:true},ag:{fire:true,police:true,ambulance:true,council:true,nhs:true,voluntary:true},
    timed:false,
    q:'With 350 residents displaced at 18:00, how do you manage rest centre provision?',
    opts:[
-     {t:'Open both centres immediately \u2014 Ashfield Community for immediate intake, Barrow Vale as overflow. Red Cross leads Ashfield Community, Salvation Army at Barrow Vale.',r:'Correct. Opening both from the outset avoids chaotic mid-evening transfers.',pts:20,best:true,cons:{comm:-20},fi:'pos',ft:'Both centres open. 350 residents accommodated. Evening meal provided. Police briefed on locations.'},
+     {t:'Open both centres immediately \u2014 Ashfield Community for immediate intake, Barrow Vale as overflow. Voluntary agency welfare leads at both centres.',r:'Correct. Opening both from the outset avoids chaotic mid-evening transfers.',pts:20,best:true,cons:{comm:-20},fi:'pos',ft:'Both centres open. 350 residents accommodated. Evening meal provided. Police briefed on locations.'},
      {t:'Open Ashfield Community Centre first and activate Barrow Vale only once the first centre is at capacity',r:'Opening sequentially means a chaotic transfer of distressed residents mid-evening when Ashfield Community fills.',pts:10,cons:{comm:10},fi:'neu',ft:'Ashfield Community fills \u2014 chaotic transfer to Barrow Vale at 20:00. Residents who just settled being moved again.'},
      {t:'Direct all 350 residents to Barrow Vale Leisure Centre \u2014 the larger venue eliminates any overflow risk',r:'Barrow Vale is further from Ashfield for many residents. Opening one centre removes redundancy and increases transport burden.',pts:8,cons:{comm:10},fi:'neu',ft:'All residents at Barrow Vale \u2014 transport burden greater, but centre manages.'}
    ],
-   fb:{title:'Rest Centre Management',body:'Opening two centres from the outset with voluntary sector support avoids mid-evening transfers. The Red Cross and Salvation Army are experienced rest centre operators \u2014 brief them clearly and let them lead on welfare delivery.',jesip:'The council coordinates rest centres but does not run them alone. Voluntary sector delivers welfare. NHS provides health support. Police manage access and security.'}},
+   fb:{title:'Rest Centre Management',body:'Opening two centres from the outset with voluntary sector support avoids mid-evening transfers. Voluntary agencies are experienced rest centre operators \u2014 brief them clearly and let them lead on welfare delivery.',jesip:'The council coordinates rest centres but does not run them alone. Voluntary sector delivers welfare. NHS provides health support. Police manage access and security.'}},
   {phase:'PHASE 3',title:'Gas Supply Loss',rf:'6,200 homes have lost gas supply overnight.',
    sit:'The gas substation has been isolated. 6,200 homes have no heating, hot water, or gas cooking. It is 21:00, overnight temperature will drop to 8\u00B0C. Western Power estimates 3-5 days for restoration. Two care homes are in the affected area.',
    stats:[{l:'6,200 homes: no gas',t:'r'},{l:'Overnight: 8C',t:'r'},{l:'Restoration: 3-5 days',t:'r'},{l:'2 care homes: affected',t:'r'}],
@@ -1138,7 +1138,7 @@ council:[
 nhs:[
 
   {phase:'PHASE 1',title:'Early Hospital Notification',rf:'You have just been notified of the wildfire.',
-   sit:'15:00. Notified via the TCG. Northgate General Hospital is 8 miles from Dundry Hill, currently at 89% bed occupancy. Air quality warnings issued. You have not yet spoken to Northgate.',
+   sit:'15:00. Notified via the TCG. Northgate General Hospital is 8 miles from Brynmoor Hill, currently at 89% bed occupancy. Air quality warnings issued. You have not yet spoken to Northgate.',
    stats:[{l:'Wildfire: confirmed',t:'r'},{l:'Northgate General: 89% occupancy',t:'a'},{l:'Air quality: warning issued',t:'a'},{l:'Hospital: not notified',t:'r'}],
    cmd:{g:false,s:true,b:true},ag:{fire:true,police:true,ambulance:true,nhs:true},
    timed:false,
@@ -1237,7 +1237,7 @@ nhs:[
 utilities:[
 
   {phase:'PHASE 1',title:'First Notification',rf:'You are the Western Power / Wessex Water Lead. Just been notified.',
-   sit:'15:00. TCG notifies you of a wildfire on Dundry Hill. Your asset register shows a 33kV overhead line in the fire risk area and a gas distribution substation 300m from the fire perimeter. A water main serving Ashfield runs under the access road. You are 45 minutes from site.',
+   sit:'15:00. TCG notifies you of a wildfire on Brynmoor Hill. Your asset register shows a 33kV overhead line in the fire risk area and a gas distribution substation 300m from the fire perimeter. A water main serving Ashfield runs under the access road. You are 45 minutes from site.',
    stats:[{l:'33kV line: in fire risk area',t:'r'},{l:'Gas substation: 300m from fire',t:'r'},{l:'Water main: under access road',t:'a'},{l:'On-site ETA: 45 min',t:'a'}],
    cmd:{g:false,s:true,b:true},ag:{fire:true,police:true,utilities:true},
    timed:false,
@@ -1261,7 +1261,7 @@ utilities:[
    ],
    fb:{title:'Controlled vs Uncontrolled Outage',body:'A controlled outage on your own infrastructure is always preferable to an uncontrolled event. A 33kV arc fault can start a secondary fire and create lethal hazards for fire service personnel.',jesip:'Notify the TCG of your isolation decision and its community impact \u2014 4,000 homes offline requires immediate council and NHS response for care homes and oxygen-dependent residents.'}},
   {phase:'PHASE 2',title:'Firefighting Water Supply',rf:'Avon Fire and Rescue is reporting low water pressure.',
-   sit:'Fire Bronze reports hydrants on the Dundry Hill access road are delivering insufficient pressure. You check: a 150mm main serves the area but pressure has been reduced for an unrelated repair. You can restore full pressure by closing the repair bypass.',
+   sit:'Fire Bronze reports hydrants on the Brynmoor Hill access road are delivering insufficient pressure. You check: a 150mm main serves the area but pressure has been reduced for an unrelated repair. You can restore full pressure by closing the repair bypass.',
    stats:[{l:'Hydrant pressure: insufficient',t:'r'},{l:'150mm main: reduced pressure',t:'r'},{l:'Repair bypass: in operation',t:'a'},{l:'Full pressure: restorable',t:'g'}],
    cmd:{g:false,s:true,b:true},ag:{fire:true,police:true,utilities:true},
    timed:false,
@@ -1336,8 +1336,8 @@ utilities:[
 ambulance:[
 
   {phase:'PHASE 1',title:'Pre-Hospital Staging',rf:'You are the SWAST Bronze commander.',
-   sit:'15:00. TCG notified you. You have 3 ambulances, 1 RRV, and 1 HART team. Resources need staging \u2014 close enough to respond quickly, far enough from smoke, accessible if A38 closes.',
-   stats:[{l:'3 ambulances + RRV + HART',t:'b'},{l:'Smoke: moving toward A38',t:'a'},{l:'Meridian House: evacuation likely',t:'a'},{l:'A38: potential closure',t:'a'}],
+   sit:'15:00. TCG notified you. You have 3 ambulances, 1 RRV, and 1 HART team. Resources need staging \u2014 close enough to respond quickly, far enough from smoke, accessible if B4107 closes.',
+   stats:[{l:'3 ambulances + RRV + HART',t:'b'},{l:'Smoke: moving toward B4107',t:'a'},{l:'Meridian House: evacuation likely',t:'a'},{l:'B4107: potential closure',t:'a'}],
    cmd:{g:false,s:true,b:true},ag:{fire:true,police:true,ambulance:true},
    timed:false,
    q:'Where do you stage your resources and in what configuration?',
@@ -1359,12 +1359,12 @@ ambulance:[
      {t:'Ask the TCG to confirm HART activation is warranted before committing the resource',r:'SWAST Bronze has the authority and duty to activate HART based on clinical assessment. Waiting for TCG authorisation delays activation unnecessarily.',pts:8,cons:{life:15},fi:'neu',ft:'TCG authorises after 8-minute discussion. HART arrives 38 minutes later than necessary.'}
    ],
    fb:{title:'HART: Anticipatory Clinical Decision',body:'HART teams are designed for complex clinical needs in hazardous environments. Their value is entirely dependent on being pre-deployed before the complex casualty presents.',jesip:'SWAST Bronze is a clinical decision-maker. HART activation is a clinical decision based on the anticipated casualty profile. This is clinical authority being exercised appropriately at Bronze level.'}},
-  {phase:'PHASE 2',title:'A38 Mass Casualty',rf:'A vehicle collision has created a mass casualty scenario.',
-   sit:'A fuel tanker has been involved in a collision on the A38 in near-zero smoke visibility. Tanker overturned but not ignited. 4 vehicles involved, approximately 8 casualties visible, fuel leaking onto road surface. Your staging area is 400m away.',
+  {phase:'PHASE 2',title:'B4107 Mass Casualty',rf:'A vehicle collision has created a mass casualty scenario.',
+   sit:'A fuel tanker has been involved in a collision on the B4107 in near-zero smoke visibility. Tanker overturned but not ignited. 4 vehicles involved, approximately 8 casualties visible, fuel leaking onto road surface. Your staging area is 400m away.',
    stats:[{l:'8 casualties: visible',t:'r'},{l:'Fuel tanker: overturned, leaking',t:'r'},{l:'Fire risk: fuel leak',t:'r'},{l:'No ignition yet',t:'a'}],
    cmd:{g:false,s:true,b:true},ag:{fire:true,police:true,ambulance:true},
    timed:true,timerSecs:12,
-   q:'URGENT: 8 casualties, overturned fuel tanker, fuel leaking on the A38. First actions?',
+   q:'URGENT: 8 casualties, overturned fuel tanker, fuel leaking on the B4107. First actions?',
    opts:[
      {t:'Establish Bronze command. HART to assess scene hazards before any crew advances. RRV to triage from safe upwind position. Request fire service urgently for fuel containment.',r:'Correct. Fuel leak plus potential ignition means do not rush crews in before assessment. HART assesses, fire contains the fuel risk, then organised casualty management begins.',pts:20,best:true,cons:{life:-15},fi:'pos',ft:'Systematic Bronze command established. HART assesses safely. Fire contain fuel. 8 casualties triaged and treated.'},
      {t:'Deploy all resources to the casualties immediately \u2014 8 people are injured and every second of delay is clinically costly',r:'Rushing into an unassessed scene with leaking fuel risks a fire that kills both your crew and the casualties.',pts:3,cons:{life:45},fi:'neg',ft:'Crew advance into unassessed fuel leak. Static spark ignites fuel. Casualties and HART crew sustain burn injuries.'},
@@ -1384,7 +1384,7 @@ ambulance:[
    ],
    fb:{title:'SBAR Clinical Handover',body:'The Situation-Background-Assessment-Recommendation (SBAR) handover is a patient safety requirement, not optional. In a busy Major Incident setting, critical clinical information can be lost without a formal structured verbal handover.',jesip:'Clinical handover quality is a Major Incident planning issue \u2014 the NHS should have a dedicated SWAST-to-ED handover area in their Major Incident Plan, with a named liaison officer.'}},
   {phase:'PHASE 3',title:'HART Team Welfare',rf:'Your HART team has been operating in hazardous conditions.',
-   sit:'Your HART team has been working in smoke from Dundry Hill for 6 hours. Two HART paramedics are showing signs of fatigue and one has reported chest tightness. Further complex casualties are expected from the ongoing Meridian House situation.',
+   sit:'Your HART team has been working in smoke from Brynmoor Hill for 6 hours. Two HART paramedics are showing signs of fatigue and one has reported chest tightness. Further complex casualties are expected from the ongoing Meridian House situation.',
    stats:[{l:'HART: 6 hours in smoke',t:'a'},{l:'2 paramedics: fatigue symptoms',t:'a'},{l:'1 paramedic: chest tightness',t:'r'},{l:'Further complex casualties: expected',t:'a'}],
    cmd:{g:true,s:true,b:true},ag:{fire:true,police:true,ambulance:true,nhs:true,council:true},
    timed:false,
@@ -1407,8 +1407,8 @@ ambulance:[
      {t:'Present the staging and HART successes as good practice while attributing the SBAR failure and TCG absence to resourcing constraints that were outside SWAST\'s control',r:'The SBAR failure and TCG absence are planning and protocol issues, not resourcing issues. Attributing them to resourcing is inaccurate.',pts:8,cons:{coord:15},fi:'neu',ft:'Resourcing attribution challenged by Tactical Commander. Debrief discussion becomes defensive.'}
    ],
    fb:{title:'Debrief: Own Your Learning',body:'A credible debrief contribution presents both successes and failures honestly. Successes documented as good practice strengthen the system. Failures owned with concrete actions drive genuine improvement.',jesip:'JESIP continuous improvement requires that each agency owns its learning. SWAST owning the TCG absence and SBAR failure, with concrete fixes, is the professional standard.'}},
-  {phase:'PHASE 3',title:'Paediatric Casualty at A38',rf:'A child casualty has been identified at the A38 scene.',
-   sit:'At the A38 mass casualty scene, one of the 8 casualties is a 6-year-old with serious injuries \u2014 suspected internal trauma. Your nearest HART team is managing the fuel fire. Northgate General is 8 miles north and paediatric-capable.',
+  {phase:'PHASE 3',title:'Paediatric Casualty at B4107',rf:'A child casualty has been identified at the B4107 scene.',
+   sit:'At the B4107 mass casualty scene, one of the 8 casualties is a 6-year-old with serious injuries \u2014 suspected internal trauma. Your nearest HART team is managing the fuel fire. Northgate General is 8 miles north and paediatric-capable.',
    stats:[{l:'Child: 6yo, serious injuries',t:'r'},{l:'HART: committed to fuel fire',t:'r'},{l:'Northgate: paediatric capable',t:'b'},{l:'Transport: 8 miles',t:'a'}],
    cmd:{g:true,s:true,b:true},ag:{fire:true,police:true,ambulance:true,nhs:true},
    timed:true,timerSecs:10,
@@ -1420,7 +1420,7 @@ ambulance:[
    ],
    fb:{title:'Paediatric Casualty: Pre-Alert and Speed',body:'Serious paediatric trauma requires transport to a paediatric-capable centre. Pre-alerting the receiving team is non-negotiable. A paramedic escort is sufficient for transport.',jesip:'Clinical routing decisions are made by SWAST Bronze with NHS Lead input. A paediatric casualty triggers specific routing protocols that should be in the Major Incident Plan.'}},
   {phase:'PHASE 4',title:'Collaborative Play Mode',rf:'Your group has gathered to play Operation Ashdown together.',
-   sit:'Your group has completed the exercise. You are now reviewing the decisions made across the session and thinking about what your organisation would do differently in a real incident on Dundry Hill.',
+   sit:'Your group has completed the exercise. You are now reviewing the decisions made across the session and thinking about what your organisation would do differently in a real incident on Brynmoor Hill.',
    stats:[{l:'Exercise: completed',t:'g'},{l:'Group discussion: active',t:'b'},{l:'Learning points: identified',t:'b'},{l:'Action planning: underway',t:'g'}],
    cmd:{g:true,s:true,b:true},ag:{fire:true,police:true,ambulance:true,nhs:true,council:true,utilities:true,pubhealth:true,voluntary:true},
    timed:false,
@@ -1628,8 +1628,8 @@ fire:[
 police:[
 
   {phase:'PHASE 1',title:'Cordons and Unsafe Swimming',rf:'You are Police Bronze. Unsafe outdoor activity is occurring.',
-   sit:'13:30. Public parks and open spaces are filling with people seeking shade. The Portway along the Avon Gorge has people attempting to swim in unsafe non-lifeguarded sections. One person is already in the water. Brandon Hill park has around 800 people with limited shade.',
-   stats:[{l:'Brandon Hill: 800 people, limited shade',t:'a'},{l:'Portway: people in the water',t:'r'},{l:'One person: in water now',t:'r'},{l:'No lifeguards: at Avon Gorge sections',t:'r'}],
+   sit:'13:30. Public parks and open spaces are filling with people seeking shade. The A4 Thornway along the Avon Gorge has people attempting to swim in unsafe non-lifeguarded sections. One person is already in the water. Brandon Hill park has around 800 people with limited shade.',
+   stats:[{l:'Brandon Hill: 800 people, limited shade',t:'a'},{l:'A4 Thornway: people in the water',t:'r'},{l:'One person: in water now',t:'r'},{l:'No lifeguards: at Avon Gorge sections',t:'r'}],
    cmd:{g:false,s:true,b:true},ag:{fire:true,police:true,ambulance:true,council:true},
    timed:false,
    q:'Unsafe swimming is occurring now. What is your immediate action?',
@@ -1722,7 +1722,7 @@ council:[
    fb:{title:'Care Home Response: Coordinate, Do Not Just Escalate',body:'The council\u2019s role in a care home cooling failure is coordinating the welfare response: mobile cooling, clinical welfare checks, TCG notification. CQC has a follow-up role, not an immediate life safety role.',jesip:'The LA Incident Commander coordinates across all three sites. TCG must know about all three \u2014 not just the failed one. The picture is: one failed, one at risk, one stable. That picture drives resource deployment.'}},
 
   {phase:'PHASE 3',title:'Vulnerable Persons Register Gap',rf:'The voluntary sector is finding people outside the register.',
-   sit:'St John Ambulance and the Red Cross report that door-knocking teams are finding isolated elderly residents in poor condition who are not on the Vulnerable Persons Register. An estimated 600-800 residents in Ashfield estate alone may be at risk but are not registered. Many are recent arrivals or have not engaged with council services.',
+   sit:'St John Ambulance and voluntary agency teams report that door-knocking teams are finding isolated elderly residents in poor condition who are not on the Vulnerable Persons Register. An estimated 600-800 residents in Ashfield estate alone may be at risk but are not registered. Many are recent arrivals or have not engaged with council services.',
    stats:[{l:'Register gap: 600-800 Ashfield residents',t:'r'},{l:'Recent arrivals: not registered',t:'r'},{l:'Voluntary sector: finding welfare gaps',t:'a'},{l:'Register update: needed',t:'b'}],
    cmd:{g:true,s:true,b:true},ag:{fire:true,ambulance:true,nhs:true,council:true,voluntary:true},
    timed:false,
@@ -1922,9 +1922,9 @@ function getScoreLabel(pts,timeout){
 }
 
 var MAPS=[
-  {phase:'PHASE 1 \u2192 2',head:'Fire Spreading \u2014 Dundry Hill',desc:'The fire is now 6 hectares and wind-driven toward Ashfield estate. Meridian House is within the risk corridor. The A38 is experiencing smoke drift.',fires:[{id:'fire1',cx:200,cy:75,rx:28,ry:20},{id:'fire2',cx:185,cy:92,rx:18,ry:14},{id:'fire3',cx:218,cy:88,rx:22,ry:16}],embers:[{id:'emb1',cx:160,cy:112},{id:'emb2',cx:230,cy:108}],fact:'Wildfire embers can be carried 2km ahead of the fire front by wind, starting spot fires beyond roads and firebreaks. Road clearance does NOT guarantee safety \u2014 embers jump roads.'},
-  {phase:'PHASE 2 \u2192 3',head:'Fire at Critical Assets',desc:'The fire front has reached 300m from Meridian House. The gas substation perimeter has been breached. Ashfield estate evacuation is underway.',fires:[{id:'fire1',cx:200,cy:72,rx:35,ry:26},{id:'fire2',cx:178,cy:95,rx:28,ry:20},{id:'fire3',cx:222,cy:92,rx:30,ry:22},{id:'fire4',cx:190,cy:114,rx:22,ry:16},{id:'fire5',cx:255,cy:108,rx:20,ry:15}],embers:[{id:'emb1',cx:155,cy:130},{id:'emb2',cx:240,cy:125},{id:'emb3',cx:170,cy:148}],fact:'At the urban wildland interface (WUI), fire spreads through garden fences, sheds, gas meters and parked vehicles. A wind shift can cut off crews in seconds \u2014 dynamic risk assessment must be continuous.'},
-  {phase:'PHASE 3 \u2192 4',head:'Containment Underway',desc:'Aerial resources and mutual aid have arrived. The fire is being contained on the north face. The substation has been isolated. Ashfield residents are in rest centres.',fires:[{id:'fire1',cx:200,cy:72,rx:40,ry:30},{id:'fire2',cx:175,cy:98,rx:32,ry:24},{id:'fire3',cx:225,cy:95,rx:34,ry:26},{id:'fire4',cx:192,cy:118,rx:26,ry:18},{id:'fire5',cx:258,cy:110,rx:22,ry:16}],embers:[],fact:'Wildfire on a slope descends more slowly than it ascends \u2014 fire can travel 4x faster uphill. The descent toward Ashfield from Dundry Hill is still rapid due to the 25mph SW wind.'},
+  {phase:'PHASE 1 \u2192 2',head:'Fire Spreading \u2014 Brynmoor Hill',desc:'The fire is now 6 hectares and wind-driven toward Ashfield estate. Meridian House is within the risk corridor. The B4107 is experiencing smoke drift.',fires:[{id:'fire1',cx:200,cy:75,rx:28,ry:20},{id:'fire2',cx:185,cy:92,rx:18,ry:14},{id:'fire3',cx:218,cy:88,rx:22,ry:16}],embers:[{id:'emb1',cx:160,cy:112},{id:'emb2',cx:230,cy:108}],fact:'Wildfire embers can be carried 2km ahead of the fire front by wind, starting spot fires beyond roads and firebreaks. Road clearance does NOT guarantee safety \u2014 embers jump roads.'},
+  {phase:'PHASE 2 \u2192 3',head:'Fire at Critical Assets',desc:'The fire front has reached 300m from Meridian House. The gas substation perimeter has been breached. Ashfield estate evacuation is underway.',fires:[{id:'fire1',cx:200,cy:72,rx:35,ry:26},{id:'fire2',cx:178,cy:95,rx:28,ry:20},{id:'fire3',cx:222,cy:92,rx:30,ry:22},{id:'fire4',cx:190,cy:114,rx:22,ry:16},{id:'fire5',cx:255,cy:108,rx:20,ry:15}],embers:[{id:'emb1',cx:155,cy:130},{id:'emb2',cx:240,cy:125},{id:'emb3',cx:170,cy:148}],fact:'At the wildland urban interface (WUI), fire spreads through garden fences, sheds, gas meters and parked vehicles. A wind shift can cut off crews in seconds \u2014 dynamic risk assessment must be continuous.'},
+  {phase:'PHASE 3 \u2192 4',head:'Containment Underway',desc:'Aerial resources and mutual aid have arrived. The fire is being contained on the north face. The substation has been isolated. Ashfield residents are in rest centres.',fires:[{id:'fire1',cx:200,cy:72,rx:40,ry:30},{id:'fire2',cx:175,cy:98,rx:32,ry:24},{id:'fire3',cx:225,cy:95,rx:34,ry:26},{id:'fire4',cx:192,cy:118,rx:26,ry:18},{id:'fire5',cx:258,cy:110,rx:22,ry:16}],embers:[],fact:'Wildfire on a slope descends more slowly than it ascends \u2014 fire can travel 4x faster uphill. The descent toward Ashfield from Brynmoor Hill is still rapid due to the 25mph SW wind.'},
 ];
 
 var MAPS2=[
