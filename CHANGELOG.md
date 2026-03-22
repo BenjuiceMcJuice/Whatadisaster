@@ -2,6 +2,16 @@
 
 All notable changes to the Emergency Exercise Simulator.
 
+## [1.1.1] — 2026-03-22
+
+### Fixed
+- Broken national guidance URLs corrected:
+  - `heat-health-alerts` → `heat-health-alerting-system` (GOV.UK page was renamed)
+  - `national-risk-register` → `national-risk-register-2025` (publication moved to year-specific URL)
+  - `met.gov.uk/...` → `metoffice.gov.uk/services/government/environmental-hazard-resilience/fire-severity-index` (wrong domain entirely; `met.gov.uk` does not exist)
+
+---
+
 ## [1.1.0] — 2026-03-22
 
 ### Added

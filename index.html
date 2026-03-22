@@ -590,7 +590,7 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
 
 <script>
 
-const APP_VERSION='1.1.0';
+const APP_VERSION='1.1.1';
 
 /* ── ROLE-SPECIFIC LEARNING POINTS ─────────────────────────────────────── */
 var LEARN_POINTS={
@@ -700,12 +700,12 @@ function showBriefing(){
   s+='\u2192 <a href="https://www.gov.uk/guidance/emergency-response-and-recovery" target="_blank" style="color:var(--blue);text-decoration:none;">GOV.UK: Emergency Response &amp; Recovery<\/a><br>';
   s+='\u2192 <a href="https://www.jesip.org.uk" target="_blank" style="color:var(--blue);text-decoration:none;">JESIP: Joint Doctrine &amp; Principles<\/a><br>';
   if(h){
-    s+='\u2192 <a href="https://www.gov.uk/guidance/heat-health-alerts" target="_blank" style="color:var(--blue);text-decoration:none;">UKHSA: Heat-Health Alert System<\/a><br>';
+    s+='\u2192 <a href="https://www.gov.uk/guidance/heat-health-alerting-system" target="_blank" style="color:var(--blue);text-decoration:none;">UKHSA: Heat-Health Alert System<\/a><br>';
     s+='\u2192 <a href="https://www.metoffice.gov.uk/binaries/content/assets/metofficegovuk/pdf/research/spf/ukcr_heat_pack_bristol.pdf" target="_blank" style="color:var(--blue);text-decoration:none;">Met Office: Bristol Urban Climate Resilience \u2014 Heat Pack<\/a><br>';
     s+='\u2192 <a href="https://www.bristol.gov.uk/council/policies-plans-and-strategies/energy-and-environment/the-keep-bristol-cool-mapping-tool" target="_blank" style="color:var(--blue);text-decoration:none;">Bristol City Council: Keep Bristol Cool \u2014 Heat Vulnerability Mapping<\/a>';
   } else {
-    s+='\u2192 <a href="https://www.gov.uk/government/publications/national-risk-register" target="_blank" style="color:var(--blue);text-decoration:none;">National Risk Register<\/a><br>';
-    s+='\u2192 <a href="https://www.met.gov.uk/public/natural-hazards/wildfire" target="_blank" style="color:var(--blue);text-decoration:none;">Met Office: Wildfire Guidance<\/a>';
+    s+='\u2192 <a href="https://www.gov.uk/government/publications/national-risk-register-2025" target="_blank" style="color:var(--blue);text-decoration:none;">National Risk Register<\/a><br>';
+    s+='\u2192 <a href="https://www.metoffice.gov.uk/services/government/environmental-hazard-resilience/fire-severity-index" target="_blank" style="color:var(--blue);text-decoration:none;">Met Office: Fire Severity Index<\/a>';
   }
   s+='<\/div><\/div>';
   document.getElementById('briefingBody').innerHTML=s;
