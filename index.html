@@ -217,10 +217,10 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
 
     <div style="margin-bottom:.4rem;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);text-align:left">Select Scenario</div>
     <div style="display:flex;gap:.75rem;margin-bottom:.5rem">
-    <button class="btn" onclick="G.scenario='ashdown';showScreen('roleSelect')" style="flex:1;max-width:none;background:linear-gradient(135deg,#FF4500,#c0392b)">&#128293; Operation Ashdown<div style="font-size:.7rem;font-weight:400;opacity:.8;margin-top:.2rem">Wildfire · Brynmoor Hill</div></button>
-    <button class="btn" onclick="G.scenario='hotwells';showScreen('roleSelect')" style="flex:1;max-width:none;background:linear-gradient(135deg,#c0392b,#8e0000)">&#9728;&#65039; Operation Solstice<div style="font-size:.7rem;font-weight:400;opacity:.8;margin-top:.2rem">Severe Heatwave · Bristol</div></button>
+    <button class="btn" onclick="G.scenario='ashdown';showBriefing()" style="flex:1;max-width:none;background:linear-gradient(135deg,#FF4500,#c0392b)">&#128293; Operation Ashdown<div style="font-size:.7rem;font-weight:400;opacity:.8;margin-top:.2rem">Wildfire · Brynmoor Hill</div></button>
+    <button class="btn" onclick="G.scenario='hotwells';showBriefing()" style="flex:1;max-width:none;background:linear-gradient(135deg,#c0392b,#8e0000)">&#9728;&#65039; Operation Solstice<div style="font-size:.7rem;font-weight:400;opacity:.8;margin-top:.2rem">Severe Heatwave · Bristol</div></button>
   </div>
-    <button class="btn2" onclick="showScreen('briefing')">📋 Pre-Exercise Briefing</button>
+    <button class="btn2" onclick="showBriefing()">📋 Pre-Exercise Briefing</button>
     <a href="how-it-works.html" class="btn2" style="display:block;text-align:center;text-decoration:none;margin-top:.5rem;">❓ How It Works</a>
   </div>
 </div>
@@ -233,55 +233,8 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
 
 <!-- BRIEFING -->
 <div id="briefing" class="screen">
-  <div class="sh"><h2>📋 Pre-Exercise Briefing</h2><p>OPERATION ASHDOWN</p></div>
-  <div class="bc2">
-    <div class="ib"><strong>This exercise</strong><br>Tabletop — no real emergency. Decisions have consequences that compound. Early mistakes make later situations worse. Final outcome uses the UK National Risk Assessment impact scale.</div>
-    <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;text-transform:uppercase;margin:1rem 0 .5rem;color:var(--gold)">🏅 Command Structure</h3>
-    <div class="jw">
-      <div class="jp" style="--pc:var(--gold)"><div class="jt">⬛ Gold — Strategic</div><div class="jb">Sets objectives. Leads the SCG. Off-scene.</div></div>
-      <div class="jp" style="--pc:var(--silver)"><div class="jt">🔘 Silver — Tactical</div><div class="jb">Translates aims to action. Leads TCG.</div></div>
-      <div class="jp" style="--pc:var(--bronze)"><div class="jt">🔷 Bronze — Operational</div><div class="jb">Hands-on delivery at scene.</div></div>
-      <div class="jp" style="--pc:var(--blue)"><div class="jt">🤝 JESIP</div><div class="jb">Joint Emergency Services Interoperability Principles.</div></div>
-    </div>
-    <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;text-transform:uppercase;margin:1rem 0 .5rem;color:var(--fire)"><span id="fireFactLabel">🔥 Wildfire Behaviour</span></h3>
-    <div class="tl2"><div class="tt" style="color:#FF6B35">Spotting</div><div class="tb">Embers carried ahead of the fire front can land up to 2km away, starting spot fires. A wildfire can effectively <strong>jump roads</strong> via airborne embers — road clearance does not guarantee safety.</div></div>
-    <div class="tl2"><div class="tt" style="color:#FF6B35">Wildland Urban Interface</div><div class="tb">At the wildland urban interface (WUI), where wildland meets urban areas, fire behaviour is unpredictable. Garden fences, sheds, gas meters, and parked vehicles all become fuel. Fire can enter buildings through roof vents and gaps.</div></div>
-    <div class="tl2"><div class="tt" style="color:#FF6B35">Wind effect</div><div class="tb">A 25mph wind can double or triple the rate of fire spread and dramatically increase ember cast distance. Wind direction shifts can cut off crews. <strong>Crew safety and dynamic risk assessment are paramount.</strong></div></div>
-    <div class="tl2"><div class="tt" style="color:#FF6B35">Slope</div><div class="tb">Fire travels uphill faster than downhill — up to 4x faster on steep slopes. Brynmoor Hill's north-facing slope means fire descending toward Ashfield has gravity working in its favour.</div></div>
-    <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;text-transform:uppercase;margin:1rem 0 .5rem;color:var(--fire)">📊 UK Impact Scale</h3>
-    <div class="tl2"><div class="tt" style="color:var(--green)">NEGL.</div><div class="tb"><strong>Negligible</strong> — Managed effectively, no preventable harm</div></div>
-    <div class="tl2"><div class="tt" style="color:#8BC34A">LIMITED</div><div class="tb"><strong>Limited</strong> — Mostly well managed, minor preventable harm</div></div>
-    <div class="tl2"><div class="tt" style="color:var(--amber)">SIGNIF.</div><div class="tb"><strong>Significant</strong> — Coordination gaps, avoidable harm</div></div>
-    <div class="tl2"><div class="tt" style="color:var(--fire)">SERIOUS</div><div class="tb"><strong>Serious</strong> — Major failures, preventable casualties</div></div>
-    <div class="tl2"><div class="tt" style="color:var(--red)">CATASTR.</div><div class="tb"><strong>Catastrophic</strong> — Systemic breakdown, lives lost</div></div>
-    <div style="margin-top:1.5rem"><button class="btn" onclick="showScreen('roleSelect')" style="max-width:none">Choose Your Role →</button></div>
-
-    <!-- Additional requirements: BC, response plan, national guidance -->
-    <div style="margin-top:1.25rem;background:rgba(243,156,18,.07);border:1px solid rgba(243,156,18,.22);border-radius:8px;padding:.9rem 1.1rem;">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:.6rem;">💼 Business Continuity Inject</div>
-      <p style="font-size:.82rem;color:var(--dim);line-height:1.55;margin-bottom:.5rem;"><strong style="color:var(--text);">During the exercise, consider:</strong> Your organisation's HQ building is within the affected zone and staff have been told to work remotely with 30 minutes' notice. Key personnel are unreachable. Critical systems are inaccessible.</p>
-      <p style="font-size:.82rem;color:var(--dim);line-height:1.55;"><strong style="color:var(--text);">Discussion prompt:</strong> How long could your organisation sustain core emergency functions? Who authorises alternative working arrangements? Is this covered in your Business Continuity Plan?</p>
-    </div>
-
-    <div style="margin-top:.85rem;background:rgba(52,152,219,.07);border:1px solid rgba(52,152,219,.2);border-radius:8px;padding:.9rem 1.1rem;">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:.5rem;">📂 Response Plan Check</div>
-      <p style="font-size:.82rem;color:var(--dim);line-height:1.55;">Before starting, locate your organisation's <strong style="color:var(--text);">Emergency Response Plan</strong> or <strong style="color:var(--text);">Major Incident Plan</strong>. As you play, note whether your plan covers the situations you encounter and flag any gaps for the post-exercise discussion.</p>
-    </div>
-
-    <div style="margin-top:.85rem;background:rgba(46,204,113,.06);border:1px solid rgba(46,204,113,.18);border-radius:8px;padding:.9rem 1.1rem;">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--green);margin-bottom:.5rem;">🌐 National Guidance</div>
-      <p style="font-size:.82rem;color:var(--dim);line-height:1.55;margin-bottom:.45rem;">For further context, refer to:</p>
-      <div style="font-size:.8rem;line-height:1.8;">
-        <div>→ <a href="https://www.gov.uk/guidance/emergency-response-and-recovery" target="_blank" style="color:var(--blue);text-decoration:none;">GOV.UK: Emergency Response &amp; Recovery</a></div>
-        <div>→ <a href="https://www.jesip.org.uk" target="_blank" style="color:var(--blue);text-decoration:none;">JESIP: Joint Doctrine &amp; Principles</a></div>
-        <div>→ <a href="https://www.gov.uk/government/publications/national-risk-register" target="_blank" style="color:var(--blue);text-decoration:none;">National Risk Register</a></div>
-        <div>→ <a href="https://www.met.gov.uk/public/natural-hazards/wildfire" target="_blank" style="color:var(--blue);text-decoration:none;">Met Office: Wildfire Guidance</a> (Op Ashdown)</div>
-        <div>→ <a href="https://www.metoffice.gov.uk/binaries/content/assets/metofficegovuk/pdf/research/spf/ukcr_heat_pack_bristol.pdf" target="_blank" style="color:var(--blue);text-decoration:none;">Met Office: Bristol Urban Climate Resilience — Heat Pack</a> (Op Solstice)</div>
-        <div>→ <a href="https://www.bristol.gov.uk/council/policies-plans-and-strategies/energy-and-environment/the-keep-bristol-cool-mapping-tool" target="_blank" style="color:var(--blue);text-decoration:none;">Bristol City Council: Keep Bristol Cool — Heat Vulnerability Mapping</a> (Op Solstice)</div>
-      </div>
-    </div>
-
-  </div>
+  <div class="sh"><h2>📋 Pre-Exercise Briefing</h2><p id="briefingSubtitle">OPERATION ASHDOWN</p></div>
+  <div class="bc2" id="briefingBody"></div>
 </div>
 
 <!-- FIRE MAP (between phases) -->
@@ -437,7 +390,7 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
   <div class="ra2">
     <button class="btn" onclick="restart()">🔄 Play Again (Different Role)</button>
     <button class="btn2" onclick="showDebrief()">&#128218; Review Decisions</button>
-    <button class="btn2" onclick="showScreen('briefing')">&#128203; Review Briefing</button>
+    <button class="btn2" onclick="showBriefing()">&#128203; Review Briefing</button>
   </div>
 </div>
 
@@ -636,6 +589,128 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
 </div>
 
 <script>
+
+const APP_VERSION='1.1.0';
+
+/* ── ROLE-SPECIFIC LEARNING POINTS ─────────────────────────────────────── */
+var LEARN_POINTS={
+shared:{
+  ashdown:['Wildfire behaviour: embers jump roads \u2014 road clearance does NOT mean the far side is safe','Timed decisions under pressure are a reality \u2014 frozen decision-making is itself a failure mode'],
+  hotwells:['Tropical nights \u2014 overnight temps above 20\u00B0C \u2014 prevent the body recovering from daytime heat stress: mortality is cumulative across a multi-day heatwave event','Timed decisions under pressure are a reality \u2014 frozen decision-making is itself a failure mode']
+},
+roles:{
+  strategic:{
+    ashdown:['Early SCG activation is not over-reaction \u2014 the SCG cannot retrospectively provide direction that was absent in the critical early phase','Mutual aid has significant lead time \u2014 authorise before it is obviously necessary, not after the window has closed','Gold commands through Silver \u2014 direct intervention at Bronze level collapses the command architecture precisely when it is most needed','Recovery transition is a deliberate act \u2014 activate council-led recovery structures before standing down the emergency posture'],
+    hotwells:['A Level\u00a04 Heat-Health Alert is a statutory emergency \u2014 SCG activation is required, not discretionary','The welfare operation IS the response \u2014 cooling centres, vulnerable person checks, and high-rise welfare are the primary tasks, not secondary ones','Political interface at Gold: elected members need a factual update and a clear handover to the LA Incident Commander, not a seat in the SCG','Recovery from a heatwave is prolonged \u2014 community health impact continues after temperatures drop: plan beyond the acute phase']
+  },
+  tactical:{
+    ashdown:['Establishing the TCG is the single most consequential early decision \u2014 it enables every other agency to function effectively','Vulnerable persons data must be shared at TCG initiation \u2014 the council holds it but all agencies need it immediately','Conflict between Bronze commanders is resolved at Silver using the TCG \u2014 escalating to Gold undermines the command architecture','Utilities must be in the TCG from Phase\u00a01 \u2014 engineers mobilised early arrive before the crisis, not during it'],
+    hotwells:['Voluntary sector \u2014 British Red Cross, Age UK, community networks \u2014 have reach into vulnerable communities that statutory agencies do not: bring them into the TCG early','Public Health must be represented at the TCG \u2014 a heatwave is a public health emergency, not just a welfare operation','Cooling centre locations must be accessible to mobility-impaired and elderly residents \u2014 proximity alone is not enough','NHS and ambulance surge requires early warning \u2014 notify Northgate General at Level\u00a03, not Level\u00a04']
+  },
+  fire:{
+    ashdown:['Dynamic risk assessment must be continuous \u2014 a wind direction shift can cut off crews in seconds with no warning','Embers jump roads: a cleared road is not a safe boundary \u2014 spot fires can start 2km ahead of the fire front','Crew welfare and fatigue reporting is non-negotiable \u2014 degraded resource you have not reported to the TCG cannot be planned around','Sector boundaries must be communicated to the TCG immediately \u2014 Bronze commanders operating in isolation create coordination failures at Silver'],
+    hotwells:['Wildfire risk is elevated during extreme heat \u2014 even when fire is not the primary threat, secondary ignition risk must be actively monitored','Physiological limits apply to responders under extreme heat \u2014 crew rotation schedules must be shorter than in standard operations from the outset','High-rise welfare checks are a life safety operation \u2014 upper floors may be 10\u00b0C above ambient and residents may be incapacitated behind closed doors','Crew safety under extreme heat is the primary operational constraint \u2014 plan for reduced endurance and communicate it to the TCG']
+  },
+  police:{
+    ashdown:['Cordon placement must account for ember cast distance \u2014 not just the fire front: a 2km ember cast means a 2km safety zone consideration','Evacuation without a confirmed welfare destination is displacement \u2014 verify rest centre capacity before directing residents to move','Road closures directly affect mutual aid access \u2014 early coordination with Fire and Ambulance on priority routes is essential','Scene control at a wildland urban interface incident is dynamic \u2014 cordons must be repositioned as fire spread and wind conditions change'],
+    hotwells:['Public order risk rises in prolonged extreme heat \u2014 welfare implications of crowds at cooling locations must be actively managed','Vulnerable person welfare checks require police to work alongside council and voluntary sector, not in isolation','Road management for cooling centre access must be coordinated with Ambulance to preserve emergency vehicle priority routes','Be alert to heat-related medical presentations among members of the public at scene \u2014 welfare is a police function in a heatwave, not just scene control']
+  },
+  council:{
+    ashdown:['Vulnerable persons register: the council holds it but all agencies need it \u2014 share it at TCG initiation without waiting to be asked','Rest centre activation requires lead time \u2014 trigger based on risk assessment, not confirmed need: an empty rest centre is better than a missing one','Recovery planning starts at Phase\u00a01 \u2014 the response-to-recovery transition should be a structured handover, not a cold start','Your own organisation may be directly affected by the incident \u2014 have an alternative working arrangement and continuity plan ready from the outset'],
+    hotwells:['The vulnerable persons register is the most critical asset in a heatwave response \u2014 activate it at Level\u00a03, before the emergency peaks','Cooling centre activation: community venues, libraries, and faith buildings are your primary resource \u2014 identify and agree access in advance, not during the event','Business continuity inject: staff welfare in extreme heat without air conditioning is a live operational issue \u2014 your BC plan must address it explicitly','Recovery from a prolonged heatwave includes community bereavement support and follow-up health outreach \u2014 plan beyond the immediate acute phase']
+  },
+  nhs:{
+    ashdown:['Hospital Major Incident Plan activation requires time to implement \u2014 early notification protects capacity; late notification creates crisis','Surge capacity decisions must be made before the ED is full, not after \u2014 discharge planning begins when a Major Incident is declared','Pre-hospital communications: confirm the ambulance staging area before casualties arrive \u2014 conflicting information at the hospital door costs lives','METHANE reporting from ambulance services must flow into NHS command in real time \u2014 do not wait for a formal situation report'],
+    hotwells:['A Level\u00a04 Heat-Health Alert triggers hospital Major Incident planning \u2014 do not wait for confirmed casualties before activating surge protocols','Heat stroke (above 40\u00b0C core temperature, confusion, cessation of sweating) requires immediate aggressive cooling at scene and in hospital \u2014 triage accordingly','Discharge planning must begin early in a heat surge \u2014 bed pressure builds steadily over days and is harder to reverse than a trauma surge','Community health follow-up after a tropical night sequence is part of the NHS response \u2014 mortality risk does not end when temperatures drop']
+  },
+  utilities:{
+    ashdown:['Engineers mobilised early arrive before the crisis \u2014 waiting for confirmed need means they arrive during it or after it','Technical life safety advice from on-scene engineers must go directly to Gold via the TCG \u2014 do not filter or delay it','Substation isolation is not instant \u2014 isolation procedures have a safety lead time that must be factored into tactical decisions from the outset','Infrastructure damage assessment must begin before the incident is fully contained \u2014 restoration planning requires early data'],
+    hotwells:['Power grid stress from air conditioning load during extreme heat is foreseeable \u2014 notify grid operators and the TCG proactively, not reactively','Loss of power during a heatwave is a life safety emergency for vulnerable residents \u2014 treat grid stability as a life safety priority, not just an infrastructure issue','Substation cooling failure under extreme ambient temperatures is a real risk \u2014 proactive inspection of critical assets is part of the heatwave response','Restoration timescales must be communicated to the TCG in real time \u2014 welfare planning for affected residents depends on accurate utility restoration estimates']
+  },
+  ambulance:{
+    ashdown:['Hospital pre-notification must happen as soon as casualty numbers can be estimated \u2014 not when they are confirmed: Northgate General needs time to activate their Major Incident Plan','HART deployment is a Gold/Silver resource decision \u2014 Bronze commanders cannot commit it unilaterally','Casualty staging area must be positioned outside the ember cast zone, not just the fire front \u2014 a 2km buffer is the operational minimum','Sector coordination with Fire at Meridian House is essential \u2014 conflicting access routes and competing priorities at scene cost lives'],
+    hotwells:['Heat-related call surge is predictable from forecast data \u2014 pre-position resources before the demand peak, not after it has arrived','On-scene cooling reduces mortality before transport \u2014 ensure crews carry and use cooling equipment as a standard intervention for heat stroke presentations','Hospital notification in a heat surge must happen earlier than in a trauma incident \u2014 ED pressure builds more slowly but is harder to reverse','Heat exhaustion and heat stroke require different interventions \u2014 crew briefing on recognition and treatment is an operational prerequisite, not an optional add-on']
+  }
+}};
+
+/* ── DYNAMIC BRIEFING ───────────────────────────────────────────────────── */
+function showBriefing(){
+  var h=G.scenario==='hotwells';
+  var sub=document.getElementById('briefingSubtitle');
+  if(sub)sub.textContent=h?'OPERATION SOLSTICE':'OPERATION ASHDOWN';
+  var s='';
+  // Intro (shared)
+  s+='<div class="ib"><strong>This exercise<\/strong><br>Tabletop \u2014 no real emergency. Decisions have consequences that compound. Early mistakes make later situations worse. Final outcome uses the UK National Risk Assessment impact scale.<\/div>';
+  // Command structure (shared)
+  s+='<h3 style="font-family:\'Barlow Condensed\',sans-serif;font-size:1.1rem;text-transform:uppercase;margin:1rem 0 .5rem;color:var(--gold)">\uD83C\uDFC5 Command Structure<\/h3>';
+  s+='<div class="jw">';
+  s+='<div class="jp" style="--pc:var(--gold)"><div class="jt">\u2b1b Gold \u2014 Strategic<\/div><div class="jb">Sets objectives. Leads the SCG. Off-scene.<\/div><\/div>';
+  s+='<div class="jp" style="--pc:var(--silver)"><div class="jt">\uD83D\uDD18 Silver \u2014 Tactical<\/div><div class="jb">Translates aims to action. Leads TCG.<\/div><\/div>';
+  s+='<div class="jp" style="--pc:var(--bronze)"><div class="jt">\uD83D\uDD37 Bronze \u2014 Operational<\/div><div class="jb">Hands-on delivery at scene.<\/div><\/div>';
+  s+='<div class="jp" style="--pc:var(--blue)"><div class="jt">\uD83E\uDD1D JESIP<\/div><div class="jb">Joint Emergency Services Interoperability Principles.<\/div><\/div>';
+  s+='<\/div>';
+  // Hazard section (scenario-specific)
+  if(h){
+    s+='<h3 style="font-family:\'Barlow Condensed\',sans-serif;font-size:1.1rem;text-transform:uppercase;margin:1rem 0 .5rem;color:var(--amber)">\uD83C\uDF21\uFE0F Heatwave Hazards<\/h3>';
+    s+='<div class="tl2"><div class="tt" style="color:var(--amber)">Heat-Health Alerts<\/div><div class="tb">UKHSA Heat-Health Alerts run from Level\u00a01 (seasonal baseline) to Level\u00a04 (National Emergency). Level\u00a03 triggers agency action plans; Level\u00a04 \u2014 reached in this exercise \u2014 requires immediate protective action from NHS, local authorities, and emergency services.<\/div><\/div>';
+    s+='<div class="tl2"><div class="tt" style="color:var(--amber)">Urban Heat Island<\/div><div class="tb">Cities retain heat long after rural areas cool. High-rise flats trap it \u2014 upper floors can reach 10\u00b0C above ambient. Residents without air conditioning face sustained dangerous heat, especially overnight when buildings cannot cool down.<\/div><\/div>';
+    s+='<div class="tl2"><div class="tt" style="color:var(--amber)">Vulnerable People<\/div><div class="tb">Elderly people, young children, those with mental illness, and people on certain medications (diuretics, antipsychotics, beta-blockers) are at highest risk. Mortality rises sharply when these groups cannot access cooling.<\/div><\/div>';
+    s+='<div class="tl2"><div class="tt" style="color:var(--amber)">Tropical Nights<\/div><div class="tb">When overnight temperatures stay above 20\u00b0C, the body cannot recover from daytime heat stress. Each successive tropical night compounds the physiological burden \u2014 mortality is cumulative across a multi-day event.<\/div><\/div>';
+    s+='<div class="tl2"><div class="tt" style="color:var(--amber)">Heat Illness<\/div><div class="tb">Heat exhaustion (heavy sweating, weakness, pale skin) can progress to heat stroke (above 40\u00b0C, confusion, cessation of sweating) within 30\u00a0minutes. <strong>Heat stroke is a 999 emergency requiring immediate cooling.<\/strong><\/div><\/div>';
+  } else {
+    s+='<h3 style="font-family:\'Barlow Condensed\',sans-serif;font-size:1.1rem;text-transform:uppercase;margin:1rem 0 .5rem;color:var(--fire)">\uD83D\uDD25 Wildfire Behaviour<\/h3>';
+    s+='<div class="tl2"><div class="tt" style="color:#FF6B35">Spotting<\/div><div class="tb">Embers carried ahead of the fire front can land up to 2km away, starting spot fires. A wildfire can effectively <strong>jump roads<\/strong> via airborne embers \u2014 road clearance does not guarantee safety.<\/div><\/div>';
+    s+='<div class="tl2"><div class="tt" style="color:#FF6B35">Wildland Urban Interface<\/div><div class="tb">At the wildland urban interface (WUI), where wildland meets urban areas, fire behaviour is unpredictable. Garden fences, sheds, gas meters, and parked vehicles all become fuel. Fire can enter buildings through roof vents and gaps.<\/div><\/div>';
+    s+='<div class="tl2"><div class="tt" style="color:#FF6B35">Wind effect<\/div><div class="tb">A 25mph wind can double or triple the rate of fire spread and dramatically increase ember cast distance. Wind direction shifts can cut off crews. <strong>Crew safety and dynamic risk assessment are paramount.<\/strong><\/div><\/div>';
+    s+='<div class="tl2"><div class="tt" style="color:#FF6B35">Slope<\/div><div class="tb">Fire travels uphill faster than downhill \u2014 up to 4x faster on steep slopes. Brynmoor Hill\u2019s north-facing slope means fire descending toward Ashfield has gravity working in its favour.<\/div><\/div>';
+  }
+  // UK Impact Scale (shared)
+  s+='<h3 style="font-family:\'Barlow Condensed\',sans-serif;font-size:1.1rem;text-transform:uppercase;margin:1rem 0 .5rem;color:var(--fire)">\uD83D\uDCCA UK Impact Scale<\/h3>';
+  s+='<div class="tl2"><div class="tt" style="color:var(--green)">NEGL.<\/div><div class="tb"><strong>Negligible<\/strong> \u2014 Managed effectively, no preventable harm<\/div><\/div>';
+  s+='<div class="tl2"><div class="tt" style="color:#8BC34A">LIMITED<\/div><div class="tb"><strong>Limited<\/strong> \u2014 Mostly well managed, minor preventable harm<\/div><\/div>';
+  s+='<div class="tl2"><div class="tt" style="color:var(--amber)">SIGNIF.<\/div><div class="tb"><strong>Significant<\/strong> \u2014 Coordination gaps, avoidable harm<\/div><\/div>';
+  s+='<div class="tl2"><div class="tt" style="color:var(--fire)">SERIOUS<\/div><div class="tb"><strong>Serious<\/strong> \u2014 Major failures, preventable casualties<\/div><\/div>';
+  s+='<div class="tl2"><div class="tt" style="color:var(--red)">CATASTR.<\/div><div class="tb"><strong>Catastrophic<\/strong> \u2014 Systemic breakdown, lives lost<\/div><\/div>';
+  // CTA
+  s+='<div style="margin-top:1.5rem"><button class="btn" onclick="showScreen(\'roleSelect\')" style="max-width:none">Choose Your Role \u2192<\/button><\/div>';
+  // BC Inject (scenario-specific)
+  if(h){
+    s+='<div style="margin-top:1.25rem;background:rgba(243,156,18,.07);border:1px solid rgba(243,156,18,.22);border-radius:8px;padding:.9rem 1.1rem;">';
+    s+='<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:.6rem;">\uD83D\uDCBC Business Continuity Inject<\/div>';
+    s+='<p style="font-size:.82rem;color:var(--dim);line-height:1.55;margin-bottom:.5rem;"><strong style="color:var(--text);">During the exercise, consider:<\/strong> Your organisation has been advised to send non-essential staff home due to the extreme heat advisory. Your office building has no mechanical cooling and internal temperatures have reached 34\u00b0C. Key personnel are working remotely with limited access to shared systems. One critical staff member is off sick with suspected heat exhaustion.<\/p>';
+    s+='<p style="font-size:.82rem;color:var(--dim);line-height:1.55;"><strong style="color:var(--text);">Discussion prompt:<\/strong> What are your organisation\u2019s minimum staffing levels for emergency response functions? Is remote working during a heat emergency covered in your Business Continuity Plan? Who authorises an emergency reduction in service delivery?<\/p>';
+    s+='<\/div>';
+  } else {
+    s+='<div style="margin-top:1.25rem;background:rgba(243,156,18,.07);border:1px solid rgba(243,156,18,.22);border-radius:8px;padding:.9rem 1.1rem;">';
+    s+='<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:.6rem;">\uD83D\uDCBC Business Continuity Inject<\/div>';
+    s+='<p style="font-size:.82rem;color:var(--dim);line-height:1.55;margin-bottom:.5rem;"><strong style="color:var(--text);">During the exercise, consider:<\/strong> Your organisation\u2019s HQ building is within the affected zone and staff have been told to work remotely with 30\u00a0minutes\u2019 notice. Key personnel are unreachable. Critical systems are inaccessible.<\/p>';
+    s+='<p style="font-size:.82rem;color:var(--dim);line-height:1.55;"><strong style="color:var(--text);">Discussion prompt:<\/strong> How long could your organisation sustain core emergency functions? Who authorises alternative working arrangements? Is this covered in your Business Continuity Plan?<\/p>';
+    s+='<\/div>';
+  }
+  // Response Plan Check (shared)
+  s+='<div style="margin-top:.85rem;background:rgba(52,152,219,.07);border:1px solid rgba(52,152,219,.2);border-radius:8px;padding:.9rem 1.1rem;">';
+  s+='<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:.5rem;">\uD83D\uDCC2 Response Plan Check<\/div>';
+  s+='<p style="font-size:.82rem;color:var(--dim);line-height:1.55;">Before starting, locate your organisation\u2019s <strong style="color:var(--text);">Emergency Response Plan<\/strong> or <strong style="color:var(--text);">Major Incident Plan<\/strong>. As you play, note whether your plan covers the situations you encounter and flag any gaps for the post-exercise discussion.<\/p>';
+  s+='<\/div>';
+  // National Guidance (scenario-specific links)
+  s+='<div style="margin-top:.85rem;background:rgba(46,204,113,.06);border:1px solid rgba(46,204,113,.18);border-radius:8px;padding:.9rem 1.1rem;">';
+  s+='<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--green);margin-bottom:.5rem;">\uD83C\uDF10 National Guidance<\/div>';
+  s+='<p style="font-size:.82rem;color:var(--dim);line-height:1.55;margin-bottom:.45rem;">For further context, refer to:<\/p>';
+  s+='<div style="font-size:.8rem;line-height:1.8;">';
+  s+='\u2192 <a href="https://www.gov.uk/guidance/emergency-response-and-recovery" target="_blank" style="color:var(--blue);text-decoration:none;">GOV.UK: Emergency Response &amp; Recovery<\/a><br>';
+  s+='\u2192 <a href="https://www.jesip.org.uk" target="_blank" style="color:var(--blue);text-decoration:none;">JESIP: Joint Doctrine &amp; Principles<\/a><br>';
+  if(h){
+    s+='\u2192 <a href="https://www.gov.uk/guidance/heat-health-alerts" target="_blank" style="color:var(--blue);text-decoration:none;">UKHSA: Heat-Health Alert System<\/a><br>';
+    s+='\u2192 <a href="https://www.metoffice.gov.uk/binaries/content/assets/metofficegovuk/pdf/research/spf/ukcr_heat_pack_bristol.pdf" target="_blank" style="color:var(--blue);text-decoration:none;">Met Office: Bristol Urban Climate Resilience \u2014 Heat Pack<\/a><br>';
+    s+='\u2192 <a href="https://www.bristol.gov.uk/council/policies-plans-and-strategies/energy-and-environment/the-keep-bristol-cool-mapping-tool" target="_blank" style="color:var(--blue);text-decoration:none;">Bristol City Council: Keep Bristol Cool \u2014 Heat Vulnerability Mapping<\/a>';
+  } else {
+    s+='\u2192 <a href="https://www.gov.uk/government/publications/national-risk-register" target="_blank" style="color:var(--blue);text-decoration:none;">National Risk Register<\/a><br>';
+    s+='\u2192 <a href="https://www.met.gov.uk/public/natural-hazards/wildfire" target="_blank" style="color:var(--blue);text-decoration:none;">Met Office: Wildfire Guidance<\/a>';
+  }
+  s+='<\/div><\/div>';
+  document.getElementById('briefingBody').innerHTML=s;
+  showScreen('briefing');
+}
 
 const QB={
 strategic:[
@@ -2241,7 +2316,8 @@ function endGame(){
     var sl=getScoreLabel(a.pts,a.timeout);
     return '<div class="bi"><div style="flex:1"><div class="biq">'+(a.timeout?'\u23F1\uFE0F':a.pts>=16?'\u2705':a.pts>=8?'\u26A0\uFE0F':'\u274C')+' '+a.title+'<\/div>'+(a.ft?'<div class="bic">'+a.ft+'<\/div>':'')+'<\/div><div class="bip '+(a.timeout?'t':a.quality==='good'?'g':a.quality==='ok'?'a':'b')+'"><span class="slab '+sl.cls+'" style="font-size:.65rem;padding:.15rem .4rem">'+sl.txt+'<\/span><br>'+a.pts+'/'+a.max+'<\/div><\/div>';
   }).join('');
-  var ll=['As '+r.name+': your decisions are yours alone \u2014 other roles are making different calls simultaneously in the same incident','Early TCG establishment is the single most consequential early decision \u2014 it enables every other agency to function effectively','Timed decisions under pressure are a reality \u2014 frozen decision-making is itself a failure mode','Vulnerable persons data: council holds it, but all agencies need it \u2014 share it immediately at TCG initiation','Northgate General Hospital must be notified early \u2014 their Major Incident Plan needs time to activate','Utilities must be in the TCG from Phase 1 \u2014 engineers mobilised early arrive before the crisis, not during it','Crew and staff welfare is not optional \u2014 degraded resource you have not reported to the TCG cannot be planned around','Wildfire behaviour: embers jump roads \u2014 road clearance does NOT mean the far side is safe'];
+  var lp=LEARN_POINTS.roles[G.roleKey]||{};
+  var ll=['As '+r.name+': your decisions are yours alone \u2014 other roles face different pressures and make different calls simultaneously in the same incident'].concat(lp[G.scenario]||[]).concat(LEARN_POINTS.shared[G.scenario]||[]);
   if(G.answers.some(function(a){return a.timeout;}))ll.push('One or more time-expired decisions had double consequences \u2014 frozen decision-making at critical moments is catastrophic in real incidents');
   if(G.flags.noTCG)ll.push('\u26A0\uFE0F Your early decision not to establish the TCG compounded throughout the exercise \u2014 this is the single most important lesson from this scenario');
   document.getElementById('lpList').innerHTML=ll.map(function(l){return '<div class="li">'+l+'<\/div>';}).join('');
