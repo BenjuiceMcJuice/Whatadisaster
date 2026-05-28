@@ -6,10 +6,34 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Emergency exercise simulator for multi-agency fire/heatwave response training. Two HTML files, no build system, no dependencies beyond Google Fonts.
 
-- `index.html` — the main simulator (~2,340 lines)
+- `index.html` — the main simulator (~2,400 lines)
 - `how-it-works.html` — standalone explainer page linked from the splash screen
 
-Edit HTML directly and open in a browser to test. Deploy by pushing to `main` (GitHub Pages).
+Edit HTML directly and open in a browser to test. Deploy by pushing to `main` (Cloudflare Pages → whatadisaster.uk). `whatadisaster.pages.dev` continues to serve the same app.
+
+## Dev Log
+
+Two-tier logging system — same pattern as BetaLog:
+
+**`DEVLOG.md`** — milestone tracker. One entry per completed feature or significant step. Read this at the start of a new session.
+
+**`logs/YYYY-MM-DD.md`** — daily work log. Granular: what was built, files changed, key decisions.
+
+Rules:
+- Update today's log file **as you go** — after each meaningful change, not at the end of the session
+- Create the log file at the start of the day's work if it doesn't exist yet
+- Only update `DEVLOG.md` when a milestone is complete
+- At the start of any new session, read `DEVLOG.md` first, then the most recent log file
+
+## Documentation Index
+
+| File | Purpose |
+|------|---------|
+| `DEVLOG.md` | **CURRENT** — Milestone tracker, read first in any session |
+| `VISION.md` | **CURRENT** — Product strategy, roadmap, principles |
+| `CHANGELOG.md` | **CURRENT** — Version history |
+| `docs/guides/whatadisaster_sdlc.md` | **CURRENT** — Dev → test → deploy workflow |
+| `info/whatadisaster-changes-briefing.md` | **CURRENT** — Pending changes briefing for Claude Code |
 
 ## Scenarios
 

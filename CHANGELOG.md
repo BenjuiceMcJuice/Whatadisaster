@@ -2,6 +2,13 @@
 
 All notable changes to the Emergency Exercise Simulator.
 
+## [1.1.2] — 2026-05-28
+
+### Fixed
+- Game header always displayed "Op. Ashdown" regardless of scenario. `getElementById('scenarioTag')` was targeting a non-existent element; replaced with `querySelectorAll('.gtt')` to correctly update both game screen headers on role selection. Operation Solstice now shows "Op. Solstice" in the header.
+
+---
+
 ## [1.1.1] — 2026-03-22
 
 ### Fixed

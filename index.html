@@ -2104,7 +2104,7 @@ function selectRole(key){
   var r=ROLES[key];G.roleKey=key;
   document.documentElement.style.setProperty('--rc',r.color);
   document.getElementById('hRole').textContent=r.icon+' '+r.name;
-  var st=document.getElementById('scenarioTag');if(st)st.textContent=G.scenario==='hotwells'?'Operation Solstice':'Operation Ashdown';
+  document.querySelectorAll('.gtt').forEach(function(el){el.textContent=G.scenario==='hotwells'?'Op. Solstice':'Op. Ashdown';});
   setTimeout(function(){startGame(G.scenario);},200);
 }
 
