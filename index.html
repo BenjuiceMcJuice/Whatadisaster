@@ -127,6 +127,17 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
 .cl.gold{background:rgba(255,184,0,.15);color:var(--gold);border:1px solid rgba(255,184,0,.3);}.cl.gold.on{background:rgba(255,184,0,.25);border-color:var(--gold);}
 .cl.silver{background:rgba(192,192,192,.1);color:var(--silver);border:1px solid rgba(192,192,192,.2);}.cl.silver.on{background:rgba(192,192,192,.2);border-color:var(--silver);}
 .cl.bronze{background:rgba(205,127,50,.1);color:var(--bronze);border:1px solid rgba(205,127,50,.2);}.cl.bronze.on{background:rgba(205,127,50,.2);border-color:var(--bronze);}
+/* DEV WARNING POPUP */
+#devWarning{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9999;align-items:center;justify-content:center;padding:1.5rem;}
+#devWarning.show{display:flex;}
+.dw-box{background:var(--dark2);border:2px solid var(--fire);border-radius:10px;padding:1.75rem 1.5rem;max-width:360px;width:100%;text-align:center;box-shadow:0 0 40px rgba(255,69,0,.3);}
+.dw-icon{font-size:2.5rem;margin-bottom:.75rem;}
+.dw-title{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:900;text-transform:uppercase;color:var(--fire);margin-bottom:.5rem;}
+.dw-body{font-size:.88rem;color:var(--dim);line-height:1.6;margin-bottom:1.25rem;}
+.dw-link{display:inline-block;color:var(--fire);font-weight:700;font-size:1rem;text-decoration:none;border-bottom:1px solid rgba(255,69,0,.4);padding-bottom:1px;margin-bottom:1.25rem;}
+.dw-link:hover{border-color:var(--fire);}
+.dw-dismiss{background:transparent;color:var(--dim);border:1px solid rgba(255,255,255,.1);padding:.6rem 1.25rem;font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;border-radius:4px;cursor:pointer;width:100%;}
+.dw-dismiss:active{opacity:.7;}
 .clsub{font-size:.55rem;font-weight:400;text-transform:none;letter-spacing:0;margin-top:.1rem;}
 .pd{display:flex;gap:.35rem;align-items:center;padding:.5rem 1rem;background:var(--dark2);border-bottom:1px solid rgba(255,255,255,.05);}
 .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.1);transition:all .3s;}
@@ -187,6 +198,17 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
 </style>
 </head>
 <body>
+
+<!-- DEV ENV WARNING -->
+<div id="devWarning">
+  <div class="dw-box">
+    <div class="dw-icon">⚠️</div>
+    <div class="dw-title">You're on a Dev Build</div>
+    <div class="dw-body">This is a Cloudflare Pages preview URL and may be decommissioned at any time. For the stable, up-to-date version please use the live site:</div>
+    <a class="dw-link" href="https://whatadisaster.uk" target="_blank">whatadisaster.uk</a>
+    <button class="dw-dismiss" onclick="document.getElementById('devWarning').classList.remove('show')">Continue anyway</button>
+  </div>
+</div>
 
 <!-- SPLASH -->
 <div id="splash" class="screen active">
@@ -569,6 +591,8 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
 </div>
 
 <script>
+
+if(location.hostname.includes('pages.dev')){document.getElementById('devWarning').classList.add('show');}
 
 const APP_VERSION='1.1.1';
 
