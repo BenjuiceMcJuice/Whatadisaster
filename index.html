@@ -239,8 +239,8 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
 
     <div style="margin-bottom:.4rem;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);text-align:left">Select Scenario</div>
     <div style="display:flex;gap:.75rem;margin-bottom:.5rem">
-    <button class="btn" onclick="G.scenario='ashdown';showBriefing()" style="flex:1;max-width:none;background:linear-gradient(135deg,#FF4500,#c0392b)">&#128293; Operation Ashdown<div style="font-size:.7rem;font-weight:400;opacity:.8;margin-top:.2rem">Wildfire · Brynmoor Hill</div></button>
-    <button class="btn" onclick="G.scenario='hotwells';showBriefing()" style="flex:1;max-width:none;background:linear-gradient(135deg,#c0392b,#8e0000)">&#9728;&#65039; Operation Solstice<div style="font-size:.7rem;font-weight:400;opacity:.8;margin-top:.2rem">Severe Heatwave · Bristol</div></button>
+    <button class="btn" onclick="G.scenario='ashdown';showBriefing()" style="flex:1;max-width:none;background:linear-gradient(135deg,#FF4500,#c0392b)">&#128293; Exercise Ashdown<div style="font-size:.7rem;font-weight:400;opacity:.8;margin-top:.2rem">Wildfire · Brynmoor Hill</div></button>
+    <button class="btn" onclick="G.scenario='hotwells';showBriefing()" style="flex:1;max-width:none;background:linear-gradient(135deg,#c0392b,#8e0000)">&#9728;&#65039; Exercise Solstice<div style="font-size:.7rem;font-weight:400;opacity:.8;margin-top:.2rem">Severe Heatwave · Bristol</div></button>
   </div>
     <button class="btn2" onclick="showBriefing()">📋 Pre-Exercise Briefing</button>
     <a href="how-it-works.html" class="btn2" style="display:block;text-align:center;text-decoration:none;margin-top:.5rem;">❓ How It Works</a>
@@ -256,7 +256,7 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
 
 <!-- BRIEFING -->
 <div id="briefing" class="screen">
-  <div class="sh"><h2>📋 Pre-Exercise Briefing</h2><p id="briefingSubtitle">OPERATION ASHDOWN</p></div>
+  <div class="sh"><h2>📋 Pre-Exercise Briefing</h2><p id="briefingSubtitle">EXERCISE ASHDOWN</p></div>
   <div class="bc2" id="briefingBody"></div>
 </div>
 
@@ -641,7 +641,7 @@ roles:{
 function showBriefing(){
   var h=G.scenario==='hotwells';
   var sub=document.getElementById('briefingSubtitle');
-  if(sub)sub.textContent=h?'OPERATION SOLSTICE':'OPERATION ASHDOWN';
+  if(sub)sub.textContent=h?'EXERCISE SOLSTICE':'EXERCISE ASHDOWN';
   var s='';
   // Intro (shared)
   s+='<div class="ib"><strong>This exercise<\/strong><br>Tabletop \u2014 no real emergency. Decisions have consequences that compound. Early mistakes make later situations worse. Final outcome uses the UK National Risk Assessment impact scale.<\/div>';
@@ -1501,7 +1501,7 @@ ambulance:[
      {t:'Transport to the nearest available ED for speed, regardless of paediatric capability \u2014 minimising transport time is the priority',r:'Northgate is 8 miles north and paediatric-capable. A non-paediatric ED receiving serious paediatric trauma is a worse outcome than the 8-mile journey.',pts:8,cons:{life:15},fi:'neu',ft:'Child transported to non-paediatric ED \u2014 secondary transfer to Northgate required. Total time extended.'}
    ],
    fb:{title:'Paediatric Casualty: Pre-Alert and Speed',body:'Serious paediatric trauma requires transport to a paediatric-capable centre. Pre-alerting the receiving team is non-negotiable. A paramedic escort is sufficient for transport.',jesip:'Clinical routing decisions are made by SWAST Bronze with NHS Lead input. A paediatric casualty triggers specific routing protocols that should be in the Major Incident Plan.'}},
-  {phase:'PHASE 4',title:'Collaborative Play Mode',rf:'Your group has gathered to play Operation Ashdown together.',
+  {phase:'PHASE 4',title:'Collaborative Play Mode',rf:'Your group has gathered to play Exercise Ashdown together.',
    sit:'Your group has completed the exercise. You are now reviewing the decisions made across the session and thinking about what your organisation would do differently in a real incident on Brynmoor Hill.',
    stats:[{l:'Exercise: completed',t:'g'},{l:'Group discussion: active',t:'b'},{l:'Learning points: identified',t:'b'},{l:'Action planning: underway',t:'g'}],
    cmd:{g:true,s:true,b:true},ag:{fire:true,police:true,ambulance:true,nhs:true,council:true,utilities:true,pubhealth:true,voluntary:true},
