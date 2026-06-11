@@ -160,6 +160,35 @@ The form should feel lightweight — not a survey. One category pick and a text 
 5. **Release log write** — admin form to create releases, auto-close linked feedback
 6. **Release log read (in-app)** — optional "What's new" panel on splash or debrief
 
+7. **Claude session-start hook** — see below
+
+---
+
+## Claude Auto-Review (Session-Start Hook)
+
+At the start of each Claude Code session, a hook triggers an automatic feedback review without needing a manual prompt. Claude checks the Firestore `feedback` collection, surfaces anything new or unreviewed, flags urgent items, and summarises open bugs/features before any other work begins.
+
+**Behaviour:**
+- Runs once at session start
+- Queries Firestore for feedback with `status: 'open'` or `status: 'in_progress'`
+- Groups by category (bug / content / UX / feature)
+- Flags anything marked urgent or from a named partner
+- Posts a brief summary to the session before waiting for instruction
+
+**Interim behaviour (pre-Firebase):**
+Until Firestore is live, the hook reads `info/` feedback docs and flags any items without a resolved status.
+
+**Setup:**
+- Add `SessionStart` hook to `.claude/settings.json`
+- Hook prompt: *"Check the feedback collection (or info/ docs if Firebase not yet live), summarise open items by category, flag anything urgent or from a named partner, then wait for instruction."*
+- `CLAUDE.md` documents the expected behaviour so it persists across sessions
+
+**On-demand review:**
+Claude can also be asked to review feedback at any point — useful for batching fixes before a release or reviewing a surge of community submissions.
+
+**Future: auto-triage on submission**
+A Firebase Cloud Function can call the Claude API when new feedback is written, posting a triage label and severity back onto the Firestore record automatically — so by the time a session starts, items are already categorised.
+
 ---
 
 ## Open Questions

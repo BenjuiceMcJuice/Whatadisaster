@@ -11,6 +11,15 @@ Emergency exercise simulator for multi-agency fire/heatwave response training. T
 
 Edit HTML directly and open in a browser to test. Deploy by pushing to `main` (Cloudflare Pages → whatadisaster.uk). `whatadisaster.pages.dev` continues to serve the same app.
 
+## Session Start — Feedback Review
+
+At the start of every session, before any other work:
+
+1. **If Firebase is live:** query the `feedback` Firestore collection for items with `status: 'open'` or `'in_progress'`. Group by category, flag anything urgent or from a named partner, post a brief summary.
+2. **If Firebase is not yet live:** check `info/` for any feedback docs with unresolved items and surface them.
+
+Do this once per session without being asked. Then wait for instruction.
+
 ## Dev Log
 
 Two-tier logging system — same pattern as BetaLog:
