@@ -125,37 +125,6 @@ Question object fields:
 - `OUTCOMES` — five outcome bands
 - `MAPS` / `MAPS2` — three phase-transition map objects per scenario, each with SVG element targets for fire blob/ember animation and a `fact` string
 
-## Feedback & Release Tracking (Planned — Firebase setup pending)
-
-The goal is a proper feedback and release management system replacing the current ad-hoc approach. Firebase is the likely backend (to be configured locally before wiring up).
-
-### Three things to build
-
-**1. Partner / internal feedback tracker**
-Structured intake replacing email threads. Each piece of feedback gets a unique reference (e.g. `WAD-FB-001`). Fields: source, date, category (content accuracy / UX / feature request / bug), description, status (open / in progress / resolved), linked commit or release. Firestore collection: `feedback`.
-
-**2. Community feedback**
-An in-app mechanism so players can submit feedback directly from the simulator — a lightweight form (role played, scenario, free text) that writes to the same `feedback` collection with `source: 'community'`. Needs spam/abuse consideration (rate limiting, no auth required but fingerprinted by IP or session).
-
-**3. Release log**
-Structured changelog beyond the current `CHANGELOG.md` flat file. Each release entry in Firestore: version, date, type (`bugfix` / `content` / `feature`), summary, linked feedback refs resolved. Could power a public "What's new" panel in the app.
-
-### Design decisions to make when setting up Firebase
-
-- Firestore vs Realtime Database (Firestore preferred — better querying)
-- Auth for admin review UI: Google Auth is simplest
-- Whether the community feedback form needs any friction (CAPTCHA, rate limit)
-- Reference ID format: auto-increment (`WAD-FB-001`) vs Firestore auto-ID — auto-increment is friendlier for human reference in emails/docs
-- Whether releases are also surfaced in-app or just internal
-
-### Current state
-
-Firebase not yet configured. All feedback is tracked manually in `info/` docs. When Firebase is ready, start here:
-1. Create Firebase project, enable Firestore
-2. Add Firebase SDK to `index.html` (CDN, no build step needed)
-3. Build feedback write path first (community form → Firestore)
-4. Build admin read UI separately (simple HTML page, auth-gated)
-
 ## Code style
 
 - Minified CSS in `<style>`. Dark theme, fire-orange accent (`#FF4500`), Barlow / Barlow Condensed fonts.

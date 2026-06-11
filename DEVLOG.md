@@ -18,6 +18,30 @@ Granular daily work is in `logs/YYYY-MM-DD.md`.
 
 ---
 
+## Planned: Feedback & Release Tracking (Firebase — setup pending)
+
+Goal: replace ad-hoc email feedback with a structured system. Firebase/Firestore is the intended backend — to be configured when next on laptop.
+
+**Three things to build:**
+
+1. **Partner / internal feedback tracker** — each item gets a human-readable reference (e.g. `WAD-FB-001`). Fields: source, date, category (content / UX / feature / bug), description, status, linked commit. Firestore collection: `feedback`.
+2. **Community feedback form** — lightweight in-app form (role played, scenario, free text) writing to the same collection with `source: 'community'`. Rate limiting needed; no auth required.
+3. **Structured release log** — Firestore-backed changelog (version, date, type, summary, feedback refs resolved). Could power a "What's new" panel in-app.
+
+**Design decisions to make at setup time:**
+- Reference ID format: auto-increment (`WAD-FB-001`) vs Firestore auto-ID — auto-increment friendlier for human reference
+- Auth for admin review UI: Google Auth simplest
+- Whether community form needs CAPTCHA / rate limiting
+- Whether release log is surfaced in-app or internal only
+
+**Build order when Firebase is ready:**
+1. Create Firebase project, enable Firestore
+2. Add Firebase SDK to `index.html` via CDN (no build step needed)
+3. Community feedback write path first
+4. Admin read UI separately (simple auth-gated HTML page)
+
+---
+
 ## Backlog
 
 From `info/whatadisaster-changes-briefing.md`:
