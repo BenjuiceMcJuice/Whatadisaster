@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  body { font-family: Calibri, Arial, sans-serif; font-size: 11pt; color: #1a1a1a; margin: 2cm 2.5cm; line-height: 1.5; }
+  h1 { font-size: 18pt; color: #1a1a1a; border-bottom: 2px solid #CC3300; padding-bottom: 6pt; margin-bottom: 4pt; }
+  h2 { font-size: 13pt; color: #CC3300; margin-top: 22pt; margin-bottom: 4pt; }
+  h3 { font-size: 11pt; color: #1a1a1a; margin-top: 14pt; margin-bottom: 2pt; }
+  .meta { color: #666; font-size: 10pt; margin-bottom: 18pt; }
+  .intro { background: #f7f7f7; border-left: 4px solid #CC3300; padding: 10pt 14pt; margin-bottom: 18pt; font-size: 10.5pt; }
+  table { border-collapse: collapse; width: 100%; margin: 10pt 0 16pt 0; font-size: 10.5pt; }
+  th { background: #CC3300; color: white; padding: 6pt 10pt; text-align: left; }
+  td { padding: 5pt 10pt; border-bottom: 1px solid #ddd; vertical-align: top; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .tag { display: inline-block; font-size: 9pt; padding: 1pt 6pt; border-radius: 3pt; font-weight: bold; }
+  .tag-quick { background: #d4edda; color: #155724; }
+  .tag-content { background: #fff3cd; color: #856404; }
+  .tag-feature { background: #cce5ff; color: #004085; }
+  .tag-discuss { background: #f8d7da; color: #721c24; }
+  .section-note { font-size: 10pt; color: #555; font-style: italic; margin: 4pt 0 10pt 0; }
+  ul { margin: 4pt 0 10pt 14pt; padding: 0; }
+  li { margin-bottom: 4pt; }
+  .code-ref { font-family: Consolas, monospace; font-size: 9.5pt; background: #f0f0f0; padding: 1pt 4pt; border-radius: 2pt; }
+  .proposed { background: #eaf4ea; border-left: 3px solid #28a745; padding: 7pt 12pt; margin: 6pt 0 12pt 0; font-size: 10.5pt; }
+  .feedback-source { font-size: 9.5pt; color: #888; font-style: italic; }
+  hr { border: none; border-top: 1px solid #ddd; margin: 20pt 0; }
+  .summary-box { border: 1px solid #CC3300; padding: 10pt 14pt; margin: 16pt 0; }
+  .summary-box h3 { color: #CC3300; margin-top: 0; }
+</style>
+</head>
+<body>
+
+<h1>What a Disaster — Proposed Changes</h1>
+<p class="meta">Prepared: 11 June 2026 &nbsp;|&nbsp; Based on feedback from Clare and Jon Muddel &nbsp;|&nbsp; For discussion with Heather</p>
+
+<div class="intro">
+Both reviewers were positive about the tool overall. Clare (Emergency Planning) described it as "really impressive" for testing knowledge and understanding of multi-agency roles. Jon (Utilities) called it "a really good idea" that lets people see what else is going on in incidents. Both flagged the same core issue: <strong>countdowns are too short</strong>. Clare raised several factual accuracy points; Jon raised role coverage concerns. All issues are fixable — and both have expressed interest in continuing to work with us.
+</div>
+
+<div class="summary-box">
+<h3>Changes at a Glance</h3>
+<table>
+<tr><th>Change</th><th>Type</th><th>Effort</th></tr>
+<tr><td>Extend timer durations on timed questions</td><td><span class="tag tag-quick">Quick fix</span></td><td>Low — change a few numbers in the code</td></tr>
+<tr><td>Click-to-reveal option (show question, then start timer on click)</td><td><span class="tag tag-feature">Enhancement</span></td><td>Medium — small UX change</td></tr>
+<tr><td>Correct TCG / hospital MI plan wording</td><td><span class="tag tag-content">Content</span></td><td>Low — one option reworded</td></tr>
+<tr><td>Change NWFC → NRFC; correct ownership of mutual aid request</td><td><span class="tag tag-content">Content</span></td><td>Low — one question revised</td></tr>
+<tr><td>Revise crew safety answer (conditional on no symptomatic crew)</td><td><span class="tag tag-content">Content</span></td><td>Low — one option reworded</td></tr>
+<tr><td>Reframe ambulance surge as internal Ambulance decision</td><td><span class="tag tag-content">Content</span></td><td>Low — one question revised</td></tr>
+<tr><td>Address answer telegraphing</td><td><span class="tag tag-discuss">For discussion</span></td><td>Medium — may not need fixing</td></tr>
+<tr><td>Split utilities into separate energy / water roles</td><td><span class="tag tag-discuss">For discussion</span></td><td>High — new question bank content needed</td></tr>
+<tr><td>Add water supply content to heatwave scenario</td><td><span class="tag tag-feature">Enhancement</span></td><td>Medium — Jon has offered examples</td></tr>
+</table>
+</div>
+
+<hr>
+
+<h2>1. Countdown Timers — Too Short</h2>
+<p class="feedback-source">Raised by: Clare &amp; Jon (independently)</p>
+
+<p>Four questions currently use a countdown pressure timer. Current durations are:</p>
+<table>
+<tr><th>Question</th><th>Role</th><th>Scenario</th><th>Current Timer</th></tr>
+<tr><td>Power Grid Stress</td><td>Utilities</td><td>Heatwave</td><td>12 seconds</td></tr>
+<tr><td>Crew Safety in Extreme Heat</td><td>Fire</td><td>Heatwave</td><td>10 seconds</td></tr>
+<tr><td>Substation Failure</td><td>Utilities</td><td>Heatwave</td><td>10 seconds</td></tr>
+<tr><td>Heat Stroke Recognition</td><td>Ambulance</td><td>Heatwave</td><td>12 seconds</td></tr>
+</table>
+
+<p>Both reviewers found these too short — not enough time to read the options before the clock runs out.</p>
+
+<div class="proposed">
+<strong>Option A — Extend the timers (low effort):</strong> Increase all timed questions to 25–30 seconds. A quick code change.
+<br><br>
+<strong>Option B — Click-to-reveal (Clare's suggestion, medium effort):</strong> Show the question text first, then the player clicks a button to reveal the answer options and start the countdown. This replicates real decision pressure more authentically — you know the situation before you're forced to choose. This would be a small UX addition to the existing timer logic.
+<br><br>
+<strong>Recommendation:</strong> Option B is the better experience if we have time for it; Option A as a quick interim fix regardless.
+</div>
+
+<hr>
+
+<h2>2. Content Accuracy — Factual Corrections</h2>
+<p class="feedback-source">Raised by: Clare</p>
+
+<h3>2a. TCG requesting hospital to implement MI plan</h3>
+<p>One answer option currently states that the TCG requests the hospital to activate their Major Incident Plan. Clare notes this is incorrect: activating an MI Plan is the hospital's own decision, not something the TCG directs.</p>
+<div class="proposed">
+<strong>Proposed fix:</strong> Rephrase the option so the TCG <em>notifies</em> or <em>alerts</em> the hospital and ensures they are aware of the situation — not that the TCG requests activation. The hospital makes its own decision based on that notification.
+</div>
+
+<h3>2b. Mutual aid in the wildfire scenario — NWFC vs NRFC</h3>
+<p>The wildfire scenario (Operation Ashdown) has a question where aerial mutual aid is requested via NWFC. Clare flagged two issues:</p>
+<ul>
+<li>The correct abbreviation is <strong>NRFC</strong> (National Resilience Fire Control), not NWFC</li>
+<li>This would be a <strong>Fire commander</strong> decision, not a TCG request</li>
+</ul>
+<div class="proposed">
+<strong>Proposed fix:</strong> Update the question text and relevant answer options to reference NRFC. Reframe the decision so it sits with the Fire commander rather than being presented as a TCG action.
+</div>
+
+<h3>2c. Crew safety in extreme heat — dynamic risk assessment</h3>
+<p>The correct answer for the "Crew Safety in Extreme Heat" question needs a small but important caveat: a dynamic risk assessment is the right response <em>if no other crew members are symptomatic</em>. Without that condition the answer implies continuing work regardless of wider crew welfare, which is not the correct doctrine.</p>
+<div class="proposed">
+<strong>Proposed fix:</strong> Add the conditional clause to the correct option so it reads something like: "Withdraw the affected crew member, dynamic risk assessment for remaining crew <em>if no others are symptomatic</em>, continue operation."
+</div>
+
+<h3>2d. Ambulance surge management</h3>
+<p>A Phase 3 question frames surge management as a decision to be made at the TCG level. Clare notes that surge management is an internal Ambulance service matter — SWAST manages it internally, not via TCG direction.</p>
+<div class="proposed">
+<strong>Proposed fix:</strong> Reframe the question so the player is acting as the Ambulance commander deciding how to manage internal surge, rather than a TCG decision. The TCG might be <em>informed</em> of the situation, but the management action sits with Ambulance.
+</div>
+
+<hr>
+
+<h2>3. Answer Telegraphing</h2>
+<p class="feedback-source">Raised by: Clare</p>
+
+<p>After playing multiple roles, Clare noticed that the correct answer tends to stand out because it contains more detail than the other options. This makes it easier to spot through pattern recognition rather than knowledge.</p>
+
+<p>Clare's own view: "it means players are learning anyway, so maybe not really a problem at all."</p>
+
+<div class="proposed">
+<strong>Options:</strong>
+<ul>
+<li><strong>Leave as-is</strong> — players are learning the right behaviours regardless of how they spot the answer. The detail in the correct option is itself educational.</li>
+<li><strong>Add detail to distractors</strong> — make the incorrect options more plausible and similarly detailed, so the right answer isn't telegraphed by length or specificity. This requires careful writing to avoid making wrong answers look right to non-experts.</li>
+</ul>
+<strong>Recommendation:</strong> Worth flagging to Heather for a view, but not a priority fix. The learning value holds either way.
+</div>
+
+<hr>
+
+<h2>4. Utilities Role Coverage</h2>
+<p class="feedback-source">Raised by: Jon Muddel</p>
+
+<h3>4a. Single utilities role is too broad</h3>
+<p>Jon notes that energy and water utilities operate very differently and have different responsibilities, command structures, and concerns during emergencies. Grouping them as a single "Utilities" role is an oversimplification — analogous to combining all blue light services into one role.</p>
+
+<div class="proposed">
+<strong>Options:</strong>
+<ul>
+<li><strong>Split into two roles</strong>: <em>Energy</em> and <em>Water</em>. Each would need its own question bank (~3 questions per scenario). Jon has offered to help provide content for water. High effort but significantly improves authenticity.</li>
+<li><strong>Keep single role, add water content</strong>: Retain the utilities role but ensure both energy and water perspectives are represented within it. Lower effort, partial improvement.</li>
+<li><strong>Rename and reframe</strong>: Keep one role but make it explicitly "Infrastructure Utilities" with a broader framing, and add a note in the briefing that it covers both energy and water considerations.</li>
+</ul>
+<strong>Recommendation:</strong> Option 1 (split) is the right long-term direction. Jon's offer of help makes it tractable. Could be scoped as a Phase 2 development.
+</div>
+
+<h3>4b. Water supply absent from heatwave scenario</h3>
+<p>The heatwave scenario (Operation Solstice) currently has no water supply content, despite extreme heat creating significant operational challenges for water networks: pressure drops, increased demand, pipe failures in heat, and supply management.</p>
+
+<p>Jon has explicitly offered to provide example scenarios from real operational experience.</p>
+
+<div class="proposed">
+<strong>Proposed fix:</strong> Follow up with Jon to gather 1–2 real-world examples for the heatwave scenario. These could be added to the existing utilities question bank in the short term, or form the basis of a dedicated water role if we split utilities.
+</div>
+
+<hr>
+
+<h2>5. Positive Feedback &amp; Collaboration Offers</h2>
+
+<p>Both reviewers expressed clear enthusiasm and interest in further involvement:</p>
+
+<ul>
+<li><strong>Clare:</strong> "We can see lots of potential for developing this across a range of scenarios and would be interested to work alongside you to do this if that is an option."</li>
+<li><strong>Jon:</strong> "Happy to chat about a couple of examples we could add in" (water/heatwave scenarios). "Overall this is a really good idea."</li>
+</ul>
+
+<p>Both of these are worth following up on — not just for content accuracy, but for building the credibility and buy-in that would support wider rollout across LRF partners.</p>
+
+<hr>
+
+<h2>Suggested Next Steps</h2>
+
+<table>
+<tr><th>#</th><th>Action</th><th>Who</th><th>When</th></tr>
+<tr><td>1</td><td>Extend all timed questions to 25–30s (quick fix)</td><td>Dev</td><td>Before next demo</td></tr>
+<tr><td>2</td><td>Correct NWFC → NRFC; reframe as Fire commander decision</td><td>Dev + content check</td><td>Before next demo</td></tr>
+<tr><td>3</td><td>Revise TCG/hospital MI plan option wording</td><td>Dev + content check</td><td>Before next demo</td></tr>
+<tr><td>4</td><td>Revise crew safety answer (add symptomatic-crew conditional)</td><td>Dev</td><td>Before next demo</td></tr>
+<tr><td>5</td><td>Reframe ambulance surge as internal decision</td><td>Dev</td><td>Before next demo</td></tr>
+<tr><td>6</td><td>Follow up with Jon on water/heatwave examples</td><td>Heather</td><td>This month</td></tr>
+<tr><td>7</td><td>Discuss splitting utilities into energy / water roles</td><td>Heather + Jon</td><td>Phase 2 planning</td></tr>
+<tr><td>8</td><td>Decide on click-to-reveal timer approach vs simple extension</td><td>Heather + Dev</td><td>Next sprint</td></tr>
+<tr><td>9</td><td>Respond to Clare re: scenario development collaboration</td><td>Heather</td><td>This month</td></tr>
+</table>
+
+</body>
+</html>
