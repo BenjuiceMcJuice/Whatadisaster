@@ -15,6 +15,7 @@ Granular daily work is in `logs/YYYY-MM-DD.md`.
 | 2026-05-28 | Custom domain whatadisaster.uk registered + Cloudflare Pages deploy | ✅ Done |
 | 2026-05-28 | SDLC docs, DEVLOG, daily logs structure added                    | ✅ Done |
 | 2026-05-28 | Bug fix: game header always showed "Op. Ashdown" in Solstice     | ✅ Done |
+| 2026-06-25 | v1.2.0 — New role: Voluntary Agency Coordinator, both scenarios (6 questions, fictional orgs, LA activation cascade, timed Q3 in Solstice) | ✅ Done |
 
 ---
 
@@ -49,7 +50,7 @@ From `info/whatadisaster-changes-briefing.md`:
 | Priority | Item |
 |----------|------|
 | ~~High~~ | ~~Bug: rename "Operation Ashdown" → "Operation Solstice" in Solstice scenario display text~~ — fixed 2026-05-28 |
-| High     | New role: Voluntary Agency Coordinator — both scenarios |
+| ~~High~~ | ~~New role: Voluntary Agency Coordinator — both scenarios~~ — shipped 2026-06-25 |
 | Medium   | Heat-Health Alert (HHA) system — incorporate into Solstice questions and feedback |
 | Medium   | Met Office Hazard Manager — reference in Solstice scenario |
 | Medium   | UKHSA hot weather guidance — decisions around vulnerable populations and public messaging |
