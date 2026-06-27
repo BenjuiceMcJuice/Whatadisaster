@@ -9,6 +9,25 @@ Legend: 🔴 High · 🟠 Medium · 🟢 Low
 
 ---
 
+## Progress (updated 2026-06-26)
+
+**Implemented this session** (smoke-tested headless — full flow + all 3 phase maps work, no JS errors):
+- ✅ 1.1 Deleted the duplicated screen block (~140 lines; all IDs now unique)
+- ✅ 1.3 Removed dead `fireSvg` code
+- ✅ 1.4 Re-enabled pinch-zoom (viewport meta)
+- ✅ 2.1 "8 roles" → "9 roles" (splash + how-it-works)
+- ✅ 2.2 Added the Voluntary Agency Coordinator card to how-it-works
+- ✅ 2.3 In-game header "Op." → "Exercise"
+- ✅ 2.4 Corrected the how-it-works timer copy (30–90s → ~10–25s); also fixed "three options" → "three or four"
+- ✅ 2.6 Generalised the between-phases map description to both scenarios
+- ✅ 3.1 `APP_VERSION` → 1.2.0 + added CHANGELOG 1.2.0 and Unreleased entries
+- ✅ 3.2 Updated CLAUDE.md (9 roles, removed stale `submitToEPT`)
+
+**Still open:** 1.2 (flag refactor), 2.5 (cabot rename), 4.1 (timed-question click-to-reveal — headline UX),
+4.2 (ambulance surge framing), 4.3 (telegraphing), 4.4 (water/utilities coverage), 4.5 (pending HHA content).
+
+---
+
 ## 1. Code bugs & correctness
 
 ### 🔴 1.1 Duplicated screen blocks (invalid duplicate IDs)

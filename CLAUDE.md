@@ -118,7 +118,6 @@ Question object fields:
 | `showFireMap(idx, callback)` | Populates the `#fireMap` screen with `MAPS`/`MAPS2` data and animates SVG |
 | `endGame()` | Calculates outcome via `getOutcome()`, renders `#results` |
 | `showDebrief()` | Renders the full decision review in `#debrief` |
-| `submitToEPT()` | Builds a mailto link to `emergencyplanning@bristol.gov.uk` with the exercise record |
 | `restart()` | Partial reset (score/qIdx/answers) — keeps scenario, goes to role select |
 
 ## Scoring and outcome
@@ -129,7 +128,7 @@ Question object fields:
 
 ## Data constants
 
-- `ROLES` — 8 roles: `strategic`, `tactical`, `fire`, `police`, `council`, `nhs`, `utilities`, `ambulance`
+- `ROLES` — 9 roles: `strategic`, `tactical`, `fire`, `police`, `council`, `nhs`, `utilities`, `ambulance`, `voluntary`
 - `SLABS` — score-to-label map
 - `OUTCOMES` — five outcome bands
 - `MAPS` / `MAPS2` — three phase-transition map objects per scenario, each with SVG element targets for fire blob/ember animation and a `fact` string

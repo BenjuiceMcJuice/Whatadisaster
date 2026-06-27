@@ -2,6 +2,28 @@
 
 All notable changes to the Emergency Exercise Simulator.
 
+## [Unreleased]
+
+### Fixed
+- Removed a duplicated block of screen markup (`#fireMap`, `#game`, `#results`, `#modal` were each defined twice), eliminating ~140 lines of invalid duplicate-ID HTML.
+- "8 roles" copy corrected to "9 roles" on the splash screen and in `how-it-works.html` (the Voluntary Agency Coordinator brought the total to 9 in v1.2.0).
+- Added the missing Voluntary Agency Coordinator card to the `how-it-works.html` role directory.
+- In-game header now reads "Exercise Ashdown / Exercise Solstice" to match the naming used everywhere else (previously "Op. …").
+- Corrected the `how-it-works.html` timed-question copy (claimed 30–90s; actual timers are ~10–25s) and generalised the between-phases map description to cover both scenarios.
+- Removed dead code referencing a non-existent `fireSvg` element in `showFireMap()`.
+- Re-enabled pinch-zoom (dropped `maximum-scale`/`user-scalable=no` from the viewport meta) for accessibility.
+
+### Changed
+- `APP_VERSION` bumped to `1.2.0` to reflect the shipped Voluntary Agency Coordinator release.
+
+## [1.2.0] — 2026-06-25
+
+### Added
+- **New role: Voluntary Agency Coordinator** (🤝, Bronze, LRF Voluntary Sector) across both scenarios, with role-specific learning points and a five-question bank per scenario (Operation Solstice Q3 timed, 25s). Uses fictional voluntary orgs (Avon Emergency Volunteers, Brynmoor Community First).
+
+### Fixed
+- Stakeholder content-accuracy corrections: NWFC → **NRFC** (and framed as a Fire-commander decision); hospital Major Incident Plan activation framed as the hospital's own decision, not a TCG request; extreme-heat crew safety made conditional on no other symptomatic crew.
+
 ## [1.1.2] — 2026-05-28
 
 ### Fixed

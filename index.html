@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Emergency Exercise Simulator</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&amp;family=Barlow:wght@400;500;600&amp;display=swap" rel="stylesheet">
 <style>
@@ -217,7 +217,7 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
     <div class="fi">🚨</div>
     <div class="badge">Multi-Agency · Bristol · JESIP · Off-the-Shelf Exercise</div>
     <h1 class="st">Emergency<br><span>Exercise Simulator</span></h1>
-    <p class="ss">Tabletop decision-making across 8 roles — pick up and play</p>
+    <p class="ss">Tabletop decision-making across 9 roles — pick up and play</p>
     <div class="scard"><strong>No prior knowledge needed.</strong><br>This exercise is designed to be picked up off-the-shelf by any team. Choose a scenario and role — your decisions mirror real emergency response principles including JESIP, business continuity, and national guidance. Decisions compound.</div>
 
     <!-- Scenario framing panel -->
@@ -347,7 +347,7 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
 <!-- GAME -->
 <div id="game" class="screen">
   <div class="gh">
-    <div><div class="grt" id="hRole">Role</div><div class="gtt">Op. Ashdown</div></div>
+    <div><div class="grt" id="hRole">Role</div><div class="gtt">Exercise Ashdown</div></div>
     <div class="sd"><div class="sl">Score</div><div class="sv" id="scoreEl">0</div></div>
     <div style="text-align:right"><div class="sl">Elapsed</div><div class="tv2" id="timerEl">00:00</div></div>
   </div>
@@ -429,149 +429,6 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
     <button class="btn" onclick="closeModal()" style="max-width:none;margin-top:.75rem">Continue →</button>
   </div>
 </div>
-<!-- FIRE MAP (between phases) -->
-<div id="fireMap" class="screen">
-  <div class="fms">
-    <div class="fmt" id="fmPhase">PHASE TRANSITION</div>
-    <div class="fmh" id="fmHead">Fire Spreading</div>
-    <div class="fmd" id="fmDesc">The situation is developing.</div>
-  </div>
-  <div class="map-wrap">
-    <svg class="firemap" id="fireMapSvg" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
-      <!-- Background terrain -->
-      <rect width="400" height="220" fill="#1a1a0a"/>
-      <!-- Hill (top) -->
-      <ellipse cx="200" cy="60" rx="180" ry="55" fill="#2a2a10" opacity="0.8"/>
-      <text x="200" y="38" text-anchor="middle" font-family="Barlow Condensed" font-size="11" fill="#8a8060" font-weight="700">BRYNMOOR HILL</text>
-      <!-- B4107 road -->
-      <rect x="0" y="130" width="400" height="10" fill="#333" rx="2"/>
-      <text x="380" y="126" text-anchor="end" font-family="Barlow Condensed" font-size="10" fill="#666">B4107</text>
-      <!-- M5 motorway (vertical) -->
-      <rect x="340" y="0" width="12" height="220" fill="#2a2a50" rx="2"/>
-      <text x="352" y="100" font-family="Barlow Condensed" font-size="10" fill="#558" transform="rotate(90,352,100)">M5</text>
-      <!-- Ashfield estate -->
-      <rect x="60" y="150" width="120" height="55" fill="#1a2a1a" rx="4" stroke="#2a4a2a" stroke-width="1"/>
-      <text x="120" y="178" text-anchor="middle" font-family="Barlow Condensed" font-size="11" fill="#4a7a4a" font-weight="700">ASHFIELD</text>
-      <!-- Meridian House tower -->
-      <rect x="155" y="155" width="18" height="35" fill="#1a3a3a" rx="2" stroke="#2a5a5a" stroke-width="1" id="tower"/>
-      <text x="164" y="205" text-anchor="middle" font-family="Barlow Condensed" font-size="8" fill="#4a7a7a">MERIDIAN</text>
-      <!-- Substation -->
-      <rect x="270" y="105" width="24" height="20" fill="#2a2a10" rx="2" stroke="#6a6a20" stroke-width="1" id="substation"/>
-      <text x="282" y="100" text-anchor="middle" font-family="Barlow Condensed" font-size="8" fill="#8a8030">⚡ SUBSTAT.</text>
-      <!-- Northgate Hospital (off map top right) -->
-      <text x="380" y="15" text-anchor="end" font-family="Barlow Condensed" font-size="9" fill="#2a6a4a">🏥 NORTHGATE</text>
-      <text x="380" y="25" text-anchor="end" font-family="Barlow Condensed" font-size="8" fill="#1a4a2a">GENERAL (8mi N)</text>
-      <!-- Fire blobs - animated, shown progressively -->
-      <ellipse id="fire1" cx="200" cy="75" rx="0" ry="0" fill="rgba(255,69,0,0.6)" opacity="0"/>
-      <ellipse id="fire2" cx="185" cy="95" rx="0" ry="0" fill="rgba(255,100,0,0.5)" opacity="0"/>
-      <ellipse id="fire3" cx="220" cy="90" rx="0" ry="0" fill="rgba(255,69,0,0.55)" opacity="0"/>
-      <ellipse id="fire4" cx="175" cy="115" rx="0" ry="0" fill="rgba(255,120,0,0.5)" opacity="0"/>
-      <ellipse id="fire5" cx="210" cy="118" rx="0" ry="0" fill="rgba(255,69,0,0.45)" opacity="0"/>
-      <!-- Ember particles -->
-      <circle id="emb1" cx="0" cy="0" r="2" fill="#FF9030" opacity="0"/>
-      <circle id="emb2" cx="0" cy="0" r="2" fill="#FF9030" opacity="0"/>
-      <circle id="emb3" cx="0" cy="0" r="1.5" fill="#FFB030" opacity="0"/>
-    </svg>
-  </div>
-  <div class="fire-fact" id="fireFact" style="display:none">
-    <div class="fft">🔥 Fire Behaviour Fact</div>
-    <div class="ffb" id="fireFactText"></div>
-  </div>
-  <div style="padding:1.5rem;width:100%;max-width:480px">
-    <button class="btn" onclick="continueFromMap()" style="max-width:none">Continue →</button>
-  </div>
-</div>
-
-<!-- GAME -->
-<div id="game" class="screen">
-  <div class="gh">
-    <div><div class="grt" id="hRole">Role</div><div class="gtt">Op. Ashdown</div></div>
-    <div class="sd"><div class="sl">Score</div><div class="sv" id="scoreEl">0</div></div>
-    <div style="text-align:right"><div class="sl">Elapsed</div><div class="tv2" id="timerEl">00:00</div></div>
-  </div>
-  <div class="pd" id="pdots"></div>
-  <div class="cba">
-    <div class="cbl"><span>Consequence Tracker</span><span id="clevel">Monitoring</span></div>
-    <div class="cts">
-      <div class="ct"><div class="ctl">Life Safety</div><div class="ctb"><div class="ctf" id="cLife" style="width:10%;background:var(--green)"></div></div></div>
-      <div class="ct"><div class="ctl">Infrastructure</div><div class="ctb"><div class="ctf" id="cInfra" style="width:10%;background:var(--green)"></div></div></div>
-      <div class="ct"><div class="ctl">Community</div><div class="ctb"><div class="ctf" id="cComm" style="width:10%;background:var(--green)"></div></div></div>
-      <div class="ct"><div class="ctl">Coordination</div><div class="ctb"><div class="ctf" id="cCoord" style="width:10%;background:var(--green)"></div></div></div>
-    </div>
-  </div>
-  <div class="sp">
-    <div class="sph"><span class="spp" id="phaseEl">PHASE 1</span><span class="spt" id="sitTitle">Loading...</span></div>
-    <div class="sptx" id="sitText"></div>
-    <div class="sr" id="statRow"></div>
-  </div>
-  <div id="escArea"></div>
-  <div class="pra" id="pressArea">
-    <div class="prl" id="pressLabel">⚡ DECIDE NOW</div>
-    <div class="prt"><div class="prf" id="pressFill" style="width:100%"></div></div>
-  </div>
-  <div class="ds"><div class="dl">Your Decision</div><div id="qContainer"></div></div>
-  <div class="ap">
-    <div class="cls">Activated Agencies</div>
-    <div class="ag">
-      <div class="ach" id="agFire">🚒 Fire</div><div class="ach" id="agPol">🚔 Police</div>
-      <div class="ach" id="agAmb">🚑 Ambulance</div><div class="ach" id="agNHS">🏥 NHS</div>
-      <div class="ach" id="agLGA">🏛️ Council</div><div class="ach" id="agUtil">⚡ Utilities</div>
-      <div class="ach" id="agPHE">🧬 Pub.Health</div><div class="ach" id="agVol">🤝 Voluntary</div>
-    </div>
-  </div>
-  <div class="cb">
-    <div class="cls">Command Level</div>
-    <div class="clv">
-      <div class="cl gold" id="clGold">⬛ Gold<div class="clsub">SCG</div></div>
-      <div class="cl silver" id="clSilv">🔘 Silver<div class="clsub">TCG</div></div>
-      <div class="cl bronze on" id="clBron">🔷 Bronze<div class="clsub">Scene</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- RESULTS -->
-<div id="results" class="screen">
-  <div class="rh" id="resHero">
-    <div class="rob" id="resBanner">OUTCOME</div>
-    <div class="rhe" id="resHead">Loading...</div>
-    <div class="rsu" id="resSub"></div>
-    <div class="rro" id="resRole"></div>
-  </div>
-  <div class="og">
-    <div class="ot"><div class="otl">Life Safety</div><div class="otv" id="rLife">-</div></div>
-    <div class="ot"><div class="otl">Infrastructure</div><div class="otv" id="rInfra">-</div></div>
-    <div class="ot"><div class="otl">Community</div><div class="otv" id="rComm">-</div></div>
-    <div class="ot"><div class="otl">Coordination</div><div class="otv" id="rCoord">-</div></div>
-  </div>
-  <div class="bk">
-    <div class="bkt">📊 Decision Breakdown</div>
-    <div id="bkList"></div>
-    <div class="lp" style="margin-top:1.5rem"><div class="lt">📚 Key Learning Points</div><div id="lpList"></div></div>
-  </div>
-  <div class="ra2">
-    <button class="btn" onclick="restart()">🔄 Play Again (Different Role)</button>
-    <button class="btn2" onclick="showScreen('briefing')">📋 Review Briefing</button>
-
-  </div>
-</div>
-
-<!-- MODAL -->
-<div id="modal" class="mo" style="display:none" onclick="closeModal()">
-  <div class="md" onclick="event.stopPropagation()">
-    <div class="tob" id="tobEl" style="display:none">⏱️ TIME EXPIRED — DOUBLE CONSEQUENCES APPLIED</div>
-    <div class="mi" id="mIcon">✅</div>
-    <div id="mScoreLab"></div>
-    <div class="mt" id="mTitle">Result</div>
-    <div class="mb" id="mBody"></div>
-    <div id="mCons"></div>
-    <button class="btn" onclick="closeModal()" style="max-width:none;margin-top:.75rem">Continue →</button>
-  </div>
-</div>
-
-
-
-
-
 <!-- DEBRIEF SCREEN -->
 <div id="debrief" class="screen">
   <div class="sh" style="background:linear-gradient(135deg,#0a1a2a,var(--dark2));padding:1.5rem">
@@ -594,7 +451,7 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
 
 if(location.hostname.includes('pages.dev')){document.getElementById('devWarning').classList.add('show');}
 
-const APP_VERSION='1.1.1';
+const APP_VERSION='1.2.0';
 
 /* ── ROLE-SPECIFIC LEARNING POINTS ─────────────────────────────────────── */
 var LEARN_POINTS={
@@ -2185,17 +2042,7 @@ var mapIdx=0,mapCallback=null;
 function showFireMap(idx,callback){
   mapIdx=idx;mapCallback=callback;
   var m=(G.scenario==='hotwells'?MAPS2:MAPS)[idx];
-  // Update SVG colour scheme for Cabot (blue slick vs fire orange)
-  var fmsvg=document.getElementById('fireSvg');
-  if(fmsvg){
-    if(G.scenario==='hotwells'){
-      fmsvg.style.setProperty('--fire-fill','rgba(200,80,0,0.3)');
-      fmsvg.style.setProperty('--ember-fill','rgba(255,180,0,0.8)');
-    } else {
-      fmsvg.style.setProperty('--fire-fill','');
-      fmsvg.style.setProperty('--ember-fill','');
-    }
-  }
+  // Heatwave map colours are handled by the #fireMap.cabot CSS + SVG swap below.
   document.getElementById('fmPhase').textContent=m.phase;
   document.getElementById('fmHead').textContent=m.head;
   document.getElementById('fmDesc').textContent=m.desc;
@@ -2281,7 +2128,7 @@ function selectRole(key){
   var r=ROLES[key];G.roleKey=key;
   document.documentElement.style.setProperty('--rc',r.color);
   document.getElementById('hRole').textContent=r.icon+' '+r.name;
-  document.querySelectorAll('.gtt').forEach(function(el){el.textContent=G.scenario==='hotwells'?'Op. Solstice':'Op. Ashdown';});
+  document.querySelectorAll('.gtt').forEach(function(el){el.textContent=G.scenario==='hotwells'?'Exercise Solstice':'Exercise Ashdown';});
   setTimeout(function(){startGame(G.scenario);},200);
 }
 
