@@ -49,6 +49,7 @@ From `info/whatadisaster-changes-briefing.md`:
 
 | Priority | Item |
 |----------|------|
+| **Next** | **LinkedIn launch readiness** — social preview tags + OG image, better title, Cloudflare Web Analytics, prominent Feedback button, then Firebase (feedback DB + usage events). Full spec: `info/linkedin-launch-readiness-spec.md` |
 | ~~High~~ | ~~Bug: rename "Operation Ashdown" → "Operation Solstice" in Solstice scenario display text~~ — fixed 2026-05-28 |
 | ~~High~~ | ~~New role: Voluntary Agency Coordinator — both scenarios~~ — shipped 2026-06-25 |
 | Medium   | Heat-Health Alert (HHA) system — incorporate into Solstice questions and feedback |
