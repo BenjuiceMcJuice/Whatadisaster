@@ -16,30 +16,21 @@ Granular daily work is in `logs/YYYY-MM-DD.md`.
 | 2026-05-28 | SDLC docs, DEVLOG, daily logs structure added                    | ✅ Done |
 | 2026-05-28 | Bug fix: game header always showed "Op. Ashdown" in Solstice     | ✅ Done |
 | 2026-06-25 | v1.2.0 — New role: Voluntary Agency Coordinator, both scenarios (6 questions, fictional orgs, LA activation cascade, timed Q3 in Solstice) | ✅ Done |
+| 2026-07-10 | Cloudflare Web Analytics enabled (cookieless, no consent banner) | ✅ Done |
+| 2026-07-10 | Firebase project + Firestore live; community feedback form (persistent button, all screens) and usage event logging (role/scenario/completion/drop-off) wired into `index.html`. Firestore-only, no GA4 — see `firestore.rules`. Security rules written but **not yet published** in console. | 🟡 Code done, rules pending publish + live verification |
 
 ---
 
-## Planned: Feedback & Release Tracking (Firebase — setup pending)
+## Planned: Feedback & Release Tracking (Firebase)
 
-Goal: replace ad-hoc email feedback with a structured system. Firebase/Firestore is the intended backend — to be configured when next on laptop.
+Backend is now live (see milestone above: community feedback + usage events). Remaining from the original plan:
 
-**Three things to build:**
+1. ~~**Community feedback form**~~ — done 2026-07-10. In-app form (category, free text, auto-attached role/scenario) writes to `feedback` collection with `source: 'community'`. Rate limiting still needed (Firestore rules alone can't do this — App Check or a Cloud Function is the likely next step if abuse becomes a problem).
+2. **Partner / internal feedback tracker** — not started. Each item needs a human-readable reference (e.g. `WAD-FB-001`); auto-increment vs Firestore auto-ID still an open call. These items get added directly via console, not through the client write path (rules only allow `source: 'community'` from the client).
+3. **Admin read UI** — not started. Auth-gated page to review the `feedback` collection. Google Auth is the simplest option.
+4. **Structured release log** — not started. Firestore-backed changelog; could power a "What's new" panel in-app.
 
-1. **Partner / internal feedback tracker** — each item gets a human-readable reference (e.g. `WAD-FB-001`). Fields: source, date, category (content / UX / feature / bug), description, status, linked commit. Firestore collection: `feedback`.
-2. **Community feedback form** — lightweight in-app form (role played, scenario, free text) writing to the same collection with `source: 'community'`. Rate limiting needed; no auth required.
-3. **Structured release log** — Firestore-backed changelog (version, date, type, summary, feedback refs resolved). Could power a "What's new" panel in-app.
-
-**Design decisions to make at setup time:**
-- Reference ID format: auto-increment (`WAD-FB-001`) vs Firestore auto-ID — auto-increment friendlier for human reference
-- Auth for admin review UI: Google Auth simplest
-- Whether community form needs CAPTCHA / rate limiting
-- Whether release log is surfaced in-app or internal only
-
-**Build order when Firebase is ready:**
-1. Create Firebase project, enable Firestore
-2. Add Firebase SDK to `index.html` via CDN (no build step needed)
-3. Community feedback write path first
-4. Admin read UI separately (simple auth-gated HTML page)
+**Immediate next step:** `firestore.rules` is written but not yet published — paste it into Firebase Console → Firestore Database → Rules → Publish. Until then the collections have whatever default rules the console set at creation.
 
 ---
 
@@ -49,7 +40,7 @@ From `info/whatadisaster-changes-briefing.md`:
 
 | Priority | Item |
 |----------|------|
-| **Next** | **LinkedIn launch readiness** — social preview tags + OG image, better title, Cloudflare Web Analytics, prominent Feedback button, then Firebase (feedback DB + usage events). Full spec: `info/linkedin-launch-readiness-spec.md` |
+| **Next** | **LinkedIn launch readiness** — ~~Cloudflare Web Analytics~~ ✅, ~~Firebase feedback + usage events~~ ✅ (rules pending publish). Still open: social preview tags + OG image, better title, and the stakeholder content/timer fixes below. Full spec: `info/linkedin-launch-readiness-spec.md` |
 | ~~High~~ | ~~Bug: rename "Operation Ashdown" → "Operation Solstice" in Solstice scenario display text~~ — fixed 2026-05-28 |
 | ~~High~~ | ~~New role: Voluntary Agency Coordinator — both scenarios~~ — shipped 2026-06-25 |
 | Medium   | Heat-Health Alert (HHA) system — incorporate into Solstice questions and feedback |

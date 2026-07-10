@@ -1,0 +1,37 @@
+rules_version = '2';
+// No Firebase CLI/deploy pipeline is configured for this project yet.
+// This file is the source of truth for what SHOULD be live — after any
+// change here, copy it into Firebase Console → Firestore Database → Rules → Publish.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Community feedback (in-app form). Partner/internal feedback items
+    // are added directly via the console, not through this write path.
+    match /feedback/{id} {
+      allow read, update, delete: if false;
+      allow create: if
+        request.resource.data.keys().hasAll(['source','category','description','status','createdAt']) &&
+        request.resource.data.keys().hasOnly(['source','category','description','status','createdAt','role','scenario']) &&
+        request.resource.data.source == 'community' &&
+        request.resource.data.category in ['content','ux','feature','bug'] &&
+        request.resource.data.description is string &&
+        request.resource.data.description.size() > 0 &&
+        request.resource.data.description.size() < 2000 &&
+        request.resource.data.status == 'open' &&
+        request.resource.data.createdAt == request.time;
+    }
+
+    // Anonymous usage events (role played, scenario, completion, drop-off).
+    // No PII, no auth — write-only from the client.
+    match /events/{id} {
+      allow read, update, delete: if false;
+      allow create: if
+        request.resource.data.keys().hasAll(['type','createdAt']) &&
+        request.resource.data.keys().hasOnly(['type','role','scenario','qIdx','score','createdAt']) &&
+        request.resource.data.type in ['scenario_started','role_selected','question_answered','scenario_completed','feedback_submitted'] &&
+        request.resource.data.createdAt == request.time &&
+        (!('qIdx' in request.resource.data) || (request.resource.data.qIdx is int && request.resource.data.qIdx >= 0 && request.resource.data.qIdx < 50)) &&
+        (!('score' in request.resource.data) || (request.resource.data.score is int && request.resource.data.score >= 0 && request.resource.data.score <= 1000));
+    }
+  }
+}
