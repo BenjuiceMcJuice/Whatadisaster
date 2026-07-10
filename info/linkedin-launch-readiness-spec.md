@@ -2,7 +2,42 @@
 
 _Created: 2026-07-10 · Owner: Ben · Branch for work: `claude/app-roadmap-devlog-y3fhhd`_
 
-**Trigger:** The app is being shared organically and is due to go on LinkedIn. A traffic spike is coming. This spec covers what to put in place **before and around that moment** so we (a) look good when shared, (b) can measure the spike, and (c) capture feedback from a lot of fresh eyes while we have their attention.
+**Trigger:** The app is being shared organically and is due to go on LinkedIn. Ben confirmed the post won't go out until we're ready, so there's no rush — but the work should still happen, roughly in this order: analytics baseline → content quality → proper feedback backend → social preview tags.
+
+---
+
+## Status as of 2026-07-10 — what's needed next
+
+**Done:**
+- ✅ Cloudflare Web Analytics enabled (auto-injection, all visitors — not the EU-exclusion option, since the beacon is already cookieless).
+- ✅ Firebase project (`whatadisaster`) + Firestore created, `europe-west2`.
+- ✅ Feedback button + form wired into `index.html`, writes to Firestore `feedback` collection.
+- ✅ Usage event logging wired in (`role_selected`, `scenario_started`, `question_answered`, `scenario_completed`, `feedback_submitted`) → `events` collection.
+- ✅ `firestore.rules` written (create-only, field/type validated, no client read/update/delete).
+
+**Not done — in priority order:**
+1. **Publish `firestore.rules` in the Firebase console.** Written but not live — Firestore → Rules → paste → Publish. Until this happens the collections are on whatever default the console set at creation. *Ben to do this.*
+2. **Verify a live write end-to-end.** Sandbox network policy blocked reaching Google's APIs during dev, so this was never confirmed against the real deployed site. Submit a real feedback item on `whatadisaster.uk` and check it lands in the Firestore console.
+3. **⚠️ Cross-app feedback integration — see dedicated section below. Do not treat the `whatadisaster` Firestore feedback/events collections as final until this is resolved.**
+4. Stakeholder content-accuracy + timer fixes (`info/stakeholder-feedback-june-2026.md`) — not started.
+5. Stage 1 quick wins: OG/Twitter social preview tags + image, better `<title>` — not started.
+6. Admin read UI for the `feedback` collection — not started (DEVLOG).
+7. Rate limiting on the feedback/events write paths — Firestore rules alone can't do this; App Check or a Cloud Function is the likely mechanism if abuse becomes a problem.
+
+---
+
+## ⚠️ Cross-app feedback integration (pending — blocked on repo access)
+
+Ben flagged that the feedback loop being built here **must not stay siloed to this app** — it needs to wire into a parent/shared feedback system that spans his other apps (the `benjuicey-apps` repo/project surfaced in the Firebase console project list alongside `whatadisaster`, `BetaLog`, `Dungeon of Montor`, `BenMed`).
+
+**Current state:** what's live today is a standalone `whatadisaster` Firebase project with its own `feedback`/`events` collections, built before this requirement was raised. That may need to be reconciled — e.g. writing into a shared project instead, exposing this app's feedback through a shared schema, or migrating what's already there — once the shape of the parent system is known.
+
+**Why not resolved now:** this session's GitHub access is scoped to `benjuicemcjuice/whatadisaster` only — `benjuicey-apps` isn't in scope, so its feedback system's structure is unknown. Ben said he'll add repo access ("when logged in locally... so you can see all repos") and remind Claude to revisit this then.
+
+**When that happens, next session should:**
+1. Get `benjuicey-apps` added to the session (or read access to whatever holds its feedback system).
+2. Establish whether "wired into the parent system" means: (a) Whatadisaster writes to a shared Firestore project, (b) a shared read/aggregation layer pulls from each app's own project, or (c) something else Ben has in mind — ask rather than assume.
+3. Decide what happens to the `whatadisaster` project's existing `feedback`/`events` data and rules built today — keep as the per-app store feeding the parent, or migrate away from it.
 
 ---
 

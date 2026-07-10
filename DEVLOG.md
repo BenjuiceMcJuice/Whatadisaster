@@ -5,6 +5,14 @@ Granular daily work is in `logs/YYYY-MM-DD.md`.
 
 ---
 
+## ⚠️ Blocked — needs attention next session
+
+**Cross-app feedback integration.** The `feedback`/`events` Firestore collections built 2026-07-10 are standalone to this app. Ben says the feedback loop must wire into a parent/shared system across his apps (`benjuicey-apps` repo, alongside BetaLog/Dungeon of Montor/BenMed in the Firebase project list). This session's repo access doesn't include `benjuicey-apps`, so the shared system's shape is unknown. **Ben will add repo access and remind Claude to revisit this** — full context in `info/linkedin-launch-readiness-spec.md` under "Cross-app feedback integration." Don't treat the current standalone Firestore setup as final.
+
+**Firestore rules not yet published.** `firestore.rules` is written in the repo but hasn't been pasted into the Firebase console (Firestore → Rules → Publish) yet.
+
+---
+
 ## Milestones
 
 | Date       | Milestone                                                        | Status   |
