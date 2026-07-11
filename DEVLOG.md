@@ -30,6 +30,8 @@ Granular daily work is in `logs/YYYY-MM-DD.md`.
 
 ## Feedback: shared Benjuicey Apps backend
 
+**Standard:** this app follows the cross-app feedback standard — see `benjuicey-apps/docs/feedback-standard.md` (the single source of truth). This app's trigram is `WDA`; categories are the canonical `bug`/`content`/`request`/`general`.
+
 This app no longer has its own feedback storage. The feedback button (bottom-right) is the embeddable widget from the `benjuicey-apps` repo's Cloudflare Worker (`https://benjuicey-feedback.benjuicemcjuice.workers.dev/widget.js`, loaded via `<script data-app-id="whatadisaster">` in `index.html`). Submissions go straight to the shared Firestore project, tagged with this app's trigram `WDA`, ref format `WDA-0001` etc. Every app Ben builds is meant to use the same widget — see `benjuicey-apps/docs/backlog.md` for the full platform plan (admin dashboard, AI analysis, etc).
 
 **What's still local to this app:** anonymous usage-event logging (`role_selected`, `scenario_started`, `question_answered`, `scenario_completed`, `feedback_submitted` — the last one now fires off a `benjuiceyfeedback:submitted` event dispatched by the widget) — this stays in the `whatadisaster` Firebase project's `events` collection since it's app-specific analytics, not feedback. `firestore.rules` here now only covers `events`.
