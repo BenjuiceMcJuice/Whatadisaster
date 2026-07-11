@@ -5,21 +5,10 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Community feedback (in-app form). Partner/internal feedback items
-    // are added directly via the console, not through this write path.
-    match /feedback/{id} {
-      allow read, update, delete: if false;
-      allow create: if
-        request.resource.data.keys().hasAll(['source','category','description','status','createdAt']) &&
-        request.resource.data.keys().hasOnly(['source','category','description','status','createdAt','role','scenario']) &&
-        request.resource.data.source == 'community' &&
-        request.resource.data.category in ['content','ux','feature','bug'] &&
-        request.resource.data.description is string &&
-        request.resource.data.description.size() > 0 &&
-        request.resource.data.description.size() < 2000 &&
-        request.resource.data.status == 'open' &&
-        request.resource.data.createdAt == request.time;
-    }
+    // Feedback is NOT collected here — it goes through the shared
+    // Benjuicey Apps feedback Worker (see index.html widget.js embed),
+    // which writes to its own Firestore project server-side. This
+    // project is only for this app's own anonymous usage events.
 
     // Anonymous usage events (role played, scenario, completion, drop-off).
     // No PII, no auth — write-only from the client.

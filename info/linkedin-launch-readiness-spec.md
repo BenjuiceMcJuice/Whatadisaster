@@ -10,34 +10,29 @@ _Created: 2026-07-10 · Owner: Ben · Branch for work: `claude/app-roadmap-devlo
 
 **Done:**
 - ✅ Cloudflare Web Analytics enabled (auto-injection, all visitors — not the EU-exclusion option, since the beacon is already cookieless).
-- ✅ Firebase project (`whatadisaster`) + Firestore created, `europe-west2`.
-- ✅ Feedback button + form wired into `index.html`, writes to Firestore `feedback` collection.
+- ✅ Firebase project (`whatadisaster`) + Firestore created, `europe-west2` — now scoped to usage events only, see below.
+- ✅ Feedback button wired into `index.html` — now the **shared Benjuicey Apps feedback widget** (see "Cross-app feedback integration" below), not a local Firestore write.
 - ✅ Usage event logging wired in (`role_selected`, `scenario_started`, `question_answered`, `scenario_completed`, `feedback_submitted`) → `events` collection.
-- ✅ `firestore.rules` written (create-only, field/type validated, no client read/update/delete).
+- ✅ `firestore.rules` written (create-only, field/type validated, no client read/update/delete) — trimmed 2026-07-11 to `events` only, since feedback no longer touches this project.
 
 **Not done — in priority order:**
-1. **Publish `firestore.rules` in the Firebase console.** Written but not live — Firestore → Rules → paste → Publish. Until this happens the collections are on whatever default the console set at creation. *Ben to do this.*
-2. **Verify a live write end-to-end.** Sandbox network policy blocked reaching Google's APIs during dev, so this was never confirmed against the real deployed site. Submit a real feedback item on `whatadisaster.uk` and check it lands in the Firestore console.
-3. **⚠️ Cross-app feedback integration — see dedicated section below. Do not treat the `whatadisaster` Firestore feedback/events collections as final until this is resolved.**
-4. Stakeholder content-accuracy + timer fixes (`info/stakeholder-feedback-june-2026.md`) — not started.
-5. Stage 1 quick wins: OG/Twitter social preview tags + image, better `<title>` — not started.
-6. Admin read UI for the `feedback` collection — not started (DEVLOG).
-7. Rate limiting on the feedback/events write paths — Firestore rules alone can't do this; App Check or a Cloud Function is the likely mechanism if abuse becomes a problem.
+1. **Publish `firestore.rules` in the Firebase console.** Written but not live — Firestore → Rules → paste → Publish. Until this happens the `events` collection is on whatever default the console set at creation. *Ben to do this.*
+2. **Verify a live write end-to-end.** Submit a real feedback item on `whatadisaster.uk` once the branch is live and check it lands in the shared Firestore project as a `WDA-000x` ref; separately verify an `events` write lands too.
+3. Stakeholder content-accuracy + timer fixes (`info/stakeholder-feedback-june-2026.md`) — not started.
+4. Stage 1 quick wins: OG/Twitter social preview tags + image, better `<title>` — not started.
+5. Rate limiting on the shared Worker's `/submit` path — open item on the `benjuicey-apps` backlog, not this repo's problem to solve.
 
 ---
 
-## ⚠️ Cross-app feedback integration (pending — blocked on repo access)
+## ✅ Cross-app feedback integration — resolved 2026-07-11
 
-Ben flagged that the feedback loop being built here **must not stay siloed to this app** — it needs to wire into a parent/shared feedback system that spans his other apps (the `benjuicey-apps` repo/project surfaced in the Firebase console project list alongside `whatadisaster`, `BetaLog`, `Dungeon of Montor`, `BenMed`).
+Ben's requirement: the feedback loop must not stay siloed to this app — it needs to be the same system across every app he builds.
 
-**Current state:** what's live today is a standalone `whatadisaster` Firebase project with its own `feedback`/`events` collections, built before this requirement was raised. That may need to be reconciled — e.g. writing into a shared project instead, exposing this app's feedback through a shared schema, or migrating what's already there — once the shape of the parent system is known.
+**Decision:** apps never write feedback to their own Firestore project. They all POST to one shared Cloudflare Worker (`benjuicey-feedback.benjuicemcjuice.workers.dev`, in the `benjuicey-apps` repo), which writes server-side to a shared Firestore project via a service account. Each app gets a 3-letter trigram for ref numbering (`whatadisaster` → `WDA`). This is stricter than "a shared Firestore project" — the client never touches Firestore directly for feedback, which also sidesteps the "rules not published" risk this doc flagged earlier, since public visitors never get write access to a feedback collection at all.
 
-**Why not resolved now:** this session's GitHub access is scoped to `benjuicemcjuice/whatadisaster` only — `benjuicey-apps` isn't in scope, so its feedback system's structure is unknown. Ben said he'll add repo access ("when logged in locally... so you can see all repos") and remind Claude to revisit this then.
+A reusable embeddable widget (`GET /widget.js` on the Worker) now exists for this — `index.html` loads it with `<script data-app-id="whatadisaster" data-accent="#FF4500">`. Same widget, same fields (name, email, type, message), across every app. See `benjuicey-apps/docs/backlog.md` Epic 3 and `benjuicey-apps/DEVLOG.md` for the platform-side details.
 
-**When that happens, next session should:**
-1. Get `benjuicey-apps` added to the session (or read access to whatever holds its feedback system).
-2. Establish whether "wired into the parent system" means: (a) Whatadisaster writes to a shared Firestore project, (b) a shared read/aggregation layer pulls from each app's own project, or (c) something else Ben has in mind — ask rather than assume.
-3. Decide what happens to the `whatadisaster` project's existing `feedback`/`events` data and rules built today — keep as the per-app store feeding the parent, or migrate away from it.
+What stayed local to this app: the `events` collection (usage analytics) — that's a different concern from feedback and doesn't need to be shared across apps.
 
 ---
 
@@ -93,13 +88,10 @@ Turns the share from a bare link into a proper card (title, one-line description
 - Gives: visits, page views, referrers (you'll see the LinkedIn spike by source), countries, devices. **Not** custom events — that's Stage 2.
 - Turn this on *first* so the spike is captured from the moment the post goes live.
 
-### 1.4 Prominent Feedback button (Google Form interim)
-- Persistent, low-profile "Feedback" affordance:
-  - A fixed corner button on all screens, **and**
-  - A clear call-to-action on the `#results` / `#debrief` screens — the point where a player has just formed an opinion and is most likely to respond.
-- Interim target: a **Google Form** (works on locked-down devices where mailto fails; zero backend). Fields: role played, scenario, free-text, optional org/name.
-- Keep the existing mailto/`submitToEPT()` for now; the Feedback button is additive.
-- **Migration note:** when Stage 2 lands, repoint the button at the in-app Firebase form so submissions land in the `feedback` collection.
+### 1.4 Prominent Feedback button — ✅ done, superseded by the shared widget
+- Done via the shared Benjuicey Apps feedback widget (bottom-right on all screens) instead of the originally-planned interim Google Form — went straight to the real backend since it already existed on the platform side.
+- Keep the existing mailto/`submitToEPT()` alongside it; the widget is additive, not a replacement for the exercise-record submission.
+- Still open: a clear call-to-action on `#results` / `#debrief` pointing at the same widget (`BenjuiceyFeedback.open()`) at the moment a player has just formed an opinion.
 
 ### 1.5 "More scenarios coming" signal (optional, cheap)
 - A small line near the scenario picker: e.g. "More scenarios in development — request one via Feedback." Signals *platform*, not two fixed exercises — worth doing while lots of new people are looking. (VISION Tier 1.)
@@ -115,8 +107,8 @@ Turns the share from a bare link into a proper card (title, one-line description
 
 This is the already-scoped work in `DEVLOG.md` ("Planned: Feedback & Release Tracking"). The LinkedIn traffic is the *reason* to build it now, because it does double duty.
 
-### 2.1 What it delivers (two things, one project)
-1. **Structured feedback DB** — replaces the broken mailto. In-app form writes to the `feedback` Firestore collection (`source: 'community'`), with the fields already specified in DEVLOG. Repoint the Stage 1 Feedback button here.
+### 2.1 What it delivers
+1. ~~Structured feedback DB~~ — done differently than originally planned: instead of this app's own Firestore `feedback` collection, feedback now goes through the **shared Benjuicey Apps Worker** (see "Cross-app feedback integration" above). Same end result (replaces the broken mailto), shared across all apps instead of siloed here.
 2. **Custom usage events — the "what's used vs not" metrics you actually want:**
    - `scenario_started` (which scenario), `role_selected` (which role), `question_answered` (index + quality), `scenario_completed`, `feedback_submitted`.
    - This answers: which roles are popular, which scenario gets played, **where people drop off**, completion rate — none of which a pure page-view tracker can give you.
