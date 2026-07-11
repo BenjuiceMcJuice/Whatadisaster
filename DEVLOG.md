@@ -30,7 +30,7 @@ Granular daily work is in `logs/YYYY-MM-DD.md`.
 
 ## Feedback: shared Benjuicey Apps backend
 
-**Standard:** this app follows the cross-app feedback standard — see `benjuicey-apps/docs/feedback-standard.md` (the single source of truth). This app's trigram is `WDA`; categories are the canonical `bug`/`content`/`request`/`general`.
+**Standard:** this app follows the cross-app feedback standard — see the central docs in `benjuicey-apps/docs/`: **feedback-standard.md** (the standard) and **feedback-how-it-works.md** (end-to-end flow + how Claude triages submissions). This app's trigram is `WDA`; categories are the canonical `bug`/`content`/`request`/`general`.
 
 This app no longer has its own feedback storage. The feedback button (bottom-right) is the embeddable widget from the `benjuicey-apps` repo's Cloudflare Worker (`https://benjuicey-feedback.benjuicemcjuice.workers.dev/widget.js`, loaded via `<script data-app-id="whatadisaster">` in `index.html`). Submissions go straight to the shared Firestore project, tagged with this app's trigram `WDA`, ref format `WDA-0001` etc. Every app Ben builds is meant to use the same widget — see `benjuicey-apps/docs/backlog.md` for the full platform plan (admin dashboard, AI analysis, etc).
 
