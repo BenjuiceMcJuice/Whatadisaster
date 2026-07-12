@@ -48,10 +48,11 @@ From `info/whatadisaster-changes-briefing.md`:
 
 | Priority | Item |
 |----------|------|
-| **Next** | **LinkedIn launch readiness** — ~~Cloudflare Web Analytics~~ ✅, ~~Feedback widget + usage events~~ ✅ (events rules pending publish). Still open: social preview tags + OG image, better title, and the stakeholder content/timer fixes below. Full spec: `info/linkedin-launch-readiness-spec.md` |
+| **Next** | **Content validity first** (reprioritised 2026-07-12, ahead of social preview polish) — stakeholder content-accuracy + timer fixes, then HHA/Hazard Manager/UKHSA content below |
 | ~~High~~ | ~~Bug: rename "Operation Ashdown" → "Operation Solstice" in Solstice scenario display text~~ — fixed 2026-05-28 |
 | ~~High~~ | ~~New role: Voluntary Agency Coordinator — both scenarios~~ — shipped 2026-06-25 |
 | Medium   | Heat-Health Alert (HHA) system — incorporate into Solstice questions and feedback |
 | Medium   | Met Office Hazard Manager — reference in Solstice scenario |
 | Medium   | UKHSA hot weather guidance — decisions around vulnerable populations and public messaging |
 | Pending  | Extreme heat impacts content — awaiting slides from Heather |
+| Later    | **LinkedIn launch readiness** — ~~Cloudflare Web Analytics~~ ✅, ~~Feedback widget + usage events~~ ✅ (events rules pending publish). Social preview tags + OG image, better title — now deprioritised until content above is validated. Full spec: `info/linkedin-launch-readiness-spec.md` |
