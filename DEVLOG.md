@@ -20,6 +20,7 @@ Granular daily work is in `logs/YYYY-MM-DD.md`.
 | 2026-07-10 | Firebase project + Firestore live; usage event logging (role/scenario/completion/drop-off) wired into `index.html` → `events` collection. Security rules written and published in console. | ✅ Done |
 | 2026-07-12 | Feedback switched from a standalone Firestore write to the **shared Benjuicey Apps feedback backend**, merged to `main` and confirmed **live on whatadisaster.uk** — see below. Old `feedback` Firestore collection/rules removed from this app. | ✅ Done |
 | 2026-07-12 | Timed questions switched to click-to-reveal: options + countdown are now hidden behind a "Reveal Options" button instead of starting immediately on question load (stakeholder feedback — countdowns started before players had read the options) | ✅ Done |
+| 2026-07-12 | **UI/UX assessment (mobile-focused) completed** — full review of `index.html`/`how-it-works.html` at iPhone/Android viewports. Severity-ranked spec written for a later build (not yet implemented): `info/ui-ux-assessment-2026-07-12.md`. See Backlog → "UI/UX mobile overhaul". | ✅ Done (spec) |
 
 ---
 
@@ -44,6 +45,7 @@ From `info/whatadisaster-changes-briefing.md`:
 | Priority | Item |
 |----------|------|
 | **Next** | **LinkedIn launch readiness** — ~~Cloudflare Web Analytics~~ ✅, ~~Feedback widget + usage events~~ ✅, ~~timer click-to-reveal~~ ✅. Still open: social preview tags + OG image, better title, and the remaining stakeholder content fixes below. Full spec: `info/linkedin-launch-readiness-spec.md` |
+| **High** | **UI/UX mobile overhaul** — build from `info/ui-ux-assessment-2026-07-12.md` (spec written 2026-07-12, not yet implemented). Phased: **P0** correctness/a11y (re-enable pinch-zoom `user-scalable=no`, delete duplicated `#game`/`#results`/`#modal`/`#fireMap` DOM blocks, stop modal backdrop-tap advancing the question, add in-game exit, role cards → real buttons, safe-area insets); **P1** game-screen density (slim status bar + consequence pill, Agencies/Command → drawer, persistent situation, calm colour/motion — target ≤1.6 screenfuls); **P2** splash (CTAs above the fold, de-jargon lead, "8 roles"→9) + OG/title tags (overlaps LinkedIn item above); **P3** polish. Preserves single-file/no-build, fire-orange identity, and all question content. |
 | ~~High~~ | ~~Bug: rename "Operation Ashdown" → "Operation Solstice" in Solstice scenario display text~~ — fixed 2026-05-28 |
 | ~~High~~ | ~~New role: Voluntary Agency Coordinator — both scenarios~~ — shipped 2026-06-25 |
 | Medium   | Heat-Health Alert (HHA) system — incorporate into Solstice questions and feedback |
