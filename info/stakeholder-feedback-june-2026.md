@@ -71,6 +71,6 @@ Immediate-decision timers are a little short; people need more time to read the 
 - [x] Change NWFC → NRFC; move mutual aid option to Fire commander (not TCG) — fixed `4c6405e` (2026-06-11)
 - [x] Revise crew safety / extreme heat option (conditional on no symptomatic crew) — fixed `4c6405e` (2026-06-11)
 - [x] Review ambulance surge framing — make it an internal Ambulance decision — fixed `4c6405e` (2026-06-11)
-- [ ] Consider whether answer telegraphing warrants a fix (longer distractors, or by design)
+- [x] Consider whether answer telegraphing warrants a fix (longer distractors, or by design) — fixed for all roles 2026-07-12 (`voluntary` was already done in `d4dd910`)
 - [ ] Explore splitting utilities into energy / water roles, or adding water-specific content
 - [ ] Follow up with Jon on water/extreme heat examples for Operation Solstice

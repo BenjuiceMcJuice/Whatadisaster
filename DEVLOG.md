@@ -20,6 +20,7 @@ Granular daily work is in `logs/YYYY-MM-DD.md`.
 | 2026-07-10 | Firebase project + Firestore live; usage event logging (role/scenario/completion/drop-off) wired into `index.html` → `events` collection. Security rules written and published in console. | ✅ Done |
 | 2026-07-12 | Feedback switched from a standalone Firestore write to the **shared Benjuicey Apps feedback backend**, merged to `main` and confirmed **live on whatadisaster.uk** — see below. Old `feedback` Firestore collection/rules removed from this app. | ✅ Done |
 | 2026-07-12 | Timed questions switched to click-to-reveal: options + countdown are now hidden behind a "Reveal Options" button instead of starting immediately on question load (stakeholder feedback — countdowns started before players had read the options) | ✅ Done |
+| 2026-07-12 | Answer-length telegraphing fixed for all remaining roles (`strategic`, `tactical`, `fire`, `police`, `council`, `nhs`, `utilities`, `ambulance`), both scenarios — ~97 questions rebalanced so distractors match the correct answer's length/detail, extending the `d4dd910` `voluntary`-role fix | ✅ Done |
 
 ---
 
@@ -49,5 +50,5 @@ From `info/whatadisaster-changes-briefing.md`:
 | Medium   | Heat-Health Alert (HHA) system — incorporate into Solstice questions and feedback |
 | Medium   | Met Office Hazard Manager — reference in Solstice scenario |
 | Medium   | UKHSA hot weather guidance — decisions around vulnerable populations and public messaging |
-| Medium   | Answer-length balancing — `d4dd910` (2026-06-26) fixed telegraphing (correct answer visibly longer/more detailed) for the `voluntary` role only, both scenarios. Still needs the same treatment on the other 8 roles (`strategic`, `tactical`, `fire`, `police`, `council`, `nhs`, `utilities`, `ambulance`) × both scenarios (`QB`/`QB2`) — ~102 questions. Considered moving question data to Firestore while at it; decided against — static content, instant load, no build/CLI pipeline currently set up for it. Fix in place in `index.html`. |
+| ~~Medium~~ | ~~Answer-length balancing~~ — `d4dd910` (2026-06-26) fixed telegraphing for `voluntary`; the remaining 8 roles × both scenarios fixed 2026-07-12 (~97 questions). Considered moving question data to Firestore while at it; decided against — static content, instant load, no build/CLI pipeline currently set up for it. |
 | Pending  | Extreme heat impacts content — awaiting slides from Heather |
