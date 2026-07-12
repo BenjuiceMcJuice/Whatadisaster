@@ -1,0 +1,26 @@
+rules_version = '2';
+// No Firebase CLI/deploy pipeline is configured for this project yet.
+// This file is the source of truth for what SHOULD be live — after any
+// change here, copy it into Firebase Console → Firestore Database → Rules → Publish.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Feedback is NOT collected here — it goes through the shared
+    // Benjuicey Apps feedback Worker (see index.html widget.js embed),
+    // which writes to its own Firestore project server-side. This
+    // project is only for this app's own anonymous usage events.
+
+    // Anonymous usage events (role played, scenario, completion, drop-off).
+    // No PII, no auth — write-only from the client.
+    match /events/{id} {
+      allow read, update, delete: if false;
+      allow create: if
+        request.resource.data.keys().hasAll(['type','createdAt']) &&
+        request.resource.data.keys().hasOnly(['type','role','scenario','qIdx','score','createdAt']) &&
+        request.resource.data.type in ['scenario_started','role_selected','question_answered','scenario_completed','feedback_submitted'] &&
+        request.resource.data.createdAt == request.time &&
+        (!('qIdx' in request.resource.data) || (request.resource.data.qIdx is int && request.resource.data.qIdx >= 0 && request.resource.data.qIdx < 50)) &&
+        (!('score' in request.resource.data) || (request.resource.data.score is int && request.resource.data.score >= 0 && request.resource.data.score <= 1000));
+    }
+  }
+}

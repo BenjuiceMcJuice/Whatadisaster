@@ -590,9 +590,30 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
   </div>
 </div>
 
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import{getFirestore,collection,addDoc,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+var firebaseConfig={
+  apiKey:"AIzaSyA5VeKRJRHM2P5mA9MnaRBu64Unh5sUEGY",
+  authDomain:"whatadisaster.firebaseapp.com",
+  projectId:"whatadisaster",
+  storageBucket:"whatadisaster.firebasestorage.app",
+  messagingSenderId:"185957961974",
+  appId:"1:185957961974:web:a86983ad6ebe59bf3b5cd7"
+};
+var fbApp=initializeApp(firebaseConfig);
+var db=getFirestore(fbApp);
+window.logEvent=function(type,extra){
+  var data=Object.assign({type:type,createdAt:serverTimestamp()},extra||{});
+  addDoc(collection(db,'events'),data).catch(function(e){console.warn('event log failed',e);});
+};
+</script>
+<!-- Shared feedback widget (Benjuicey Apps platform) -->
+<script defer src="https://benjuicey-feedback.benjuicemcjuice.workers.dev/widget.js" data-app-id="whatadisaster" data-accent="#FF4500"></script>
 <script>
 
 if(location.hostname.includes('pages.dev')){document.getElementById('devWarning').classList.add('show');}
+window.addEventListener('benjuiceyfeedback:submitted',function(e){logEventSafe('feedback_submitted',{role:G.roleKey,scenario:G.scenario});});
 
 const APP_VERSION='1.1.1';
 
@@ -2279,6 +2300,7 @@ function buildRoles(){
 
 function selectRole(key){
   var r=ROLES[key];G.roleKey=key;
+  logEventSafe('role_selected',{role:key,scenario:G.scenario});
   document.documentElement.style.setProperty('--rc',r.color);
   document.getElementById('hRole').textContent=r.icon+' '+r.name;
   document.querySelectorAll('.gtt').forEach(function(el){el.textContent=G.scenario==='hotwells'?'Op. Solstice':'Op. Ashdown';});
@@ -2288,6 +2310,7 @@ function selectRole(key){
 function startGame(scenario){
   G.scenario=scenario||G.scenario||'ashdown';
   G.score=0;G.qIdx=0;G.answers=[];G.flags={};G.cons={life:10,infra:10,comm:10,coord:10};G.mapShown={};
+  logEventSafe('scenario_started',{role:G.roleKey,scenario:G.scenario});
   showScreen('game');buildDots();updateConsBars();loadQ();
   G.exTimer=0;
   if(G.timerInt)clearInterval(G.timerInt);
@@ -2416,6 +2439,7 @@ function pick(idx,timedOut){
   G.score+=pts;
   var qual=pts>=16?'good':pts>=8?'ok':'bad';
   G.answers.push({title:q.title,pts:pts,max:20,quality:qual,timeout:timedOut,ft:chosen.ft||'',chosenText:chosen.t||''});
+  logEventSafe('question_answered',{role:G.roleKey,scenario:G.scenario,qIdx:G.qIdx});
   updateConsBars();
   var isG=pts>=16,isO=pts>=8;
   document.getElementById('modal').style.setProperty('--mc',timedOut?'#800':isG?'#2ecc71':isO?'#f39c12':'#e74c3c');
@@ -2435,6 +2459,13 @@ function closeModal(){
   G.qIdx++;
   var se=document.getElementById('scoreEl');if(se)se.textContent=G.score;
   checkAndShowMap(G.qIdx,function(){showScreen('game');loadQ();});
+}
+
+function logEventSafe(type,extra){
+  if(typeof window.logEvent!=='function')return;
+  var data={};
+  if(extra){for(var k in extra){if(extra[k])data[k]=extra[k];}}
+  try{window.logEvent(type,data);}catch(e){}
 }
 
 function updateConsBars(){
@@ -2460,6 +2491,7 @@ function getOutcome(){
 
 function endGame(){
   if(G.timerInt)clearInterval(G.timerInt);
+  logEventSafe('scenario_completed',{role:G.roleKey,scenario:G.scenario,score:G.score});
   var o=getOutcome();var maxPts=getQs().length*20;var r=ROLES[G.roleKey];
   document.getElementById('resHero').style.background='linear-gradient(135deg,#1a0800,var(--dark2))';
   var ban=document.getElementById('resBanner');

@@ -5,6 +5,12 @@ Granular daily work is in `logs/YYYY-MM-DD.md`.
 
 ---
 
+## ⚠️ Needs attention next session
+
+**Firestore rules not yet published.** `firestore.rules` (now `events`-only, see below) is written in the repo but hasn't been pasted into the Firebase console (Firestore → Rules → Publish) yet — Ben to do.
+
+---
+
 ## Milestones
 
 | Date       | Milestone                                                        | Status   |
@@ -16,30 +22,21 @@ Granular daily work is in `logs/YYYY-MM-DD.md`.
 | 2026-05-28 | SDLC docs, DEVLOG, daily logs structure added                    | ✅ Done |
 | 2026-05-28 | Bug fix: game header always showed "Op. Ashdown" in Solstice     | ✅ Done |
 | 2026-06-25 | v1.2.0 — New role: Voluntary Agency Coordinator, both scenarios (6 questions, fictional orgs, LA activation cascade, timed Q3 in Solstice) | ✅ Done |
+| 2026-07-10 | Cloudflare Web Analytics enabled (cookieless, no consent banner) | ✅ Done |
+| 2026-07-10 | Firebase project + Firestore live; usage event logging (role/scenario/completion/drop-off) wired into `index.html` → `events` collection. Security rules written but **not yet published** in console. | 🟡 Code done, rules pending publish + live verification |
+| 2026-07-11 | Feedback switched from a standalone Firestore write to the **shared Benjuicey Apps feedback backend** — see below. Old `feedback` Firestore collection/rules removed from this app. | ✅ Done |
 
 ---
 
-## Planned: Feedback & Release Tracking (Firebase — setup pending)
+## Feedback: shared Benjuicey Apps backend
 
-Goal: replace ad-hoc email feedback with a structured system. Firebase/Firestore is the intended backend — to be configured when next on laptop.
+**Standard:** this app follows the cross-app feedback standard — see the central docs in `benjuicey-apps/docs/`: **feedback-standard.md** (the standard) and **feedback-how-it-works.md** (end-to-end flow + how Claude triages submissions). This app's trigram is `WDA`; categories are the canonical `bug`/`content`/`request`/`general`.
 
-**Three things to build:**
+This app no longer has its own feedback storage. The feedback button (bottom-right) is the embeddable widget from the `benjuicey-apps` repo's Cloudflare Worker (`https://benjuicey-feedback.benjuicemcjuice.workers.dev/widget.js`, loaded via `<script data-app-id="whatadisaster">` in `index.html`). Submissions go straight to the shared Firestore project, tagged with this app's trigram `WDA`, ref format `WDA-0001` etc. Every app Ben builds is meant to use the same widget — see `benjuicey-apps/docs/backlog.md` for the full platform plan (admin dashboard, AI analysis, etc).
 
-1. **Partner / internal feedback tracker** — each item gets a human-readable reference (e.g. `WAD-FB-001`). Fields: source, date, category (content / UX / feature / bug), description, status, linked commit. Firestore collection: `feedback`.
-2. **Community feedback form** — lightweight in-app form (role played, scenario, free text) writing to the same collection with `source: 'community'`. Rate limiting needed; no auth required.
-3. **Structured release log** — Firestore-backed changelog (version, date, type, summary, feedback refs resolved). Could power a "What's new" panel in-app.
+**What's still local to this app:** anonymous usage-event logging (`role_selected`, `scenario_started`, `question_answered`, `scenario_completed`, `feedback_submitted` — the last one now fires off a `benjuiceyfeedback:submitted` event dispatched by the widget) — this stays in the `whatadisaster` Firebase project's `events` collection since it's app-specific analytics, not feedback. `firestore.rules` here now only covers `events`.
 
-**Design decisions to make at setup time:**
-- Reference ID format: auto-increment (`WAD-FB-001`) vs Firestore auto-ID — auto-increment friendlier for human reference
-- Auth for admin review UI: Google Auth simplest
-- Whether community form needs CAPTCHA / rate limiting
-- Whether release log is surfaced in-app or internal only
-
-**Build order when Firebase is ready:**
-1. Create Firebase project, enable Firestore
-2. Add Firebase SDK to `index.html` via CDN (no build step needed)
-3. Community feedback write path first
-4. Admin read UI separately (simple auth-gated HTML page)
+**Next step:** publish the trimmed `firestore.rules` in the Firebase console (Ben to do), and add `whatadisaster.uk` / `whatadisaster.pages.dev` to the Worker's CORS allowlist + redeploy the Worker (done in `benjuicey-apps` alongside this change — confirm it's live before this branch merges).
 
 ---
 
@@ -49,6 +46,7 @@ From `info/whatadisaster-changes-briefing.md`:
 
 | Priority | Item |
 |----------|------|
+| **Next** | **LinkedIn launch readiness** — ~~Cloudflare Web Analytics~~ ✅, ~~Feedback widget + usage events~~ ✅ (events rules pending publish). Still open: social preview tags + OG image, better title, and the stakeholder content/timer fixes below. Full spec: `info/linkedin-launch-readiness-spec.md` |
 | ~~High~~ | ~~Bug: rename "Operation Ashdown" → "Operation Solstice" in Solstice scenario display text~~ — fixed 2026-05-28 |
 | ~~High~~ | ~~New role: Voluntary Agency Coordinator — both scenarios~~ — shipped 2026-06-25 |
 | Medium   | Heat-Health Alert (HHA) system — incorporate into Solstice questions and feedback |
