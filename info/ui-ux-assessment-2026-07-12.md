@@ -171,12 +171,13 @@ Already scoped in `info/linkedin-launch-readiness-spec.md` §1.1; restating here
 
 Each phase is independently shippable and testable.
 
-**Phase 1 — Correctness & a11y (P0, ~half-day)**
-- A1 viewport / pinch-zoom + safe-area (A6)
-- A2 delete duplicated DOM blocks
-- A3 modal backdrop no longer advances
-- A4 in-game exit control
-- A5 role cards as buttons + focus states
+**Phase 1 — Correctness & a11y (P0) — ✅ DONE 2026-07-12** (commit on `claude/whatadisaster-ui-ux-assessment-xwrslb`)
+- ✅ A1 viewport / pinch-zoom (`viewport-fit=cover`, both pages) + A6 safe-area insets on `.gh`/`.md`
+- ✅ A2 deleted the four duplicated DOM blocks (fireMap/game/results/modal #2) — every screen id now unique; verified both scenarios play through incl. fire-map interstitials with no JS errors
+- ✅ A3 modal backdrop no longer advances (removed backdrop `onclick`; only Continue advances)
+- ✅ A4 in-game exit control (quiet ✕ in header → `#exitConfirm` overlay → `exitToMenu()`, clears timers)
+- ✅ A5 role cards render as `<button>` with `aria-label`; keyboard-activatable; `:focus-visible` outlines added
+- _Note (out of P0 scope, pre-existing):_ `fire1`–`fire5`/`emb1`–`emb3` ids are duplicated **within** the live fireMap across `svgAshdown` + `svgCabot`, so in Solstice the heat-zone blobs animate on the hidden Ashdown SVG rather than the visible Cabot one. The map screen, fact, and Continue all work; only the blob animation is affected in hotwells. Track as a follow-up (give each SVG's shapes unique ids).
 
 **Phase 2 — Game-screen density (P1, ~1 day)**
 - B1 hierarchy: slim status bar + consequence pill; Agencies/Command → drawer
