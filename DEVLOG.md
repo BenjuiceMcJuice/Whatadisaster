@@ -43,7 +43,7 @@ From `info/whatadisaster-changes-briefing.md`:
 
 | Priority | Item |
 |----------|------|
-| **Next** | **LinkedIn launch readiness** — ~~Cloudflare Web Analytics~~ ✅, ~~Feedback widget + usage events~~ ✅, ~~timer click-to-reveal~~ ✅. Still open: social preview tags + OG image, better title, and the remaining stakeholder content fixes below. Full spec: `info/linkedin-launch-readiness-spec.md` |
+| **Next** | **LinkedIn launch readiness** — ~~Cloudflare Web Analytics~~ ✅, ~~Feedback widget + usage events~~ ✅, ~~timer click-to-reveal~~ ✅, ~~stakeholder content-accuracy fixes (TCG/hospital MI plan, NWFC→NRFC, crew safety, ambulance surge)~~ ✅ 2026-06-11. Still open: social preview tags + OG image, better title. Full spec: `info/linkedin-launch-readiness-spec.md` |
 | ~~High~~ | ~~Bug: rename "Operation Ashdown" → "Operation Solstice" in Solstice scenario display text~~ — fixed 2026-05-28 |
 | ~~High~~ | ~~New role: Voluntary Agency Coordinator — both scenarios~~ — shipped 2026-06-25 |
 | Medium   | Heat-Health Alert (HHA) system — incorporate into Solstice questions and feedback |
