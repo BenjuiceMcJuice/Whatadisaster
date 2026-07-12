@@ -221,7 +221,7 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
   <div class="dw-box">
     <div class="dw-icon">&#128682;</div>
     <div class="dw-title">End exercise?</div>
-    <div class="dw-body">Your progress this round will be lost and you'll return to the role menu.</div>
+    <div class="dw-body">Your progress this round will be lost and you'll return to the home screen.</div>
     <button class="btn" style="max-width:none" onclick="exitToMenu()">End exercise</button>
     <button class="dw-dismiss" style="margin-top:.75rem" onclick="closeExitConfirm()">Keep playing</button>
   </div>
@@ -432,6 +432,7 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
     <button class="btn" onclick="restart()">🔄 Play Again (Different Role)</button>
     <button class="btn2" onclick="showDebrief()">&#128218; Review Decisions</button>
     <button class="btn2" onclick="showBriefing()">&#128203; Review Briefing</button>
+    <button class="btn2" onclick="goHome()">&#127968; Home</button>
   </div>
 </div>
 
@@ -464,9 +465,10 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
     </div>
   </div>
   <div style="padding:1rem;flex:1;overflow-y:auto" id="debriefList"></div>
-  <div style="padding:1rem;background:var(--dark3);border-top:1px solid rgba(255,255,255,.07);display:flex;gap:.75rem">
-    <button class="btn2" onclick="showScreen('results')" style="flex:1">&#8592; Results</button>
-    <button class="btn" onclick="showScreen('roleSelect')" style="flex:1;max-width:none">Play Again</button>
+  <div style="padding:1rem;background:var(--dark3);border-top:1px solid rgba(255,255,255,.07);display:flex;flex-wrap:wrap;gap:.75rem">
+    <button class="btn2" onclick="showScreen('results')" style="flex:1;min-width:100px">&#8592; Results</button>
+    <button class="btn" onclick="showScreen('roleSelect')" style="flex:1;min-width:100px;max-width:none">Play Again</button>
+    <button class="btn2" onclick="goHome()" style="flex:1;min-width:100px">&#127968; Home</button>
   </div>
 </div>
 
@@ -2460,14 +2462,18 @@ function showDebrief(){
 
 function restart(){G.score=0;G.qIdx=0;G.answers=[];showScreen('roleSelect');}
 
-function openExitConfirm(){var el=document.getElementById('exitConfirm');if(el)el.style.display='flex';}
-function closeExitConfirm(){var el=document.getElementById('exitConfirm');if(el)el.style.display='none';}
-function exitToMenu(){
+function goHome(){
   if(G.timerInt){clearInterval(G.timerInt);G.timerInt=null;}
   if(G.pressInt){clearInterval(G.pressInt);G.pressInt=null;}
   var m=document.getElementById('modal');if(m)m.style.display='none';
   closeExitConfirm();
-  restart();
+  showScreen('splash');
+}
+
+function openExitConfirm(){var el=document.getElementById('exitConfirm');if(el)el.style.display='flex';}
+function closeExitConfirm(){var el=document.getElementById('exitConfirm');if(el)el.style.display='none';}
+function exitToMenu(){
+  goHome();
 }
 
 
