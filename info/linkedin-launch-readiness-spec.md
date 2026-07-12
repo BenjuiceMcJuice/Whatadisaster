@@ -16,12 +16,11 @@ _Created: 2026-07-10 · Owner: Ben · Branch for work: `claude/app-roadmap-devlo
 - ✅ `firestore.rules` written (create-only, field/type validated, no client read/update/delete) — trimmed 2026-07-11 to `events` only, since feedback no longer touches this project.
 
 **Not done — in priority order (reprioritised 2026-07-12: content validity before social preview polish):**
-1. **Publish `firestore.rules` in the Firebase console.** Written but not live — Firestore → Rules → paste → Publish. Until this happens the `events` collection is on whatever default the console set at creation. *Ben to do this.*
-2. **Verify a live write end-to-end.** Submit a real feedback item on `whatadisaster.uk` once the branch is live and check it lands in the shared Firestore project as a `WDA-000x` ref; separately verify an `events` write lands too.
-3. Stakeholder content-accuracy + timer fixes (`info/stakeholder-feedback-june-2026.md`) — not started.
-4. HHA / Met Office Hazard Manager / UKHSA hot weather guidance content (`info/whatadisaster-changes-briefing.md` §2–4) — not started, partly blocked on Heather's slides.
-5. Stage 1 quick wins: OG/Twitter social preview tags + image, better `<title>` — deprioritised until content above is validated.
-6. Rate limiting on the shared Worker's `/submit` path — open item on the `benjuicey-apps` backlog, not this repo's problem to solve.
+1. **Verify a live `events` write end-to-end**, now that `firestore.rules` is published (done 2026-07-12). Play through a scenario on `whatadisaster.uk` and confirm an `events` doc lands in Firestore; separately confirm a real feedback item lands in the shared Firestore project as a `WDA-000x` ref.
+2. Stakeholder content-accuracy + timer fixes (`info/stakeholder-feedback-june-2026.md`) — not started.
+3. HHA / Met Office Hazard Manager / UKHSA hot weather guidance content (`info/whatadisaster-changes-briefing.md` §2–4) — not started, partly blocked on Heather's slides.
+4. Stage 1 quick wins: OG/Twitter social preview tags + image, better `<title>` — deprioritised until content above is validated.
+5. Rate limiting on the shared Worker's `/submit` path — open item on the `benjuicey-apps` backlog, not this repo's problem to solve.
 
 ---
 
