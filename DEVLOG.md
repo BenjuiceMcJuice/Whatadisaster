@@ -5,12 +5,6 @@ Granular daily work is in `logs/YYYY-MM-DD.md`.
 
 ---
 
-## ⚠️ Needs attention next session
-
-**Firestore rules not yet published.** `firestore.rules` (now `events`-only, see below) is written in the repo but hasn't been pasted into the Firebase console (Firestore → Rules → Publish) yet — Ben to do.
-
----
-
 ## Milestones
 
 | Date       | Milestone                                                        | Status   |
@@ -23,14 +17,15 @@ Granular daily work is in `logs/YYYY-MM-DD.md`.
 | 2026-05-28 | Bug fix: game header always showed "Op. Ashdown" in Solstice     | ✅ Done |
 | 2026-06-25 | v1.2.0 — New role: Voluntary Agency Coordinator, both scenarios (6 questions, fictional orgs, LA activation cascade, timed Q3 in Solstice) | ✅ Done |
 | 2026-07-10 | Cloudflare Web Analytics enabled (cookieless, no consent banner) | ✅ Done |
-| 2026-07-10 | Firebase project + Firestore live; usage event logging (role/scenario/completion/drop-off) wired into `index.html` → `events` collection. Security rules written but **not yet published** in console. | 🟡 Code done, rules pending publish + live verification |
+| 2026-07-10 | Firebase project + Firestore live; usage event logging (role/scenario/completion/drop-off) wired into `index.html` → `events` collection. Security rules written and published in console. | ✅ Done |
 | 2026-07-12 | Feedback switched from a standalone Firestore write to the **shared Benjuicey Apps feedback backend**, merged to `main` and confirmed **live on whatadisaster.uk** — see below. Old `feedback` Firestore collection/rules removed from this app. | ✅ Done |
+| 2026-07-12 | Timed questions switched to click-to-reveal: options + countdown are now hidden behind a "Reveal Options" button instead of starting immediately on question load (stakeholder feedback — countdowns started before players had read the options) | ✅ Done |
 
 ---
 
 ## Feedback: shared Benjuicey Apps backend — ✅ LIVE
 
-**Status (2026-07-12):** merged to `main`, deployed, confirmed live on whatadisaster.uk — the feedback button (bottom-right) loads and submits successfully. Nothing pending on this app's side except the `firestore.rules` publish noted at the top of this file (and that only affects `events` analytics, not feedback).
+**Status (2026-07-12):** merged to `main`, deployed, confirmed live on whatadisaster.uk — the feedback button (bottom-right) loads and submits successfully. Nothing pending on this app's side.
 
 **Standard:** this app follows the cross-app feedback standard — see the central docs in the `Benjuicey-apps` repo, `docs/`: **feedback-standard.md** (the standard: schema, canonical categories) and **feedback-how-it-works.md** (end-to-end flow, the admin dashboard/API, and how to have Claude triage/categorise new submissions — on demand or scheduled). This app's trigram is `WDA`; categories are the canonical `bug`/`content`/`request`/`general`.
 
@@ -38,7 +33,7 @@ This app no longer has its own feedback storage. The feedback button is the embe
 
 **Email notification (admin-wide, not app-specific):** the Worker can now email Ben on every new submission across all apps, but it's **dormant** until he sets a real `RESEND_API_KEY` secret — see `Benjuicey-apps/docs/feedback-how-it-works.md` → "Turning email on". Nothing to do here.
 
-**What's still local to this app:** anonymous usage-event logging (`role_selected`, `scenario_started`, `question_answered`, `scenario_completed`, `feedback_submitted` — the last one fires off the widget's `benjuiceyfeedback:submitted` event) — stays in the `whatadisaster` Firebase project's `events` collection since it's app-specific analytics, not feedback. `firestore.rules` here now only covers `events` — still needs publishing, see top of file.
+**What's still local to this app:** anonymous usage-event logging (`role_selected`, `scenario_started`, `question_answered`, `scenario_completed`, `feedback_submitted` — the last one fires off the widget's `benjuiceyfeedback:submitted` event) — stays in the `whatadisaster` Firebase project's `events` collection since it's app-specific analytics, not feedback. `firestore.rules` here now only covers `events` — published in console 2026-07-12.
 
 ---
 
@@ -48,10 +43,11 @@ From `info/whatadisaster-changes-briefing.md`:
 
 | Priority | Item |
 |----------|------|
-| **Next** | **LinkedIn launch readiness** — ~~Cloudflare Web Analytics~~ ✅, ~~Feedback widget + usage events~~ ✅ (events rules pending publish). Still open: social preview tags + OG image, better title, and the stakeholder content/timer fixes below. Full spec: `info/linkedin-launch-readiness-spec.md` |
+| **Next** | **LinkedIn launch readiness** — ~~Cloudflare Web Analytics~~ ✅, ~~Feedback widget + usage events~~ ✅, ~~timer click-to-reveal~~ ✅. Still open: social preview tags + OG image, better title, and the remaining stakeholder content fixes below. Full spec: `info/linkedin-launch-readiness-spec.md` |
 | ~~High~~ | ~~Bug: rename "Operation Ashdown" → "Operation Solstice" in Solstice scenario display text~~ — fixed 2026-05-28 |
 | ~~High~~ | ~~New role: Voluntary Agency Coordinator — both scenarios~~ — shipped 2026-06-25 |
 | Medium   | Heat-Health Alert (HHA) system — incorporate into Solstice questions and feedback |
 | Medium   | Met Office Hazard Manager — reference in Solstice scenario |
 | Medium   | UKHSA hot weather guidance — decisions around vulnerable populations and public messaging |
+| Medium   | Answer-length balancing — `d4dd910` (2026-06-26) fixed telegraphing (correct answer visibly longer/more detailed) for the `voluntary` role only, both scenarios. Still needs the same treatment on the other 8 roles (`strategic`, `tactical`, `fire`, `police`, `council`, `nhs`, `utilities`, `ambulance`) × both scenarios (`QB`/`QB2`) — ~102 questions. Considered moving question data to Firestore while at it; decided against — static content, instant load, no build/CLI pipeline currently set up for it. Fix in place in `index.html`. |
 | Pending  | Extreme heat impacts content — awaiting slides from Heather |

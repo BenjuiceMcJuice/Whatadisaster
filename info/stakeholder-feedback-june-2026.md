@@ -66,7 +66,7 @@ Immediate-decision timers are a little short; people need more time to read the 
 
 ## Follow-up Actions
 
-- [ ] Extend timer duration on timed questions, or implement click-to-reveal before countdown starts
+- [x] Extend timer duration on timed questions, or implement click-to-reveal before countdown starts — click-to-reveal shipped 2026-07-12
 - [ ] Correct TCG / hospital MI plan option wording
 - [ ] Change NWFC → NRFC; move mutual aid option to Fire commander (not TCG)
 - [ ] Revise crew safety / extreme heat option (conditional on no symptomatic crew)
