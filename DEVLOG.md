@@ -24,19 +24,21 @@ Granular daily work is in `logs/YYYY-MM-DD.md`.
 | 2026-06-25 | v1.2.0 — New role: Voluntary Agency Coordinator, both scenarios (6 questions, fictional orgs, LA activation cascade, timed Q3 in Solstice) | ✅ Done |
 | 2026-07-10 | Cloudflare Web Analytics enabled (cookieless, no consent banner) | ✅ Done |
 | 2026-07-10 | Firebase project + Firestore live; usage event logging (role/scenario/completion/drop-off) wired into `index.html` → `events` collection. Security rules written but **not yet published** in console. | 🟡 Code done, rules pending publish + live verification |
-| 2026-07-11 | Feedback switched from a standalone Firestore write to the **shared Benjuicey Apps feedback backend** — see below. Old `feedback` Firestore collection/rules removed from this app. | ✅ Done |
+| 2026-07-12 | Feedback switched from a standalone Firestore write to the **shared Benjuicey Apps feedback backend**, merged to `main` and confirmed **live on whatadisaster.uk** — see below. Old `feedback` Firestore collection/rules removed from this app. | ✅ Done |
 
 ---
 
-## Feedback: shared Benjuicey Apps backend
+## Feedback: shared Benjuicey Apps backend — ✅ LIVE
 
-**Standard:** this app follows the cross-app feedback standard — see the central docs in `benjuicey-apps/docs/`: **feedback-standard.md** (the standard) and **feedback-how-it-works.md** (end-to-end flow + how Claude triages submissions). This app's trigram is `WDA`; categories are the canonical `bug`/`content`/`request`/`general`.
+**Status (2026-07-12):** merged to `main`, deployed, confirmed live on whatadisaster.uk — the feedback button (bottom-right) loads and submits successfully. Nothing pending on this app's side except the `firestore.rules` publish noted at the top of this file (and that only affects `events` analytics, not feedback).
 
-This app no longer has its own feedback storage. The feedback button (bottom-right) is the embeddable widget from the `benjuicey-apps` repo's Cloudflare Worker (`https://benjuicey-feedback.benjuicemcjuice.workers.dev/widget.js`, loaded via `<script data-app-id="whatadisaster">` in `index.html`). Submissions go straight to the shared Firestore project, tagged with this app's trigram `WDA`, ref format `WDA-0001` etc. Every app Ben builds is meant to use the same widget — see `benjuicey-apps/docs/backlog.md` for the full platform plan (admin dashboard, AI analysis, etc).
+**Standard:** this app follows the cross-app feedback standard — see the central docs in the `Benjuicey-apps` repo, `docs/`: **feedback-standard.md** (the standard: schema, canonical categories) and **feedback-how-it-works.md** (end-to-end flow, the admin dashboard/API, and how to have Claude triage/categorise new submissions — on demand or scheduled). This app's trigram is `WDA`; categories are the canonical `bug`/`content`/`request`/`general`.
 
-**What's still local to this app:** anonymous usage-event logging (`role_selected`, `scenario_started`, `question_answered`, `scenario_completed`, `feedback_submitted` — the last one now fires off a `benjuiceyfeedback:submitted` event dispatched by the widget) — this stays in the `whatadisaster` Firebase project's `events` collection since it's app-specific analytics, not feedback. `firestore.rules` here now only covers `events`.
+This app no longer has its own feedback storage. The feedback button is the embeddable widget from the `Benjuicey-apps` repo's Cloudflare Worker (`https://benjuicey-feedback.benjuicemcjuice.workers.dev/widget.js`, loaded via `<script defer data-app-id="whatadisaster">` in `index.html`). Submissions go to the shared Firestore project, tagged `WDA`, ref format `WDA-0001` etc. Every app Ben builds uses the same widget — BetaLog adopted it the same day; see `Benjuicey-apps/docs/feedback-standard.md`'s adoption table for the rest.
 
-**Next step:** publish the trimmed `firestore.rules` in the Firebase console (Ben to do), and add `whatadisaster.uk` / `whatadisaster.pages.dev` to the Worker's CORS allowlist + redeploy the Worker (done in `benjuicey-apps` alongside this change — confirm it's live before this branch merges).
+**Email notification (admin-wide, not app-specific):** the Worker can now email Ben on every new submission across all apps, but it's **dormant** until he sets a real `RESEND_API_KEY` secret — see `Benjuicey-apps/docs/feedback-how-it-works.md` → "Turning email on". Nothing to do here.
+
+**What's still local to this app:** anonymous usage-event logging (`role_selected`, `scenario_started`, `question_answered`, `scenario_completed`, `feedback_submitted` — the last one fires off the widget's `benjuiceyfeedback:submitted` event) — stays in the `whatadisaster` Firebase project's `events` collection since it's app-specific analytics, not feedback. `firestore.rules` here now only covers `events` — still needs publishing, see top of file.
 
 ---
 

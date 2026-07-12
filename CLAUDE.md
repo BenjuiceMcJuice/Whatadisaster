@@ -13,11 +13,11 @@ Edit HTML directly and open in a browser to test. Deploy by pushing to `main` (C
 
 ## Session Start — Feedback Review
 
-Feedback for this app is **not** stored here — it goes through the shared Benjuicey Apps feedback backend (Cloudflare Worker + Firestore, in the `benjuicey-apps` repo), tagged with this app's trigram `WDA`. See "Feedback: shared Benjuicey Apps backend" in `DEVLOG.md` for how it's wired.
+Feedback is **live** (since 2026-07-12) and **not** stored in this repo — it goes through the shared Benjuicey Apps feedback backend (Cloudflare Worker + Firestore, in the `Benjuicey-apps` repo), tagged with this app's trigram `WDA`. See "Feedback: shared Benjuicey Apps backend" in `DEVLOG.md` for status, and `Benjuicey-apps/docs/feedback-how-it-works.md` for how to actually pull and triage submissions (admin dashboard, API, or asking Claude to categorise them).
 
 At the start of every session, before any other work:
 
-1. **If the `benjuicey-apps` repo is in scope this session:** check its admin data / `docs/backlog.md` for anything tagged `WDA` and surface it.
+1. **If the `Benjuicey-apps` repo is in scope this session and Ben has supplied the admin password:** pull open `WDA` submissions per the triage workflow in `Benjuicey-apps/docs/feedback-how-it-works.md` and surface a summary.
 2. **Otherwise:** check `info/` for any feedback docs with unresolved items and surface them. Don't query a local Firestore `feedback` collection — it no longer exists for this app.
 
 Do this once per session without being asked. Then wait for instruction.
