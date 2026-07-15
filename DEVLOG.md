@@ -23,6 +23,7 @@ Granular daily work is in `logs/YYYY-MM-DD.md`.
 | 2026-07-12 | Answer-length telegraphing fixed for all remaining roles (`strategic`, `tactical`, `fire`, `police`, `council`, `nhs`, `utilities`, `ambulance`), both scenarios — ~97 questions rebalanced so distractors match the correct answer's length/detail, extending the `d4dd910` `voluntary`-role fix | ✅ Done |
 | 2026-07-12 | **UI/UX assessment (mobile-focused) completed** — full review of `index.html`/`how-it-works.html` at iPhone/Android viewports. Severity-ranked spec: `info/ui-ux-assessment-2026-07-12.md`. See Backlog → "UI/UX mobile overhaul". | ✅ Done (spec) |
 | 2026-07-12 | **UI/UX P0 (correctness + a11y) shipped** — re-enabled pinch-zoom + safe-area insets; deleted the 4 duplicated DOM blocks (every screen id now unique); modal backdrop no longer skips the question; added in-game exit (✕ → confirm); role cards are real `<button>`s with aria-labels + focus outlines. Verified: both scenarios play through to results incl. fire-map, 0 JS errors. Phase 1 of the assessment spec. | ✅ Done |
+| 2026-07-15 | Timed decisions given more time (repeat feedback: still too short despite click-to-reveal) — added a 2.5s frozen "👁 READ THE OPTIONS" reading grace after reveal before the countdown drains, and extended all 16 `timerSecs` ~+50% (10→15, 12→18, 15→22, 25→37). Timeout severity unchanged. Verified in-browser + a deterministic tick test of the real `startPressTimer`. | ✅ Done |
 
 ---
 

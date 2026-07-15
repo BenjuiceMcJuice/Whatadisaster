@@ -680,7 +680,7 @@ strategic:[
    sit:'The Tactical Commander reports the gas substation perimeter has been breached. The Western Power engineer on scene says there is a risk of catastrophic gas pressure failure. They recommend evacuating a 500m radius \u2014 1,200 more residents and full B4107 closure.',
    stats:[{l:'Substation: perimeter breached',t:'r'},{l:'Explosion risk: engineer-confirmed',t:'r'},{l:'500m evac: 1,200 residents',t:'r'},{l:'B4107: full closure required',t:'a'}],
    cmd:{g:true,s:true,b:true},ag:{fire:true,police:true,ambulance:true,council:true,utilities:true},
-   timed:true,timerSecs:12,
+   timed:true,timerSecs:18,
    q:'URGENT: Qualified engineer recommends 500m evacuation. Do you authorise?',
    opts:[
      {t:'YES \u2014 authorise the 500m evacuation immediately exactly as the engineer recommends, and accept the B4107 full closure that comes with it',r:'Correct. A qualified engineer has assessed an explosion risk. Life safety takes precedence \u2014 disruption from the road closure is secondary.',pts:20,best:true,cons:{life:-25,comm:10},fi:'pos',ft:'500m evacuation authorised. Life safety protected. Engineer proceeding with controlled isolation.'},
@@ -757,7 +757,7 @@ tactical:[
    sit:'Fire Bronze says the B4107 must stay open for engine access. Police Bronze says it must close \u2014 near-zero smoke visibility and a fuel tanker is approaching. Both are right within their remit. Deadlocked. Tanker is 3 minutes away.',
    stats:[{l:'B4107: near-zero visibility',t:'r'},{l:'Fuel tanker: 3 min away',t:'r'},{l:'Fire: needs B4107 access',t:'a'},{l:'Agency deadlock: TCG',t:'r'}],
    cmd:{g:true,s:true,b:true},ag:{fire:true,police:true,ambulance:true,council:true},
-   timed:true,timerSecs:12,
+   timed:true,timerSecs:18,
    q:'URGENT: Fire needs B4107 open. Police need it closed. Fuel tanker 3 minutes away. Decide.',
    opts:[
      {t:'Close B4107 to public \u2014 create a dedicated emergency vehicle corridor with police escort. Divert the tanker off now.',r:'Correct. Life safety takes precedence. A dedicated emergency corridor allows fire engines to continue. Both needs met.',pts:20,best:true,cons:{life:-15,coord:-10},fi:'pos',ft:'B4107 closed. Emergency corridor active. Tanker diverted. Fire engines continuing via escorted route.'},
@@ -806,7 +806,7 @@ tactical:[
    sit:'HART team is managing a complex casualty at Meridian House. Simultaneously the B4107 mass casualty requires HART capability. You have one HART team.',
    stats:[{l:'HART: committed to Meridian House',t:'r'},{l:'B4107 mass casualty: 8 casualties',t:'r'},{l:'One HART team available',t:'r'},{l:'Both situations: critical',t:'r'}],
    cmd:{g:true,s:true,b:true},ag:{fire:true,police:true,ambulance:true,nhs:true},
-   timed:true,timerSecs:12,
+   timed:true,timerSecs:18,
    q:'URGENT: One HART team, two critical simultaneous demands. What is your TCG decision?',
    opts:[
      {t:'Request mutual aid for a second HART team immediately. Complete the Meridian House extraction \u2014 5 minutes from completion. Then redeploy to B4107.',r:'Correct. Mutual aid buys time. Completing the near-finished task before redeployment is more efficient than abandoning mid-extraction.',pts:20,best:true,cons:{life:-10,coord:-10},fi:'pos',ft:'Mutual aid requested. HART completes Meridian House extraction then redeploys to B4107.'},
@@ -857,7 +857,7 @@ fire:[
    sit:'Your forward crew reports the fire front has reached the substation perimeter fence \u2014 it is alight. The Western Power engineer is 12 minutes away. Your crew is 50m from the fence on a hose line.',
    stats:[{l:'Substation fence: alight',t:'r'},{l:'Crew: 50m from fence',t:'r'},{l:'Engineer: 12 min away',t:'a'},{l:'Gas pressure failure risk',t:'r'}],
    cmd:{g:false,s:true,b:true},ag:{fire:true,police:true,utilities:true},
-   timed:true,timerSecs:10,
+   timed:true,timerSecs:15,
    q:'URGENT: Substation fence alight. Crew 50m away. Immediate order?',
    opts:[
      {t:'Withdraw crew to 300m immediately \u2014 no fire action on substation until engineer arrives and advises',r:'Correct. Crew safety is paramount. 50m from a potentially failing gas installation is indefensible. Withdraw, establish 300m cordon, wait for the engineer.',pts:20,best:true,cons:{life:-20},fi:'pos',ft:'Crew withdrawn to 300m. Cordon established. Engineer en route. No casualties.'},
@@ -944,7 +944,7 @@ police:[
    sit:'Smoke has reduced B4107 visibility to near zero in a 400m section. Two vehicles have stopped in the carriageway. A fuel tanker is approaching from the south \u2014 approximately 2 minutes away. Highways England not responding.',
    stats:[{l:'B4107: near-zero visibility',t:'r'},{l:'2 vehicles: stopped in road',t:'r'},{l:'Fuel tanker: 2 min away',t:'r'},{l:'Highways England: not responding',t:'a'}],
    cmd:{g:false,s:true,b:true},ag:{fire:true,police:true},
-   timed:true,timerSecs:12,
+   timed:true,timerSecs:18,
    q:'URGENT: Fuel tanker 2 minutes away. Near-zero visibility. Do you close the B4107?',
    opts:[
      {t:'YES \u2014 close B4107 immediately using police powers, divert tanker now. Notify TCG and Highways England simultaneously.',r:'Correct. You have powers under the Road Traffic Regulation Act. Near-zero visibility with a fuel tanker approaching stationary vehicles is exactly the situation they exist for. You do not need Highways England permission.',pts:20,best:true,cons:{life:-20},fi:'pos',ft:'B4107 closed. Tanker diverted. Standing vehicles guided to safety. Mass casualty averted.'},
@@ -1056,7 +1056,7 @@ council:[
    sit:'Fire is 300m from Meridian House. 15 residents still inside \u2014 8 with mobility needs. Fire advises the building must be clear in 20 minutes before lifts go offline. You have 2 council housing officers, 2 NHS support staff, and a voluntary sector welfare team.',
    stats:[{l:'15 residents: still inside',t:'r'},{l:'8 with mobility needs',t:'r'},{l:'Fire: must clear in 20 min',t:'r'},{l:'Lifts: going offline soon',t:'a'}],
    cmd:{g:false,s:true,b:true},ag:{fire:true,police:true,nhs:true,council:true},
-   timed:true,timerSecs:15,
+   timed:true,timerSecs:22,
    q:'URGENT: 15 residents inside Meridian House, 20 minutes to clear. How do you deploy your resources?',
    opts:[
      {t:'NHS staff to mobility-impaired residents on upper floors; council officers to ground-floor logistics; voluntary sector welfare team at exit with transport; police at door',r:'Correct \u2014 each resource matched to the right task. NHS capability best used for clinical complexity on upper floors.',pts:20,best:true,cons:{life:-25},fi:'pos',ft:'All 15 residents evacuated within 18 minutes. Mobility-impaired residents assisted by NHS. Voluntary sector transport waiting.'},
@@ -1155,7 +1155,7 @@ nhs:[
    sit:'14 oxygen-dependent residents are in Ashfield estate. 8 are in the current evacuation zone. 3 of these are refusing to leave without assurance their oxygen supply will continue at the rest centre. No clinical resource has yet been sent.',
    stats:[{l:'8 oxygen-dependent: in evac zone',t:'r'},{l:'3 refusing: need clinical assurance',t:'r'},{l:'Oxygen continuity: not arranged',t:'r'},{l:'Clinical resource: needed NOW',t:'r'}],
    cmd:{g:false,s:true,b:true},ag:{fire:true,police:true,ambulance:true,nhs:true,council:true},
-   timed:true,timerSecs:12,
+   timed:true,timerSecs:18,
    q:'URGENT: 3 oxygen-dependent residents in Ashfield refusing to move. What do you do?',
    opts:[
      {t:'Deploy NHS community nurses or SWAST paramedics immediately. Arrange oxygen continuity at the rest centre BEFORE moving them.',r:'Correct. The residents are refusing because their clinical need \u2014 oxygen continuity \u2014 has not been addressed. Solving that enables voluntary movement.',pts:20,best:true,cons:{life:-25},fi:'pos',ft:'NHS nurses deployed. Oxygen continuity confirmed at rest centre. All 3 agree to move with clinical escort. No oxygen-related incidents.'},
@@ -1266,7 +1266,7 @@ utilities:[
    sit:'You are now on site, pre-positioned with manual emergency isolation equipment. The fire front has breached the substation perimeter fence \u2014 it is alight. The TCG is asking for your assessment. Approximately 5 minutes before fire reaches the main structure.',
    stats:[{l:'Substation: perimeter breached',t:'r'},{l:'Main structure: ~5 min',t:'r'},{l:'Isolation equipment: ready',t:'b'},{l:'TCG: awaiting assessment',t:'a'}],
    cmd:{g:true,s:true,b:true},ag:{fire:true,police:true,council:true,utilities:true},
-   timed:true,timerSecs:10,
+   timed:true,timerSecs:15,
    q:'URGENT: Perimeter breached. 5 minutes. Emergency isolation or withdraw?',
    opts:[
      {t:'Attempt emergency isolation NOW \u2014 you are pre-positioned, trained, and this is what you are here for. Brief the TCG simultaneously.',r:'Correct. You are pre-positioned, trained, and the window exists. Emergency isolation by a qualified engineer in a pre-planned position is safe and necessary.',pts:20,best:true,cons:{infra:-30,life:-15},fi:'pos',ft:'Emergency isolation successful. Gas pressure safely neutralised. No explosion. 6,200 homes offline but safe.'},
@@ -1353,7 +1353,7 @@ ambulance:[
    sit:'A fuel tanker has been involved in a collision on the B4107 in near-zero smoke visibility. Tanker overturned but not ignited. 4 vehicles involved, approximately 8 casualties visible, fuel leaking onto road surface. Your staging area is 400m away.',
    stats:[{l:'8 casualties: visible',t:'r'},{l:'Fuel tanker: overturned, leaking',t:'r'},{l:'Fire risk: fuel leak',t:'r'},{l:'No ignition yet',t:'a'}],
    cmd:{g:false,s:true,b:true},ag:{fire:true,police:true,ambulance:true},
-   timed:true,timerSecs:12,
+   timed:true,timerSecs:18,
    q:'URGENT: 8 casualties, overturned fuel tanker, fuel leaking on the B4107. First actions?',
    opts:[
      {t:'Establish Bronze command. HART to assess scene hazards before any crew advances. RRV to triage from safe upwind position. Request fire service urgently for fuel containment.',r:'Correct. Fuel leak plus potential ignition means do not rush crews in before assessment. HART assesses, fire contains the fuel risk, then organised casualty management begins.',pts:20,best:true,cons:{life:-15},fi:'pos',ft:'Systematic Bronze command established. HART assesses safely. Fire contain fuel. 8 casualties triaged and treated.'},
@@ -1401,7 +1401,7 @@ ambulance:[
    sit:'At the B4107 mass casualty scene, one of the 8 casualties is a 6-year-old with serious injuries \u2014 suspected internal trauma. Your nearest HART team is managing the fuel fire. Northgate General is 8 miles north and paediatric-capable.',
    stats:[{l:'Child: 6yo, serious injuries',t:'r'},{l:'HART: committed to fuel fire',t:'r'},{l:'Northgate: paediatric capable',t:'b'},{l:'Transport: 8 miles',t:'a'}],
    cmd:{g:true,s:true,b:true},ag:{fire:true,police:true,ambulance:true,nhs:true},
-   timed:true,timerSecs:10,
+   timed:true,timerSecs:15,
    q:'URGENT: 6-year-old with serious injuries. HART committed to fuel fire. What is your decision?',
    opts:[
      {t:'Pre-alert Northgate paediatric team immediately. Transport by fastest available crew with paramedic escort NOW \u2014 do not wait for HART.',r:'Correct. Pre-alerting Northgate prepares the paediatric team. A serious paediatric trauma requires speed. HART redeployment from an active fuel fire is not justified.',pts:20,best:true,cons:{life:-25},fi:'pos',ft:'Northgate pre-alerted. Child en route with paramedic escort. Paediatric team ready on arrival.'},
@@ -1543,7 +1543,7 @@ strategic:[
    sit:'National Grid has issued a Demand Management Warning for the South West. Air conditioning load across Bristol has pushed the local grid close to capacity. National Grid cannot guarantee supply continuity for the next 4 hours. Hospitals, care homes, and cooling centres are all dependent on mains power.',
    stats:[{l:'National Grid: demand warning',t:'r'},{l:'A/C load: grid at capacity',t:'r'},{l:'Hospitals + care homes: mains-dependent',t:'r'},{l:'Cooling centres: mains-dependent',t:'r'}],
    cmd:{g:true,s:true,b:true},ag:{fire:true,ambulance:true,nhs:true,council:true,utilities:true,pubhealth:true},
-   timed:true,timerSecs:12,
+   timed:true,timerSecs:18,
    q:'URGENT: Grid may fail in the next 4 hours. What is your immediate strategic action?',
    opts:[
      {t:'Immediately direct NHS and council to confirm all hospitals, care homes, and cooling centres have backup generators tested and fuelled. Simultaneously request National Grid priority shedding exclusion for critical welfare sites.',r:'Correct. Generator status check and priority exclusion request happen simultaneously. Both are critical and must happen now.',pts:20,best:true,cons:{life:-25,infra:-15},fi:'pos',ft:'Generators confirmed at all critical sites. National Grid agrees priority exclusion for hospitals and care homes. Two cooling centres fully backed up.'},
@@ -1666,7 +1666,7 @@ fire:[
    sit:'Your two welfare check teams have been working for 90 minutes in the building. Outdoor temperature is 40\u00B0C and internal floors 15-22 are estimated at 44\u00B0C. One crew member has reported feeling dizzy. 8 floors remain to be checked.',
    stats:[{l:'Working temp: 44\u00B0C on upper floors',t:'r'},{l:'Crew: 90 min of sustained work',t:'a'},{l:'One crew member: dizzy',t:'r'},{l:'8 floors remaining',t:'a'}],
    cmd:{g:false,s:true,b:true},ag:{fire:true,ambulance:true},
-   timed:true,timerSecs:10,
+   timed:true,timerSecs:15,
    q:'URGENT: Crew member dizzy after 90 minutes in 44\u00B0C. 8 floors remain. What do you do?',
    opts:[
      {t:'Withdraw the symptomatic crew member immediately for SWAST assessment. Conduct dynamic risk assessment for remaining crew \u2014 if no others are symptomatic, staged rotation with mandatory rest breaks can continue. Report status to TCG.',r:'Correct. One symptomatic crew member triggers immediate withdrawal of that individual and a dynamic risk assessment for the rest. If no others are showing symptoms, the operation can continue with proper rotation. Crew safety is non-negotiable.',pts:20,best:true,cons:{life:-15},fi:'pos',ft:'Symptomatic crew member assessed \u2014 heat exhaustion, treated. Dynamic risk assessment clear for remaining crew. Staged rotation continues safely.'},
@@ -1721,7 +1721,7 @@ police:[
    sit:'Northgate Leisure Centre cooling centre has reached capacity (150 people). A queue of about 80 people is outside in direct sun. Temperature is 40\u00B0C. Two men are arguing near the front of the queue. A woman with a baby appears near collapse.',
    stats:[{l:'Cooling centre: at capacity (150)',t:'r'},{l:'Queue: 80 people in 40\u00B0C sun',t:'r'},{l:'Woman with baby: near collapse',t:'r'},{l:'Argument: developing',t:'a'}],
    cmd:{g:false,s:true,b:true},ag:{fire:true,police:true,ambulance:true,council:true},
-   timed:true,timerSecs:10,
+   timed:true,timerSecs:15,
    q:'URGENT: Queue at risk in 40\u00B0C sun. Woman and baby near collapse. What do you do?',
    opts:[
      {t:'Immediate: call 999 for the woman and baby. Move the queue to available shade. Request TCG to urgently open additional cooling capacity. Manage the argument calmly \u2014 do not escalate.',r:'Correct. The medical emergency is the absolute priority. Moving the queue to shade is immediate life safety. Additional capacity goes to TCG.',pts:20,best:true,cons:{life:-25},fi:'pos',ft:'Ambulance called. Woman and baby treated. Queue in shade. TCG opens third cooling centre in 45 minutes. No further collapses.'},
@@ -1873,7 +1873,7 @@ utilities:[
    sit:'The Ashfield distribution substation has failed during peak demand. Offline: Meridian House (lifts, 120 residents), Arnos Vale Care Home (cooling and medical equipment), and 4,200 homes in Ashfield estate. Restoration estimate: 90 minutes if you act immediately. You are 20 minutes from site.',
    stats:[{l:'Substation: failed',t:'r'},{l:'Arnos Vale: cooling and medical equipment off',t:'r'},{l:'Meridian House: lifts offline',t:'r'},{l:'Restoration: 90 min if act now',t:'a'}],
    cmd:{g:true,s:true,b:true},ag:{fire:true,ambulance:true,nhs:true,council:true,utilities:true},
-   timed:true,timerSecs:10,
+   timed:true,timerSecs:15,
    q:'URGENT: Substation failed. Arnos Vale and Meridian House offline. Immediate action?',
    opts:[
      {t:'Dispatch engineer immediately. Notify TCG with full impact picture: Arnos Vale medical equipment offline (SWAST needed now), Meridian House lifts offline (welfare teams cannot access). Attempt remote switching to partial restoration from adjacent substation while en route.',r:'Correct. Dispatch and TCG notification simultaneously. Remote switching attempted during travel. TCG notification enables immediate welfare response at both sites.',pts:20,best:true,cons:{infra:-25,life:-20},fi:'pos',ft:'Engineer dispatched. TCG briefed. SWAST sent to Arnos Vale. Remote switching achieves partial restoration in 25 minutes. Full restoration in 85 minutes.'},
@@ -1915,7 +1915,7 @@ ambulance:[
    sit:'Your crew is attending an 82-year-old male found collapsed in his 7th floor flat at Meridian House. Flat temperature is estimated at 44\u00B0C. He is confused, has hot DRY skin, has stopped sweating, and his tympanic temperature reads 40.8\u00B0C. No medical history available. Not responsive to his name.',
    stats:[{l:'Core temp: 40.8\u00B0C',t:'r'},{l:'Skin: hot and DRY',t:'r'},{l:'Confused, not responding',t:'r'},{l:'Flat: 44\u00B0C ambient',t:'r'}],
    cmd:{g:false,s:true,b:true},ag:{fire:true,ambulance:true,nhs:true},
-   timed:true,timerSecs:12,
+   timed:true,timerSecs:18,
    q:'URGENT: 82-year-old, heat stroke confirmed, 40.8\u00B0C, in 44\u00B0C flat. Immediate treatment?',
    opts:[
      {t:'Remove from the hot environment immediately \u2014 to the lift and ground floor. Begin active cooling: remove clothing, cool water to skin, fan. Pre-alert Northgate General with core temperature and clinical picture. IV access. Transport immediately.',r:'Correct. Immediate removal from the thermal source is the first intervention. Active cooling during movement. Pre-alert with specific clinical details. No delay for in-situ assessment.',pts:20,best:true,cons:{life:-25},fi:'pos',ft:'Patient cooled to 39.1\u00B0C en route. Northgate ED prepared. Patient survives with full recovery. Rapid removal from heat source was the critical intervention.'},
@@ -2000,7 +2000,7 @@ voluntary:[
    sit:'Early evening, day two of the heatwave. Two team leaders from Avon Emergency Volunteers contact you to report that several volunteers are showing signs of heat exhaustion after a second long shift. You need to plan overnight welfare coverage across your voluntary agencies to sustain the response through the night.',
    stats:[{l:'Day 2: volunteers fatigued',t:'r'},{l:'AEV: heat exhaustion signs reported',t:'r'},{l:'Overnight coverage: needed',t:'a'},{l:'Other voluntary orgs: available',t:'b'}],
    cmd:{g:false,s:true,b:true},ag:{council:true,voluntary:true},
-   timed:true,timerSecs:25,
+   timed:true,timerSecs:37,
    q:'Volunteers are showing signs of heat exhaustion and overnight coverage is needed. What do you do?',
    opts:[
      {t:'Keep your current teams in place overnight but implement more frequent rotation within each team \u2014 shorter stints with longer rest breaks will reduce heat stress without disrupting coverage. Treat the heat exhaustion reports as a welfare reminder rather than a withdrawal trigger, and ask team leaders to monitor and escalate anything serious.',r:'Rotating within teams is not the same as removing affected individuals from duty. Signs of heat exhaustion require withdrawal from the environment, not shorter stints. Passing monitoring responsibility to team leaders without central action is not a sufficient response.',pts:0,cons:{life:35},fi:'neg',ft:'Two AEV volunteers collapse overnight. Ambulance required. Remaining teams demoralised. Voluntary capacity degrades.'},
@@ -2298,10 +2298,11 @@ function revealTimedQ(){
 }
 
 function startPressTimer(secs,q){
-  var rem=secs,fill=document.getElementById('pressFill'),lbl=document.getElementById('pressLabel');
+  var rem=secs,graceRem=2.5,fill=document.getElementById('pressFill'),lbl=document.getElementById('pressLabel');
   if(fill)fill.style.width='100%';
   if(G.pressInt)clearInterval(G.pressInt);
   G.pressInt=setInterval(function(){
+    if(graceRem>0){graceRem-=0.1;if(lbl)lbl.textContent='\uD83D\uDC41 READ THE OPTIONS\u2026';return;}
     rem-=0.1;if(fill)fill.style.width=Math.max(0,(rem/secs)*100)+'%';
     if(lbl)lbl.textContent='\u26A1 DECIDE NOW \u2014 '+Math.ceil(Math.max(0,rem))+'s';
     if(rem<=0){clearInterval(G.pressInt);G.pressInt=null;
