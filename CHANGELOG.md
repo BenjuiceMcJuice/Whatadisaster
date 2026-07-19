@@ -2,7 +2,20 @@
 
 All notable changes to the Emergency Exercise Simulator.
 
-`APP_VERSION` in `index.html` tracks the current release (now `1.6.0`). Versions 1.2.0–1.5.0 below were backfilled on 2026-07-19 from the `DEVLOG.md` milestones, which the changelog had fallen behind.
+`APP_VERSION` in `index.html` tracks the current release (now `1.7.0`). Versions 1.2.0–1.5.0 below were backfilled on 2026-07-19 from the `DEVLOG.md` milestones, which the changelog had fallen behind.
+
+## [1.7.0] — 2026-07-19
+
+### Changed
+- **Splash simplification (UI/UX assessment Phase 3 / P2).** Reworked the landing screen so the play action leads instead of trailing five text blocks:
+  - Moved the two scenario buttons **above the fold** — a scenario CTA is now fully visible on a 390×844 phone without scrolling (first button at ~510px; splash content height ~2,900px → ~1,130px).
+  - De-jargoned the lead: a plain-language strapline ("Play a Gold, Silver or Bronze command role in a live emergency — make the calls and watch the consequences unfold") plus a facts line (Free · No login · ~15 minutes · 9 roles · 2 scenarios) replace the acronym-first intro.
+  - Demoted the "Exercise Framing" (WCS/RWCS) and "During the Exercise, Consider" (BC / Response Plan / National Guidance) panels into a collapsible "Before you start — facilitator notes" accordion. Content preserved, not removed.
+
+### Fixed
+- Splash copy said "8 roles"; corrected to **9** (the Voluntary Agency Coordinator, added in 1.2.0, was uncounted). No other stale role-count copy found in `index.html` / `how-it-works.html`.
+
+---
 
 ## [1.6.0] — 2026-07-19
 

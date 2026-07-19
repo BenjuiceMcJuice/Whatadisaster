@@ -37,8 +37,18 @@ body{background:var(--dark);color:var(--text);font-family:'Barlow',sans-serif;mi
 .ss{font-size:1rem;color:var(--dim);margin-bottom:2rem;}
 .fi{font-size:5rem;margin-bottom:1rem;animation:fl 1.5s ease-in-out infinite;}
 @keyframes fl{0%,100%{transform:scale(1) rotate(-2deg)}50%{transform:scale(1.05) rotate(2deg)}}
-.scard{background:rgba(255,255,255,.04);border:1px solid rgba(255,69,0,.2);border-radius:8px;padding:1rem 1.5rem;margin:1rem 0 2rem;text-align:left;font-size:.85rem;line-height:1.6;color:var(--dim);}
+.scard{background:rgba(255,255,255,.04);border:1px solid rgba(255,69,0,.2);border-radius:8px;padding:1rem 1.5rem;margin:1.25rem 0 1.25rem;text-align:left;font-size:.85rem;line-height:1.6;color:var(--dim);}
 .scard strong{color:var(--text);}
+.slead{font-size:1.05rem;color:var(--text);line-height:1.5;margin:0 auto .55rem;max-width:34ch;}
+.smeta{font-size:.8rem;color:var(--dim);letter-spacing:.03em;margin-bottom:1.75rem;}
+.scta-label{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);text-align:left;margin-bottom:.45rem;}
+.scta{display:flex;gap:.75rem;margin-bottom:.25rem;}
+.sacc{text-align:left;margin:0 0 1.25rem;border:1px solid rgba(255,255,255,.1);border-radius:8px;background:rgba(255,255,255,.02);}
+.sacc>summary{cursor:pointer;list-style:none;padding:.8rem 1rem;font-family:'Barlow Condensed',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:.5rem;}
+.sacc>summary::-webkit-details-marker{display:none;}
+.sacc>summary::after{content:'▸';margin-left:auto;color:var(--dim);transition:transform .2s ease;}
+.sacc[open]>summary::after{transform:rotate(90deg);}
+.sacc-body{padding:0 1rem 1rem;}
 .btn{background:var(--fire);color:#fff;border:none;padding:1rem 2rem;font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border-radius:4px;cursor:pointer;width:100%;max-width:340px;transition:all .2s;box-shadow:0 4px 20px rgba(255,69,0,.3);}
 .btn:active{transform:scale(.97);}
 .btn2{background:transparent;color:var(--dim);border:1px solid rgba(255,255,255,.1);padding:.8rem 2rem;font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;border-radius:4px;cursor:pointer;width:100%;max-width:340px;margin-top:.75rem;}
@@ -281,31 +291,39 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
     <div class="badge">Multi-Agency · Bristol · JESIP · Off-the-Shelf Exercise</div>
     <h1 class="st">What a <span>Disaster</span></h1>
     <div class="ssub">Multi-Agency Emergency Exercise Simulator</div>
-    <p class="ss">Tabletop decision-making across 8 roles — pick up and play</p>
-    <div class="scard"><strong>No prior knowledge needed.</strong><br>This exercise is designed to be picked up off-the-shelf by any team. Choose a scenario and role — your decisions mirror real emergency response principles including JESIP, business continuity, and national guidance. Decisions compound.</div>
+    <p class="slead">Play a Gold, Silver or Bronze command role in a live emergency — make the calls and watch the consequences unfold.</p>
+    <div class="smeta">Free · No login · ~15 minutes · 9 roles · 2 scenarios</div>
 
-    <!-- Scenario framing panel -->
-    <div style="background:rgba(255,184,0,.06);border:1px solid rgba(255,184,0,.2);border-radius:8px;padding:.9rem 1.1rem;margin:.6rem 0 .5rem;text-align:left;font-size:.8rem;line-height:1.6;">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;">📌 Exercise Framing</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem .75rem;">
-        <div><span style="font-weight:700;color:var(--text);">Strategic WCS</span><br><span style="color:var(--dim);">Catastrophic multi-agency incident: mass casualty, critical infrastructure loss, prolonged community disruption — full Gold/SCG activation required.</span></div>
-        <div><span style="font-weight:700;color:var(--text);">Tactical RWCS</span><br><span style="color:var(--dim);">Manageable escalation with resource pressure: key decisions under time stress — the scenario you will play.</span></div>
+    <div class="scta-label">Select a scenario to start</div>
+    <div class="scta">
+      <button class="btn" onclick="G.scenario='ashdown';showBriefing()" style="flex:1;max-width:none;background:linear-gradient(135deg,#FF4500,#c0392b)">&#128293; Exercise Ashdown<div style="font-size:.7rem;font-weight:400;opacity:.8;margin-top:.2rem">Wildfire · Brynmoor Hill</div></button>
+      <button class="btn" onclick="G.scenario='hotwells';showBriefing()" style="flex:1;max-width:none;background:linear-gradient(135deg,#c0392b,#8e0000)">&#9728;&#65039; Exercise Solstice<div style="font-size:.7rem;font-weight:400;opacity:.8;margin-top:.2rem">Severe Heatwave · Bristol</div></button>
+    </div>
+
+    <div class="scard"><strong>No prior knowledge needed.</strong><br>Designed to be picked up off-the-shelf by any team. Your decisions mirror real emergency-response principles — JESIP, business continuity, and national guidance — and they compound as the incident unfolds.</div>
+
+    <details class="sacc">
+      <summary>Before you start — exercise framing &amp; facilitator notes</summary>
+      <div class="sacc-body">
+        <!-- Scenario framing panel -->
+        <div style="background:rgba(255,184,0,.06);border:1px solid rgba(255,184,0,.2);border-radius:8px;padding:.9rem 1.1rem;margin:0 0 .6rem;text-align:left;font-size:.8rem;line-height:1.6;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;">📌 Exercise Framing</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem .75rem;">
+            <div><span style="font-weight:700;color:var(--text);">Strategic WCS</span><br><span style="color:var(--dim);">Catastrophic multi-agency incident: mass casualty, critical infrastructure loss, prolonged community disruption — full Gold/SCG activation required.</span></div>
+            <div><span style="font-weight:700;color:var(--text);">Tactical RWCS</span><br><span style="color:var(--dim);">Manageable escalation with resource pressure: key decisions under time stress — the scenario you will play.</span></div>
+          </div>
+        </div>
+
+        <!-- Key exercise prompts (BC, response plan, national guidance) -->
+        <div style="background:rgba(52,152,219,.06);border:1px solid rgba(52,152,219,.2);border-radius:8px;padding:.85rem 1.1rem;margin:0;text-align:left;font-size:.78rem;line-height:1.55;color:var(--dim);">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:.5rem;">🎯 During the Exercise, Consider</div>
+          <div style="margin-bottom:.35rem;"><span style="color:var(--text);font-weight:600;">💼 Business Continuity:</span> Your organisation's critical functions and how they would continue to operate despite a disruption — and where the gaps in your plan might be.</div>
+          <div style="margin-bottom:.35rem;"><span style="color:var(--text);font-weight:600;">📂 Response Plan:</span> Refer to your organisation's <em>Emergency Response Plan</em> (or Business Continuity Plan). Does it cover this scenario? Where are the gaps?</div>
+          <div><span style="color:var(--text);font-weight:600;">🌐 National Guidance:</span> Check <a href="https://www.gov.uk/guidance/emergency-response-and-recovery" target="_blank" style="color:var(--blue);text-decoration:none;">GOV.UK Emergency Response &amp; Recovery</a> or your lead agency's website for up-to-date national frameworks relevant to this scenario.</div>
+        </div>
       </div>
-    </div>
+    </details>
 
-    <!-- Key exercise prompts (BC, response plan, national guidance) -->
-    <div style="background:rgba(52,152,219,.06);border:1px solid rgba(52,152,219,.2);border-radius:8px;padding:.85rem 1.1rem;margin-bottom:.75rem;text-align:left;font-size:.78rem;line-height:1.55;color:var(--dim);">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:.5rem;">🎯 During the Exercise, Consider</div>
-      <div style="margin-bottom:.35rem;"><span style="color:var(--text);font-weight:600;">💼 Business Continuity:</span> Your organisation's critical functions and how they would continue to operate despite a disruption — and where the gaps in your plan might be.</div>
-      <div style="margin-bottom:.35rem;"><span style="color:var(--text);font-weight:600;">📂 Response Plan:</span> Refer to your organisation's <em>Emergency Response Plan</em> (or Business Continuity Plan). Does it cover this scenario? Where are the gaps?</div>
-      <div><span style="color:var(--text);font-weight:600;">🌐 National Guidance:</span> Check <a href="https://www.gov.uk/guidance/emergency-response-and-recovery" target="_blank" style="color:var(--blue);text-decoration:none;">GOV.UK Emergency Response &amp; Recovery</a> or your lead agency's website for up-to-date national frameworks relevant to this scenario.</div>
-    </div>
-
-    <div style="margin-bottom:.4rem;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);text-align:left">Select Scenario</div>
-    <div style="display:flex;gap:.75rem;margin-bottom:.5rem">
-    <button class="btn" onclick="G.scenario='ashdown';showBriefing()" style="flex:1;max-width:none;background:linear-gradient(135deg,#FF4500,#c0392b)">&#128293; Exercise Ashdown<div style="font-size:.7rem;font-weight:400;opacity:.8;margin-top:.2rem">Wildfire · Brynmoor Hill</div></button>
-    <button class="btn" onclick="G.scenario='hotwells';showBriefing()" style="flex:1;max-width:none;background:linear-gradient(135deg,#c0392b,#8e0000)">&#9728;&#65039; Exercise Solstice<div style="font-size:.7rem;font-weight:400;opacity:.8;margin-top:.2rem">Severe Heatwave · Bristol</div></button>
-  </div>
     <button class="btn2" onclick="showBriefing()">📋 Pre-Exercise Briefing</button>
     <a href="how-it-works.html" class="btn2" style="display:block;text-align:center;text-decoration:none;margin-top:.5rem;">❓ How It Works</a>
     <a href="disclaimer.html" class="btn2" style="display:block;text-align:center;text-decoration:none;margin-top:.5rem;opacity:.7;">📋 Disclaimer &amp; FAQ</a>
@@ -564,7 +582,7 @@ window.logEvent=function(type,extra){
 if(location.hostname.includes('pages.dev')){document.getElementById('devWarning').classList.add('show');}
 window.addEventListener('benjuiceyfeedback:submitted',function(e){logEventSafe('feedback_submitted',{role:G.roleKey,scenario:G.scenario});});
 
-const APP_VERSION='1.6.0';
+const APP_VERSION='1.7.0';
 
 /* ── ROLE-SPECIFIC LEARNING POINTS ─────────────────────────────────────── */
 var LEARN_POINTS={
