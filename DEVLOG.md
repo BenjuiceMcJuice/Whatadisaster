@@ -7,6 +7,8 @@ Granular daily work is in `logs/YYYY-MM-DD.md`.
 
 ## Milestones
 
+**Release version map** (reconciled with `CHANGELOG.md` + `APP_VERSION` on 2026-07-19): 06-25 = **v1.2.0** (voluntary role) · 07-10 = **v1.3.0** (analytics/telemetry) · 07-12 = **v1.4.0** (feedback widget, click-to-reveal, answer rebalance, P0 a11y) · 07-15 = **v1.4.1** (longer timers) · 07-16 = **v1.5.0** (LinkedIn launch) · 07-19 = **v1.6.0** (game-screen density / P1). `APP_VERSION` in `index.html` now tracks the current release (1.6.0).
+
 | Date       | Milestone                                                        | Status   |
 |------------|------------------------------------------------------------------|----------|
 | 2026-03-22 | v1.0.0 — Initial tracked version: two scenarios, eight roles, consequence meters, debrief, mailto submission | ✅ Done |

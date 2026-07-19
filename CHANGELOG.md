@@ -2,9 +2,9 @@
 
 All notable changes to the Emergency Exercise Simulator.
 
-> **Note:** version numbering is out of sync — `APP_VERSION` in `index.html` is still `1.1.1` and this log skips the voluntary-role release (v1.2.0 in `DEVLOG.md`), the P0 accessibility pass, timer changes, and the LinkedIn launch prep. The `[1.3.0]` header below is provisional pending a decision to reconcile `APP_VERSION`, this log, and the DEVLOG milestones.
+`APP_VERSION` in `index.html` tracks the current release (now `1.6.0`). Versions 1.2.0–1.5.0 below were backfilled on 2026-07-19 from the `DEVLOG.md` milestones, which the changelog had fallen behind.
 
-## [1.3.0] — 2026-07-19
+## [1.6.0] — 2026-07-19
 
 ### Changed
 - **Game-screen density overhaul (UI/UX assessment Phase 2 / P1).** The per-question screen dropped from ~2.6 to ~1.0–1.3 viewport-heights at 390×844 so the decision is the clear focus:
@@ -15,6 +15,56 @@ All notable changes to the Emergency Exercise Simulator.
 - **Calmer motion & colour.** Removed the three simultaneous pulses/glow (only the pressure bar animates on timed questions; nothing pulses on untimed ones); reserved red for wrong-answer/timer states and recoloured "danger" chips to the fire-orange accent. Added `prefers-reduced-motion` support (disables embers, pulses, transitions).
 
 Question content and scoring unchanged. Verified both scenarios play start→results with no JS errors.
+
+---
+
+## [1.5.0] — 2026-07-16
+
+### Added
+- **Product name & social preview (LinkedIn launch prep).** Adopted the full title "What a Disaster — Multi-Agency Emergency Exercise Simulator" and surfaced the brand on the splash (h1 + subtitle). Added Open Graph / Twitter preview tags + meta description and a designed 1200×630 `og-image.png` to `index.html` and `how-it-works.html` so shared links unfurl as a proper card.
+
+### Changed
+- **Corrected the disclaimer's privacy statements** to accurately describe what the app now uses — cookieless Cloudflare analytics, anonymous usage events, and voluntary-only feedback — replacing the out-of-date "no analytics / no data leaves your device" wording.
+
+---
+
+## [1.4.1] — 2026-07-15
+
+### Changed
+- **Timed decisions given more time** (repeat stakeholder feedback that countdowns were still too short even after click-to-reveal): added a 2.5s frozen "READ THE OPTIONS" reading grace after reveal, and extended all timed countdowns ~+50% (10→15, 12→18, 15→22, 25→37s). Timeout severity unchanged.
+
+---
+
+## [1.4.0] — 2026-07-12
+
+### Added
+- **Feedback widget** via the shared Benjuicey Apps backend (Cloudflare Worker + Firestore), tagged `WDA` — replaces the previous standalone Firestore write.
+
+### Changed
+- **Timed questions are now click-to-reveal** — options and the countdown sit behind a "Reveal Options" button so the clock no longer starts before the player has read the question (stakeholder feedback).
+- **Answer-length telegraphing rebalanced** across all roles and both scenarios (~97 questions) so the correct option no longer stands out by length/detail.
+
+### Accessibility (UI/UX assessment Phase 1 / P0)
+- Re-enabled pinch-zoom and added safe-area insets (`viewport-fit=cover`).
+- Removed duplicated DOM blocks so every screen id is unique.
+- Modal backdrop tap no longer skips the question — only "Continue →" advances.
+- Added an in-game exit (✕ → confirm) so players can leave mid-exercise.
+- Role cards are now real `<button>`s with aria-labels and focus-visible outlines.
+
+---
+
+## [1.3.0] — 2026-07-10
+
+### Added
+- **Cloudflare Web Analytics** — cookieless, no consent banner.
+- **Anonymous usage-event logging** to a Firebase/Firestore `events` collection (role selected, scenario started/completed, question answered, drop-off) — no personal data captured.
+
+---
+
+## [1.2.0] — 2026-06-25
+
+### Added
+- **New role: Voluntary Agency Coordinator** (Third Sector Liaison) in both scenarios — 6 questions each, fictional voluntary organisations, a local-authority activation cascade, and a timed decision in Operation Solstice. Decisions are grounded in the Civil Contingencies Act 2004 "have regard" duty, LRF/SCG coordination, and appropriate volunteer tasking (welfare/rest centres vs frontline response). Brings the roster to nine roles.
 
 ---
 
