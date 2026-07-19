@@ -59,9 +59,10 @@ body{background:var(--dark);color:var(--text);font-family:'Barlow',sans-serif;mi
 .sh p{color:var(--dim);font-size:.9rem;}
 .rg{padding:1.5rem;display:grid;grid-template-columns:1fr 1fr;gap:.75rem;flex:1;overflow-y:auto;}
 .rc{background:var(--card);border:2px solid transparent;border-radius:8px;padding:1rem;cursor:pointer;text-align:center;position:relative;overflow:hidden;transition:border-color .2s;font:inherit;color:inherit;width:100%;display:block;}
+.rg .rc:last-child:nth-child(odd){grid-column:1 / -1;}
 .rc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--rc);}
 .rc:active{border-color:var(--rc);}
-.btn:focus-visible,.btn2:focus-visible,.ob:focus-visible,.rc:focus-visible,.ghx:focus-visible,.dw-dismiss:focus-visible{outline:2px solid var(--fire);outline-offset:2px;}
+.btn:focus-visible,.btn2:focus-visible,.ob:focus-visible,.rc:focus-visible,.ghx:focus-visible,.dw-dismiss:focus-visible,.cpill:focus-visible,.ctxbar:focus-visible,.spx:focus-visible,.ss-close:focus-visible,.sacc>summary:focus-visible,.chip.more:focus-visible{outline:2px solid var(--fire);outline-offset:2px;}
 .rc:focus-visible{outline-color:var(--rc);}
 .ri{font-size:2rem;margin-bottom:.5rem;}.rn{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;text-transform:uppercase;}
 .ra{font-size:.72rem;color:var(--dim);margin-top:.2rem;}.rl{display:inline-block;font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .5rem;border-radius:2px;margin-top:.5rem;background:rgba(255,255,255,.05);border:1px solid currentColor;}
@@ -406,15 +407,15 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
       <text x="37" y="22" text-anchor="middle" font-family="Barlow Condensed" font-size="8" fill="#3a3a6a">ARNOS VALE</text>
       <text x="37" y="33" text-anchor="middle" font-family="Barlow Condensed" font-size="7" fill="#2a2a5a">CARE HOME</text>
       <!-- Heat zone blobs - show spreading extreme heat risk areas -->
-      <ellipse id="fire1" cx="200" cy="120" rx="0" ry="0" fill="rgba(200,80,0,0.25)" opacity="0"/>
-      <ellipse id="fire2" cx="69" cy="115" rx="0" ry="0" fill="rgba(220,60,0,0.3)" opacity="0"/>
-      <ellipse id="fire3" cx="327" cy="112" rx="0" ry="0" fill="rgba(200,80,0,0.28)" opacity="0"/>
-      <ellipse id="fire4" cx="75" cy="172" rx="0" ry="0" fill="rgba(210,70,0,0.22)" opacity="0"/>
-      <ellipse id="fire5" cx="287" cy="165" rx="0" ry="0" fill="rgba(200,80,0,0.22)" opacity="0"/>
+      <ellipse id="cfire1" cx="200" cy="120" rx="0" ry="0" fill="rgba(200,80,0,0.25)" opacity="0"/>
+      <ellipse id="cfire2" cx="69" cy="115" rx="0" ry="0" fill="rgba(220,60,0,0.3)" opacity="0"/>
+      <ellipse id="cfire3" cx="327" cy="112" rx="0" ry="0" fill="rgba(200,80,0,0.28)" opacity="0"/>
+      <ellipse id="cfire4" cx="75" cy="172" rx="0" ry="0" fill="rgba(210,70,0,0.22)" opacity="0"/>
+      <ellipse id="cfire5" cx="287" cy="165" rx="0" ry="0" fill="rgba(200,80,0,0.22)" opacity="0"/>
       <!-- Heat shimmer dots -->
-      <circle id="emb1" cx="0" cy="0" r="3" fill="rgba(255,180,0,0.7)" opacity="0"/>
-      <circle id="emb2" cx="0" cy="0" r="3" fill="rgba(255,160,0,0.6)" opacity="0"/>
-      <circle id="emb3" cx="0" cy="0" r="2.5" fill="rgba(255,200,0,0.65)" opacity="0"/>
+      <circle id="cemb1" cx="0" cy="0" r="3" fill="rgba(255,180,0,0.7)" opacity="0"/>
+      <circle id="cemb2" cx="0" cy="0" r="3" fill="rgba(255,160,0,0.6)" opacity="0"/>
+      <circle id="cemb3" cx="0" cy="0" r="2.5" fill="rgba(255,200,0,0.65)" opacity="0"/>
     </svg>
   </div>
   <div class="fire-fact" id="fireFact" style="display:none">
@@ -582,7 +583,7 @@ window.logEvent=function(type,extra){
 if(location.hostname.includes('pages.dev')){document.getElementById('devWarning').classList.add('show');}
 window.addEventListener('benjuiceyfeedback:submitted',function(e){logEventSafe('feedback_submitted',{role:G.roleKey,scenario:G.scenario});});
 
-const APP_VERSION='1.7.0';
+const APP_VERSION='1.7.1';
 
 /* ── ROLE-SPECIFIC LEARNING POINTS ─────────────────────────────────────── */
 var LEARN_POINTS={
@@ -2187,11 +2188,14 @@ function showFireMap(idx,callback){
   document.getElementById('fmPhase').textContent=m.phase;
   document.getElementById('fmHead').textContent=m.head;
   document.getElementById('fmDesc').textContent=m.desc;
+  // Each scenario's SVG shapes have distinct ids ('cfire1'/'cemb1'… on the
+  // Cabot/heatwave map) so lookups hit the visible SVG, not the hidden one.
+  var blobPfx=G.scenario==='hotwells'?'c':'';
   ['fire1','fire2','fire3','fire4','fire5'].forEach(function(id){
-    var el=document.getElementById(id);if(el){el.setAttribute('rx','0');el.setAttribute('ry','0');el.setAttribute('opacity','0');}
+    var el=document.getElementById(blobPfx+id);if(el){el.setAttribute('rx','0');el.setAttribute('ry','0');el.setAttribute('opacity','0');}
   });
   ['emb1','emb2','emb3'].forEach(function(id){
-    var el=document.getElementById(id);if(el){el.setAttribute('cx','0');el.setAttribute('cy','0');el.setAttribute('opacity','0');}
+    var el=document.getElementById(blobPfx+id);if(el){el.setAttribute('cx','0');el.setAttribute('cy','0');el.setAttribute('opacity','0');}
   });
   var ff=document.getElementById('fireFact');
   if(m.fact){
@@ -2211,7 +2215,7 @@ function showFireMap(idx,callback){
   setTimeout(function(){
     m.fires.forEach(function(f,i){
       setTimeout(function(){
-        var el=document.getElementById(f.id);if(!el)return;
+        var el=document.getElementById(blobPfx+f.id);if(!el)return;
         el.className='fblob';el.setAttribute('opacity','1');
         var t=0,trx=f.rx,try_=f.ry;
         var anim=setInterval(function(){
@@ -2224,7 +2228,7 @@ function showFireMap(idx,callback){
     });
     m.embers.forEach(function(e,i){
       setTimeout(function(){
-        var el=document.getElementById(e.id);if(!el)return;
+        var el=document.getElementById(blobPfx+e.id);if(!el)return;
         el.className='fember';el.setAttribute('cx',e.cx);el.setAttribute('cy',e.cy);el.setAttribute('opacity','0.9');
       },m.fires.length*250+i*300);
     });

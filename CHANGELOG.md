@@ -2,7 +2,18 @@
 
 All notable changes to the Emergency Exercise Simulator.
 
-`APP_VERSION` in `index.html` tracks the current release (now `1.7.0`). Versions 1.2.0–1.5.0 below were backfilled on 2026-07-19 from the `DEVLOG.md` milestones, which the changelog had fallen behind.
+`APP_VERSION` in `index.html` tracks the current release (now `1.7.1`). Versions 1.2.0–1.5.0 below were backfilled on 2026-07-19 from the `DEVLOG.md` milestones, which the changelog had fallen behind.
+
+## [1.7.1] — 2026-07-19
+
+### Fixed
+- **Fire-map heat blobs never animated in Operation Solstice.** The heatwave (Cabot) and wildfire (Ashdown) SVGs both used the same shape ids (`fire1`–`fire5`, `emb1`–`emb3`), so `showFireMap()`'s `getElementById` always hit the hidden Ashdown SVG and animated blobs the player couldn't see. Gave the Cabot SVG unique ids (`cfire1`…/`cemb1`…) and prefixed the lookups by scenario. Also removes the invalid duplicate-id HTML. The map, fact panel, and Continue were unaffected and still work.
+
+### Changed (UI/UX assessment Phase 4 / P3 polish)
+- Added `:focus-visible` outlines to the remaining interactive controls (consequence pill, context bar, situation toggle, status-sheet close, "Before you start" accordion, "+N more" chip) for keyboard/switch users.
+- The role grid's 9th card (Voluntary Agency Coordinator) now spans the full width when it would otherwise sit orphaned on its own row.
+
+---
 
 ## [1.7.0] — 2026-07-19
 
