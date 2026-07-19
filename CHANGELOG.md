@@ -2,6 +2,22 @@
 
 All notable changes to the Emergency Exercise Simulator.
 
+> **Note:** version numbering is out of sync — `APP_VERSION` in `index.html` is still `1.1.1` and this log skips the voluntary-role release (v1.2.0 in `DEVLOG.md`), the P0 accessibility pass, timer changes, and the LinkedIn launch prep. The `[1.3.0]` header below is provisional pending a decision to reconcile `APP_VERSION`, this log, and the DEVLOG milestones.
+
+## [1.3.0] — 2026-07-19
+
+### Changed
+- **Game-screen density overhaul (UI/UX assessment Phase 2 / P1).** The per-question screen dropped from ~2.6 to ~1.0–1.3 viewport-heights at 390×844 so the decision is the clear focus:
+  - Replaced the always-on 4-meter Consequence Tracker with a slim status bar carrying a single consequence pill (colour dot + level word, e.g. 🟢 Controlled).
+  - Moved the Consequence Tracker, Activated Agencies, and Command Level into a tap-to-open bottom "Situation Status" sheet — reachable from the pill or a quiet "Agencies & Command Level" bar below the decision. No information removed.
+  - Made the situation panel collapsible; collapsed, it becomes a sticky one-line recap under the status bar so the scenario stays glanceable while choosing.
+  - Capped situation stat chips at 3 with a "+N more" reveal.
+- **Calmer motion & colour.** Removed the three simultaneous pulses/glow (only the pressure bar animates on timed questions; nothing pulses on untimed ones); reserved red for wrong-answer/timer states and recoloured "danger" chips to the fire-orange accent. Added `prefers-reduced-motion` support (disables embers, pulses, transitions).
+
+Question content and scoring unchanged. Verified both scenarios play start→results with no JS errors.
+
+---
+
 ## [1.1.2] — 2026-05-28
 
 ### Fixed
