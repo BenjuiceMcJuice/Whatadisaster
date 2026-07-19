@@ -2215,137 +2215,166 @@ var mapIdx=0,mapCallback=null;
 // with image-rendering:pixelated for crisp chunky pixels. A propagating-fire
 // cellular automaton (classic "doom fire") drives the flames/heat; particles
 // add rising embers or heat shimmer on top. Replaces the old growing-ellipse SVGs.
+// PIXEL-ART TACTICAL FIRE MAP ENGINE
+// A flat, grid-aligned operational map on one <canvas> (256x141 internal,
+// upscaled with image-rendering:pixelated). The base map (terrain, roads,
+// buildings, spread zones) is drawn once to an offscreen buffer and stays
+// static; only the incident layer animates. Wildfire = flame sprites +
+// translucent spread zones + ember spots that GROW each stage by adding
+// clusters. Heatwave = upward wavy heat lines ramping amber -> deep red as
+// the alert intensifies. Data-driven from MAPS / MAPS2 (no simulation).
 var FMAP=(function(){
-  // dark -> red -> orange -> yellow -> white (wildfire)
-  var FIREPAL=[[10,8,6],[31,7,7],[47,15,7],[71,15,7],[87,23,7],[103,31,7],[119,31,7],[143,39,7],[159,47,7],[175,63,7],[191,71,7],[199,71,7],[223,79,7],[223,87,7],[223,87,7],[215,95,7],[215,95,7],[215,103,15],[207,111,15],[207,119,15],[207,127,15],[207,135,23],[199,135,23],[199,143,23],[199,151,31],[191,159,31],[191,159,31],[191,167,39],[191,167,39],[191,175,47],[183,175,47],[183,183,47],[183,183,55],[207,207,111],[223,223,159],[239,239,199],[255,255,255]];
-  // dark -> ember red -> amber -> gold -> white (heatwave shimmer)
-  var HEATPAL=[[12,8,6],[40,14,6],[64,22,6],[92,34,8],[120,50,8],[150,68,10],[176,86,12],[198,104,14],[214,122,18],[224,140,24],[232,158,34],[238,174,48],[242,188,66],[244,200,88],[246,210,112],[248,218,138],[250,224,162],[251,230,182],[252,236,200],[253,240,214],[253,244,226],[254,248,236],[255,250,244],[255,252,248],[255,253,250],[255,254,252],[255,254,253],[255,255,254],[255,255,254],[255,255,255],[255,255,255],[255,255,255],[255,255,255],[255,255,255],[255,255,255],[255,255,255],[255,255,255]];
-  var cv,ctx,W,H,bg,bx,fire,raf=0,seeds,parts,cfg,frame,reduced,imgData;
-  function px(g,x,y,w,h,c){g.fillStyle=c;g.fillRect(x,y,w,h);}
-  function blk(g,x,y,w,h,base,edge){px(g,x,y,w,h,base);px(g,x,y,w,1,edge);px(g,x,y,1,h,edge);px(g,x+w-1,y,1,h,edge);px(g,x,y+h-1,w,1,edge);}
-  function label(g,t,x,y,c,sz){g.fillStyle=c;g.font='bold '+(sz||8)+'px "Courier New",monospace';g.textAlign='center';g.textBaseline='alphabetic';g.fillText(t,x,y);}
-  var SX=256/400, SY=141/220;
-  function mx(v){return Math.round(v*SX);} function my(v){return Math.round(v*SY);}
+  var COL={
+    bg:'#1e2016',hill:'#2c3020',grid:'rgba(255,255,255,0.03)',
+    tree:'#35482a',tree2:'#2b3a22',trunk:'#243016',
+    road:'#474a44',roadC:'#6a6e5e',mway:'#3d4048',mwayC:'#565a66',
+    estate:'#262b1b',estEdge:'#3a4228',house:'#333a25',houseWin:'#4a5234',door:'#1b2112',
+    asset:'#1f3a40',assetEdge:'#3fc8d8',assetWin:'#5fd8e6',assetLab:'#4fd0e0',
+    infra:'#2a2814',infraEdge:'#e6c024',infraLab:'#d9b820',
+    hosp:'#182a18',hospEdge:'#3a5a3a',cross:'#e8ecec',
+    city:'#2a2418',cityEdge:'#43391f',
+    sun:'#f0b41e',sunEdge:'#7a5200',
+    lab:'#9aa080',labDim:'#8a9078',dark:'#10120c',
+    fR:'#e23a12',fO:'#ff7a1e',fY:'#ffb422',ember:'#ff8a2a'
+  };
+  var HEATRAMP=['#f6c832','#f0a81e','#e88418','#e05a12','#d5360e','#c01f08','#9c1405'];
+  var W=256,H=141;
+  function mx(v){return Math.round(v*W/400);} function my(v){return Math.round(v*H/220);}
+  function P(g,x,y,w,h,c){g.fillStyle=c;g.fillRect(x|0,y|0,w|0,h|0);}
+  function ring(g,x,y,w,h,c){P(g,x,y,w,1,c);P(g,x,y+h-1,w,1,c);P(g,x,y,1,h,c);P(g,x+w-1,y,1,h,c);}
+  function pixDisc(g,cx,cy,r,c){g.fillStyle=c;var r2=r*r;for(var y=-r;y<=r;y+=2)for(var x=-r;x<=r;x+=2){if(x*x+y*y<=r2)g.fillRect((cx+x)|0,(cy+y)|0,2,2);}}
+  function tree(g,x,y){P(g,x,y,3,3,COL.tree);P(g,x,y,1,3,COL.tree2);P(g,x+1,y+3,1,1,COL.trunk);}
+  // label with dark 1px backing so it stays legible over fire
+  function lab(g,t,x,y,c,sz){g.font='bold '+(sz||7)+'px "Courier New",monospace';g.textAlign='center';g.textBaseline='alphabetic';
+    g.fillStyle=COL.dark;g.fillText(t,x-1,y);g.fillText(t,x+1,y);g.fillText(t,x,y-1);g.fillText(t,x,y+1);g.fillStyle=c;g.fillText(t,x,y);}
 
-  function drawAshdown(){
-    for(var y=0;y<H;y++){var t=y/H;px(bx,0,y,W,1,'rgb('+((24+t*16)|0)+','+((17+t*9)|0)+','+((9+t*4)|0)+')');}
-    bx.fillStyle='#241d0e';bx.beginPath();bx.moveTo(0,my(60));
-    for(var x=0;x<=W;x+=6){bx.lineTo(x,my(52)+Math.round(Math.sin(x/30)*4));}
-    bx.lineTo(W,0);bx.lineTo(0,0);bx.closePath();bx.fill();
-    for(var i=0;i<220;i++){px(bx,(i*53)%W,(i*29)%my(52),1,1,'rgba(58,48,20,.5)');}
-    px(bx,0,my(130),W,my(10),'#2c2c2c');px(bx,0,my(133),W,1,'#565656');
-    for(var rx=2;rx<W;rx+=9)px(bx,rx,my(133),4,1,'#8a8a55');
-    label(bx,'B4107',W-18,my(126),'#7a7a55',7);
-    px(bx,mx(340),0,mx(12),H,'#20203a');px(bx,mx(343),0,1,H,'#3a3a60');
-    label(bx,'M5',mx(346),my(96),'#6a6ab0',7);
-    blk(bx,mx(60),my(150),mx(120),my(55),'#16240f','#2c4820');
-    for(var ex=0;ex<6;ex++)for(var ey=0;ey<3;ey++)px(bx,mx(60)+6+ex*11,my(150)+6+ey*9,5,5,'#22381c');
-    label(bx,'ASHFIELD',mx(120),my(150)+my(55)-6,'#4a7a4a',8);
-    blk(bx,mx(155),my(150),mx(18),my(48),'#132a2a','#225252');
-    for(var mj=0;mj<6;mj++){px(bx,mx(155)+3,my(150)+4+mj*5,2,2,'#3a7070');px(bx,mx(155)+7,my(150)+4+mj*5,2,2,'#2a5555');}
-    label(bx,'MERIDIAN',mx(164),H-3,'#3a6a6a',7);
-    blk(bx,mx(270),my(105),mx(24),my(20),'#2a2a10','#6a6a20');
-    px(bx,mx(270)+4,my(105)+4,3,3,'#c9c93a');px(bx,mx(270)+10,my(105)+4,3,3,'#c9c93a');
-    label(bx,'SUBSTAT',mx(282),my(105)-3,'#8a8030',7);
-    blk(bx,mx(346),my(8),mx(48),my(20),'#0f240f','#1f4a1f');
-    label(bx,'NORTHGATE',mx(370),my(8)+my(20)-4,'#2a7a2a',7);
-    label(bx,'BRYNMOOR HILL',mx(200),my(30),'#9a8f66',9);
-  }
-  function drawHeat(){
-    for(var y=0;y<H;y++){var t=y/H;px(bx,0,y,W,1,'rgb('+((34+t*10)|0)+','+((18+t*6)|0)+','+((10+t*3)|0)+')');}
-    for(var hb=0;hb<5;hb++)px(bx,0,my(40)+hb*3,W,1,'rgba(255,180,90,'+(0.05-hb*0.008)+')');
-    var sx=mx(375),sy=my(22),sr=mx(14);
-    var grd=bx.createRadialGradient(sx,sy,1,sx,sy,sr*2.4);grd.addColorStop(0,'rgba(255,200,60,.55)');grd.addColorStop(1,'rgba(255,180,0,0)');
-    bx.fillStyle=grd;bx.beginPath();bx.arc(sx,sy,sr*2.4,0,7);bx.fill();
-    bx.fillStyle='#FFB800';bx.beginPath();bx.arc(sx,sy,sr,0,7);bx.fill();
-    label(bx,'39C',sx,sy+3,'#7a3a00',7);
-    blk(bx,mx(120),my(80),mx(160),my(80),'#2a1a0a','#4a3010');
-    label(bx,'CITY CENTRE',mx(200),my(120),'#7a5028',9);
-    blk(bx,mx(60),my(90),mx(18),my(50),'#13221a','#2a4a2a');
-    for(var kj=0;kj<7;kj++)px(bx,mx(60)+4,my(90)+4+kj*6,mx(10),2,'#3a6a3a');
-    label(bx,'MERIDIAN',mx(69),my(155),'#4a7a4a',7);
-    blk(bx,mx(318),my(85),mx(18),my(55),'#13221a','#2a4a2a');
-    for(var nj=0;nj<8;nj++)px(bx,mx(318)+4,my(85)+4+nj*6,mx(10),2,'#3a6a3a');
-    label(bx,'NORTHGATE',mx(327),my(155),'#4a7a4a',7);
-    blk(bx,mx(30),my(150),mx(90),my(45),'#1a1a0a','#3a3a18');
-    for(var ax=0;ax<5;ax++)for(var ay=0;ay<2;ay++)px(bx,mx(30)+6+ax*11,my(150)+6+ay*11,6,6,'#26260f');
-    label(bx,'ASHFIELD',mx(75),my(150)+my(45)-6,'#5a5a24',8);
-    blk(bx,mx(260),my(150),mx(55),my(30),'#1a1a10','#3a3a20');
-    label(bx,'ST ANNES',mx(287),my(150)+my(30)-4,'#6a6a2a',7);
-    blk(bx,mx(340),my(10),mx(55),my(28),'#0f240f','#1f4a1f');
-    label(bx,'NORTHGATE GEN',mx(367),my(10)+my(28)-4,'#2a7a2a',6);
-    blk(bx,mx(5),my(10),mx(65),my(28),'#12122a','#26265a');
-    label(bx,'ARNOS VALE',mx(37),my(10)+my(28)-4,'#5a5aa0',6);
+  var FL=['..R..','.ROR.','.OYO.','ROYOR','RYYYR','ROYOR','.RRR.'];
+  function flame(g,cx,by,sc,flick){
+    var w=5,h=7,base=(cx-(w*sc)/2)|0,oy=(by-h*sc)|0,dx=[-1,0,1][flick||0];
+    for(var r=0;r<h;r++){var row=FL[r],ox=base+(r<2?dx:0);
+      for(var q=0;q<w;q++){var ch=row.charAt(q);if(ch==='.')continue;
+        var c=ch==='R'?COL.fR:ch==='O'?COL.fO:COL.fY;P(g,ox+q*sc,oy+r*sc,sc,sc,c);}}
   }
 
-  function initSeeds(m){
-    seeds=[];
-    m.fires.forEach(function(f){seeds.push({x:mx(f.cx),y:my(f.cy)+Math.round(my(f.ry)*0.35),w:Math.max(2,mx(f.rx))});});
+  var TREES=[[18,44],[27,52],[14,60],[34,46],[24,64],[46,42],[40,58],[54,50],[168,44],[180,52],[160,60],[192,46],[176,64],[204,50],[198,60],[186,40]];
+  function baseAshdown(g){
+    P(g,0,0,W,H,COL.bg);
+    g.fillStyle=COL.hill;for(var y=6;y<80;y+=2){var dy=(y-42)/34,span=Math.sqrt(Math.max(0,1-dy*dy))*116;if(span>0)g.fillRect((128-span)|0,y,(span*2)|0,2);}
+    g.fillStyle=COL.grid;for(var gx=0;gx<W;gx+=16)g.fillRect(gx,0,1,H);for(var gy=0;gy<H;gy+=16)g.fillRect(0,gy,W,1);
+    for(var i=0;i<TREES.length;i++)tree(g,TREES[i][0],TREES[i][1]);
+    P(g,0,my(130),W,my(10),COL.road);for(var rx=2;rx<W;rx+=10)P(g,rx,my(130)+2,5,2,COL.roadC);
+    P(g,mx(340),0,mx(12),H,COL.mway);for(var vy=2;vy<H;vy+=12)P(g,mx(343),vy,2,7,COL.mwayC);
+    // Ashfield estate
+    P(g,mx(60),my(150),mx(120),my(55),COL.estate);ring(g,mx(60),my(150),mx(120),my(55),COL.estEdge);
+    var hx=[mx(72),mx(90),mx(108),mx(126)],hy=[my(158),my(180)];
+    for(var a=0;a<4;a++)for(var b=0;b<2;b++){var bx=hx[a],by=hy[b];P(g,bx,by,12,9,COL.house);ring(g,bx,by,12,9,'#20261a');P(g,bx+2,by+2,3,3,COL.houseWin);P(g,bx+7,by+2,3,3,COL.houseWin);P(g,bx+5,by+6,3,3,COL.door);}
+    // Meridian House (highlighted asset)
+    P(g,mx(150),my(150),mx(20),my(40),COL.asset);ring(g,mx(150),my(150),mx(20),my(40),COL.assetEdge);
+    for(var w=0;w<5;w++){P(g,mx(150)+3,my(150)+4+w*4,2,2,COL.assetWin);P(g,mx(150)+8,my(150)+4+w*4,2,2,COL.assetWin);}
+    // Substation (infra)
+    P(g,mx(268),my(102),mx(26),my(20),COL.infra);ring(g,mx(268),my(102),mx(26),my(20),COL.infraEdge);
+    var bolt=[[0,1],[-1,4],[1,4],[0,7],[-1,9]];g.fillStyle=COL.infraEdge;for(var z=0;z<bolt.length;z++)g.fillRect(mx(281)+bolt[z][0],my(102)+3+bolt[z][1],2,2);
+    // Hospital
+    P(g,mx(348),my(8),mx(46),my(22),COL.hosp);ring(g,mx(348),my(8),mx(46),my(22),COL.hospEdge);
+    P(g,mx(371)-1,my(8)+4,3,9,COL.cross);P(g,mx(371)-4,my(8)+7,9,3,COL.cross);
   }
-  function seedRow(){
-    var top=Math.round((cfg.pal.length-1)*(cfg.seedMax||1)),pf=cfg.seedProb||0.75;
-    for(var s=0;s<seeds.length;s++){var sd=seeds[s];
-      for(var dx=-sd.w;dx<=sd.w;dx++){var x=sd.x+dx;if(x<0||x>=W)continue;
-        var fall=Math.abs(dx)/sd.w;
-        if(Math.random()>fall*pf){fire[sd.y*W+x]=top-((Math.random()*3)|0);}
-      }
-    }
+  function labelsAshdown(g){
+    lab(g,'BRYNMOOR HILL',mx(200),my(58),COL.lab,8);
+    lab(g,'ASHFIELD',mx(120),my(150)+my(55)-5,COL.labDim,7);
+    lab(g,'MERIDIAN',mx(160),H-3,COL.assetLab,7);
+    lab(g,'SUBSTATION',mx(281),my(102)-3,COL.infraLab,7);
+    lab(g,'NORTHGATE',mx(371),my(8)+my(22)+8,COL.labDim,7);
+    lab(g,'B4107',W-18,my(130)-3,COL.labDim,7);
+    lab(g,'M5',mx(346),my(70),COL.labDim,7);
   }
-  function propagate(){
-    var fadeY=cfg.fadeY,extra=cfg.fadeExtra,wind=cfg.wind;
-    for(var x=0;x<W;x++){
-      for(var y=1;y<H;y++){
-        var src=y*W+x,v=fire[src];if(v===0)continue;
-        var decay=(Math.random()*cfg.decay)|0;
-        var drift=((Math.random()*3)|0)-1+wind;
-        var dxp=x+drift;if(dxp<0)dxp=0;else if(dxp>=W)dxp=W-1;
-        var nv=v-decay-(y<fadeY?extra:0);if(nv<0)nv=0;
-        fire[(y-1)*W+dxp]=nv;
-      }
-    }
+
+  function baseHeat(g){
+    P(g,0,0,W,H,COL.bg);
+    g.fillStyle=COL.grid;for(var gx=0;gx<W;gx+=16)g.fillRect(gx,0,1,H);for(var gy=0;gy<H;gy+=16)g.fillRect(0,gy,W,1);
+    // sun marker (top-right)
+    var sx=mx(375),sy=my(22),sr=mx(13);
+    pixDisc(g,sx,sy,sr,COL.sun);
+    var ray=[[0,-sr-3],[0,sr+3],[-sr-3,0],[sr+3,0],[-sr-2,-sr-2],[sr+2,-sr-2],[-sr-2,sr+2],[sr+2,sr+2]];g.fillStyle=COL.sunEdge;for(var r=0;r<ray.length;r++)g.fillRect(sx+ray[r][0],sy+ray[r][1],2,2);
+    // city centre
+    P(g,mx(120),my(80),mx(160),my(80),COL.city);ring(g,mx(120),my(80),mx(160),my(80),COL.cityEdge);
+    for(var cx=0;cx<6;cx++)for(var cy=0;cy<3;cy++)P(g,mx(120)+8+cx*mx(24),my(80)+8+cy*my(22),mx(14),my(12),'#231d12');
+    // Meridian House (asset, left)
+    P(g,mx(60),my(90),mx(18),my(50),COL.asset);ring(g,mx(60),my(90),mx(18),my(50),COL.assetEdge);
+    for(var w=0;w<7;w++)P(g,mx(60)+3,my(90)+4+w*4,mx(12),2,COL.assetWin);
+    // Northgate tower (asset, right)
+    P(g,mx(318),my(85),mx(18),my(55),COL.asset);ring(g,mx(318),my(85),mx(18),my(55),COL.assetEdge);
+    for(var w2=0;w2<8;w2++)P(g,mx(318)+3,my(85)+4+w2*4,mx(12),2,COL.assetWin);
+    // Ashfield estate
+    P(g,mx(30),my(150),mx(90),my(45),COL.estate);ring(g,mx(30),my(150),mx(90),my(45),COL.estEdge);
+    var ex=[mx(38),mx(58),mx(78),mx(98)];for(var e=0;e<4;e++){P(g,ex[e],my(158),12,9,COL.house);ring(g,ex[e],my(158),12,9,'#20261a');P(g,ex[e]+2,my(158)+2,3,3,COL.houseWin);P(g,ex[e]+5,my(158)+5,3,3,COL.door);}
+    // school
+    P(g,mx(260),my(150),mx(55),my(30),COL.hosp);ring(g,mx(260),my(150),mx(55),my(30),'#3a4a2a');
+    // hospital
+    P(g,mx(340),my(10),mx(55),my(26),COL.hosp);ring(g,mx(340),my(10),mx(55),my(26),COL.hospEdge);
+    P(g,mx(367)-1,my(10)+5,3,9,COL.cross);P(g,mx(367)-4,my(10)+8,9,3,COL.cross);
+    // care home (highlighted welfare asset)
+    P(g,mx(5),my(10),mx(65),my(26),COL.asset);ring(g,mx(5),my(10),mx(65),my(26),COL.assetEdge);
   }
-  function spawnParts(){
-    if(!seeds.length)return;var sd=seeds[(Math.random()*seeds.length)|0];
-    if(cfg.type==='ember'){
-      parts.push({k:'e',x:sd.x+(Math.random()-.5)*sd.w*2,y:sd.y,vx:(Math.random()-.15)*.35,vy:-.5-Math.random()*.9,life:1});
-      if(Math.random()<.7)parts.push({k:'s',x:sd.x+(Math.random()-.5)*sd.w,y:sd.y-4,vx:.12+Math.random()*.18,vy:-.32-Math.random()*.4,life:1,sz:2+((Math.random()*3)|0)});
+  function labelsHeat(g){
+    lab(g,'39C',mx(375),my(22)+3,'#7a3a00',7);
+    lab(g,'CITY CENTRE',mx(200),my(122),COL.labDim,8);
+    lab(g,'MERIDIAN',mx(69),my(150),COL.assetLab,7);
+    lab(g,'NORTHGATE',mx(327),my(150),COL.assetLab,7);
+    lab(g,'ASHFIELD',mx(75),my(150)+my(45)-4,COL.labDim,7);
+    lab(g,'ST ANNES',mx(287),my(150)+my(30)-4,COL.labDim,7);
+    lab(g,'NORTHGATE GEN',mx(367),my(10)+my(26)+8,COL.labDim,6);
+    lab(g,'ARNOS VALE',mx(37),my(10)+my(26)+8,COL.assetLab,6);
+  }
+
+  var cv,ctx,bg,bx,raf=0,reduced,scen,frame,flames,embers,waves,spreads,curIdx;
+  var OFF=[[0,0],[-6,2],[6,1],[-3,-4],[4,-3],[0,-6],[-8,-1],[8,-2]];
+  function build(scenario,m,idx){
+    scen=scenario;curIdx=idx||0;flames=[];embers=[];waves=[];spreads=[];
+    if(scenario==='hotwells'){
+      // heat zones + wavy heat lines rising from each
+      m.fires.forEach(function(f){
+        var cx=mx(f.cx),cy=my(f.cy),rx=mx(f.rx);
+        spreads.push({cx:cx,cy:cy,r:rx*1.4,c:'rgba(224,90,20,0.09)'});
+        var n=Math.max(3,Math.min(9,Math.round(rx/3)));
+        for(var k=0;k<n;k++){var lx=cx+((k-(n-1)/2)*4);waves.push({x:lx,base:cy+2,h:10+(curIdx*4)+((k%3)*3),amp:1.5+(k%2),seed:k*1.7+cx*0.1});}
+      });
     } else {
-      parts.push({k:'h',x:sd.x+(Math.random()-.5)*sd.w*1.6,y:sd.y,ph:Math.random()*6,vy:-.2-Math.random()*.3,life:1});
+      m.fires.forEach(function(f){
+        var cx=mx(f.cx),cy=my(f.cy),rx=mx(f.rx);
+        spreads.push({cx:cx,cy:cy,r:rx*1.5,c:'rgba(226,90,20,0.10)'});
+        spreads.push({cx:cx,cy:cy,r:rx*0.9,c:'rgba(220,55,12,0.16)'});
+        var n=Math.max(2,Math.min(6,Math.round(rx/4)));
+        for(var k=0;k<n;k++){var o=OFF[k%OFF.length];flames.push({x:cx+o[0],y:cy+o[1]+3,sc:(k===0?2:1),seed:k*3+((cx*7)%5)});}
+      });
+      (m.embers||[]).forEach(function(e){embers.push({x:mx(e.cx),y:my(e.cy),seed:(e.cx*3)%6});});
     }
   }
-  function drawParts(){
-    for(var k=parts.length-1;k>=0;k--){var p=parts[k];
-      if(p.k==='s'){p.x+=p.vx;p.y+=p.vy;p.vy*=.99;p.life-=.008;if(p.life<=0){parts.splice(k,1);continue;}
-        ctx.fillStyle='rgba(44,38,32,'+(p.life*.32)+')';ctx.fillRect(p.x|0,p.y|0,p.sz,p.sz);}
-      else if(p.k==='e'){p.x+=p.vx;p.y+=p.vy;p.vx+=.008;p.life-=.014;if(p.life<=0||p.y<0){parts.splice(k,1);continue;}
-        ctx.fillStyle=p.life>.5?'#FFD27A':(p.life>.25?'#FF8C2B':'#C0392B');ctx.fillRect(p.x|0,p.y|0,1,1);
-        if(p.life>.6){ctx.fillStyle='rgba(255,180,90,.4)';ctx.fillRect((p.x|0)-1,p.y|0,3,1);ctx.fillRect(p.x|0,(p.y|0)-1,1,3);}}
-      else {p.ph+=.15;p.y+=p.vy;p.life-=.012;if(p.life<=0||p.y<my(30)){parts.splice(k,1);continue;}
-        var wx=p.x+Math.sin(p.ph)*2;ctx.fillStyle='rgba(255,'+(200+((Math.sin(p.ph)*30)|0))+',120,'+(p.life*.5)+')';ctx.fillRect(wx|0,p.y|0,1,1);}
+  function paintBase(){
+    if(scen==='hotwells')baseHeat(bx);else baseAshdown(bx);
+    for(var s=0;s<spreads.length;s++)pixDisc(bx,spreads[s].cx,spreads[s].cy,spreads[s].r,spreads[s].c);
+  }
+  function heatCol(t){var i=Math.round((t*0.7+curIdx*0.18)*(HEATRAMP.length-1));if(i<0)i=0;if(i>HEATRAMP.length-1)i=HEATRAMP.length-1;return HEATRAMP[i];}
+  function drawIncident(){
+    if(scen==='hotwells'){
+      var ph=frame*0.16;
+      for(var w=0;w<waves.length;w++){var L=waves[w];
+        for(var k=0;k<L.h;k+=2){var t=k/L.h,yy=(L.base-k)|0,xx=(L.x+Math.sin(k*0.45+L.seed+ph)*L.amp)|0;P(ctx,xx,yy,2,2,heatCol(t));}
+      }
+    } else {
+      for(var f=0;f<flames.length;f++){var F=flames[f],flick=((frame>>3)+F.seed)%3;flame(ctx,F.x,F.y,F.sc,flick);}
+      for(var e=0;e<embers.length;e++){var E=embers[e],a=0.35+0.35*Math.sin(frame*0.18+E.seed);
+        P(ctx,E.x-1,E.y-1,3,3,'rgba(255,120,40,'+(a*0.6)+')');P(ctx,E.x,E.y,2,2,COL.ember);}
     }
   }
-  function composite(){
-    var base=bx.getImageData(0,0,W,H).data,d=imgData.data,pal=cfg.pal,mxI=pal.length-1;
-    for(var i=0;i<W*H;i++){var f=fire[i];
-      var r=base[i*4],g=base[i*4+1],b=base[i*4+2];
-      if(f>0){var c=pal[f],a=f/mxI;r=r*(1-a)+c[0];g=g*(1-a)+c[1];b=b*(1-a)+c[2];if(r>255)r=255;if(g>255)g=255;if(b>255)b=255;}
-      d[i*4]=r;d[i*4+1]=g;d[i*4+2]=b;d[i*4+3]=255;
-    }
-    ctx.putImageData(imgData,0,0);
-  }
-  function loop(){frame++;seedRow();propagate();composite();if(frame%2===0)spawnParts();drawParts();raf=requestAnimationFrame(loop);}
-
-  function render(scenario,m){
-    stop();
-    cv=document.getElementById('fireCanvas');if(!cv)return;
-    ctx=cv.getContext('2d');W=cv.width;H=cv.height;ctx.imageSmoothingEnabled=false;
-    if(!bg){bg=document.createElement('canvas');}bg.width=W;bg.height=H;bx=bg.getContext('2d');
-    imgData=ctx.createImageData(W,H);fire=new Int16Array(W*H);parts=[];frame=0;
-    if(scenario==='hotwells'){cfg={pal:HEATPAL,type:'heat',decay:7,fadeY:H,fadeExtra:3,wind:0,seedMax:0.6,seedProb:0.55};drawHeat();}
-    else{cfg={pal:FIREPAL,type:'ember',decay:3,fadeY:my(85),fadeExtra:1,wind:0};drawAshdown();}
-    initSeeds(m);
+  function frameDraw(){ctx.drawImage(bg,0,0);drawIncident();if(scen==='hotwells')labelsHeat(ctx);else labelsAshdown(ctx);}
+  function loop(){frame++;frameDraw();raf=requestAnimationFrame(loop);}
+  function render(scenario,m,idx){
+    stop();cv=document.getElementById('fireCanvas');if(!cv)return;
+    ctx=cv.getContext('2d');ctx.imageSmoothingEnabled=false;
+    if(!bg){bg=document.createElement('canvas');bg.width=W;bg.height=H;}bx=bg.getContext('2d');bx.imageSmoothingEnabled=false;
+    frame=0;build(scenario,m,idx);paintBase();
     try{reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){reduced=false;}
-    if(reduced){for(var w=0;w<160;w++){seedRow();propagate();}composite();return;}
+    if(reduced){frameDraw();return;}
     loop();
   }
   function stop(){if(raf){cancelAnimationFrame(raf);raf=0;}}
@@ -2369,7 +2398,7 @@ function showFireMap(idx,callback){
   showScreen('fireMap');
   var fms=document.getElementById('fireMap');
   if(fms){fms.classList.toggle('cabot',G.scenario==='hotwells');}
-  FMAP.render(G.scenario,m);
+  FMAP.render(G.scenario,m,idx);
 }
 function continueFromMap(){FMAP.stop();if(mapCallback)mapCallback();}
 
