@@ -82,8 +82,15 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
 .gh{background:var(--dark2);border-bottom:1px solid rgba(255,255,255,.07);padding:calc(.75rem + env(safe-area-inset-top)) calc(1rem + env(safe-area-inset-right)) .75rem calc(1rem + env(safe-area-inset-left));display:flex;align-items:center;justify-content:space-between;gap:.5rem;position:sticky;top:0;z-index:100;}
 .ghx{background:none;border:none;color:var(--dim);font-size:1.25rem;line-height:1;padding:.25rem .4rem;margin-left:.15rem;cursor:pointer;border-radius:4px;flex:0 0 auto;}
 .ghx:active{opacity:.6;}
-.grt{font-family:'Barlow Condensed',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--rc);}
-.gtt{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:900;text-transform:uppercase;}
+.ghl{flex:1;min-width:0;overflow:hidden;}
+.grt{font-family:'Barlow Condensed',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--rc);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.gtt{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:900;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.gstat{display:flex;flex-direction:column;align-items:center;line-height:1.05;flex:0 0 auto;}
+.gstat .sl{font-size:.52rem;}
+.gh .sv,.gh .tv2{font-size:1.05rem;}
+.cpill{display:flex;align-items:center;gap:.35rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:20px;padding:.32rem .55rem;font-family:'Barlow Condensed',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--text);cursor:pointer;flex:0 0 auto;white-space:nowrap;}
+.cpill:active{opacity:.7;}
+.cpd{width:9px;height:9px;border-radius:50%;background:var(--green);flex:0 0 auto;}
 .sd{text-align:center;padding:0 .75rem;border-left:1px solid rgba(255,255,255,.07);border-right:1px solid rgba(255,255,255,.07);}
 .sl{font-size:.65rem;color:var(--dim);text-transform:uppercase;letter-spacing:.1em;}
 .sv{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:700;color:var(--gold);}
@@ -94,29 +101,54 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
 .ctb{height:5px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden;}
 .ctf{height:100%;border-radius:3px;transition:width .5s ease,background .5s ease;}
 .sp{background:linear-gradient(135deg,rgba(255,69,0,.1),transparent 60%);border-bottom:1px solid rgba(255,69,0,.15);padding:1rem;}
-.sph{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;}
+.spx{display:flex;align-items:center;gap:.6rem;width:100%;background:none;border:none;padding:0;margin:0;cursor:pointer;color:inherit;text-align:left;font:inherit;}
+.spchev{color:var(--dim);font-size:.7rem;flex:0 0 auto;transition:transform .2s ease;}
+.spbody{margin-top:.6rem;}
+.sp.collapsed{position:sticky;top:var(--ght,52px);z-index:90;padding-top:.65rem;padding-bottom:.65rem;box-shadow:0 2px 10px rgba(0,0,0,.3);}
+.sp.collapsed .spbody{display:none;}
+.sp.collapsed .spchev{transform:rotate(180deg);}
+.sph{display:flex;align-items:center;gap:.5rem;flex:1;min-width:0;}
 .spp{font-family:'Barlow Condensed',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;background:var(--fire);color:#fff;padding:.15rem .5rem;border-radius:2px;}
-.spt{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;text-transform:uppercase;flex:1;}
+.spt{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;text-transform:uppercase;flex:1;min-width:0;}
+.sp.collapsed .spt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .sptx{font-size:.85rem;color:var(--dim);line-height:1.5;margin-bottom:.75rem;}
 .sr{display:flex;gap:.5rem;flex-wrap:wrap;}
 .chip{font-size:.72rem;font-weight:600;padding:.25rem .6rem;border-radius:20px;}
-.chip.r{background:rgba(231,76,60,.2);color:#e74c3c;border:1px solid rgba(231,76,60,.3);}
+.chip.r{background:rgba(255,69,0,.14);color:#ff6a33;border:1px solid rgba(255,69,0,.28);}
 .chip.a{background:rgba(243,156,18,.2);color:#f39c12;border:1px solid rgba(243,156,18,.3);}
 .chip.b{background:rgba(52,152,219,.2);color:#3498db;border:1px solid rgba(52,152,219,.3);}
 .chip.g{background:rgba(46,204,113,.2);color:#2ecc71;border:1px solid rgba(46,204,113,.3);}
+.chip.more{background:rgba(255,255,255,.06);color:var(--dim);border:1px solid rgba(255,255,255,.15);cursor:pointer;font-family:inherit;}
+.chip.more:active{opacity:.7;}
 .pra{display:none;flex-direction:column;align-items:center;padding:.6rem 1rem 0;background:rgba(231,76,60,.07);border-bottom:1px solid rgba(231,76,60,.25);}
 .pra.on{display:flex;}
-.prl{font-family:'Barlow Condensed',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:.4rem;animation:up .6s ease-in-out infinite;}
+.prl{font-family:'Barlow Condensed',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:.4rem;}
 @keyframes up{0%,100%{opacity:1}50%{opacity:.2}}
 .prt{width:100%;height:8px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden;margin-bottom:.5rem;}
 .prf{height:100%;background:var(--red);border-radius:4px;transition:width .1s linear;}
 .ds{padding:1rem;flex:1;overflow-y:auto;}
 .dl{font-family:'Barlow Condensed',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;}
 .dl::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.07);}
+.ctxbar{display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:1rem;background:var(--dark3);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:.7rem .9rem;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);}
+.ctxbar:active{opacity:.7;}
+.ctxchev{color:var(--dim);font-size:.85rem;}
+.ss-md{max-width:480px;}
+.ss-h{display:flex;align-items:center;justify-content:space-between;font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:900;text-transform:uppercase;letter-spacing:.03em;margin-bottom:1rem;}
+.ss-close{background:none;border:none;color:var(--dim);font-size:1.15rem;line-height:1;padding:.2rem .4rem;cursor:pointer;border-radius:4px;}
+.ss-close:active{opacity:.6;}
+.ss-sec{background:none;border:none;padding:0;margin-bottom:1.25rem;}
+.ss-sec:last-child{margin-bottom:0;}
+.ss-sec .cbl{font-size:.65rem;margin-bottom:.6rem;}
+.ss-sec .ctb{height:9px;}
+.ss-sec .ctl{font-size:.68rem;margin-bottom:.35rem;}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;}
+  .ember{display:none!important;}
+}
 .qc{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:1.25rem;margin-bottom:1rem;animation:sic .3s ease;}
 @keyframes sic{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .ql{font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--fire);margin-bottom:.3rem;}
-.ql.urg{color:var(--red);animation:up .8s infinite;}
+.ql.urg{color:var(--red);}
 .qrf{font-size:.78rem;color:var(--rc);font-weight:600;margin-bottom:.4rem;font-style:italic;}
 .qt{font-size:.95rem;font-weight:500;line-height:1.4;margin-bottom:1rem;}
 .ol{display:flex;flex-direction:column;gap:.5rem;}
@@ -132,7 +164,7 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
 .otx{font-size:.85rem;line-height:1.4;flex:1;}
 .ores{font-size:.75rem;margin-top:.25rem;font-style:italic;color:var(--dim);display:none;}
 .ob.ok .ores,.ob.bad .ores,.ob.best .ores,.ob.tout .ores{display:block;}
-.eb{background:linear-gradient(90deg,rgba(255,69,0,.3),rgba(255,184,0,.3));border:1px solid var(--fire);border-radius:6px;padding:.75rem 1rem;margin:.5rem 1rem;display:flex;align-items:center;gap:.75rem;animation:ep 2s ease-in-out infinite;}
+.eb{background:linear-gradient(90deg,rgba(255,69,0,.3),rgba(255,184,0,.3));border:1px solid var(--fire);border-radius:6px;padding:.75rem 1rem;margin:.5rem 1rem;display:flex;align-items:center;gap:.75rem;}
 @keyframes ep{0%,100%{box-shadow:0 0 0 0 rgba(255,69,0,.3)}50%{box-shadow:0 0 0 6px rgba(255,69,0,0)}}
 .ebt{font-size:.83rem;font-weight:600;}.ebs{font-size:.75rem;color:var(--dim);}
 .ap{background:var(--dark3);border-top:1px solid rgba(255,255,255,.07);padding:.75rem 1rem;}
@@ -379,47 +411,66 @@ svg.firemap{width:100%;height:220px;display:block;border-radius:8px;border:1px s
 <!-- GAME -->
 <div id="game" class="screen">
   <div class="gh">
-    <div><div class="grt" id="hRole">Role</div><div class="gtt">Op. Ashdown</div></div>
-    <div class="sd"><div class="sl">Score</div><div class="sv" id="scoreEl">0</div></div>
-    <div style="text-align:right"><div class="sl">Elapsed</div><div class="tv2" id="timerEl">00:00</div></div>
+    <div class="ghl"><div class="grt" id="hRole">Role</div><div class="gtt">Op. Ashdown</div></div>
+    <div class="gstat"><span class="sl">Score</span><span class="sv" id="scoreEl">0</span></div>
+    <div class="gstat"><span class="sl">Time</span><span class="tv2" id="timerEl">00:00</span></div>
+    <button type="button" class="cpill" id="consPill" onclick="openStatusSheet()" aria-label="Show full status: consequences, agencies and command level"><span class="cpd" id="consPillDot"></span><span id="consPillTxt">Monitoring</span></button>
     <button type="button" class="ghx" onclick="openExitConfirm()" aria-label="Exit exercise" title="Exit exercise">&#10005;</button>
   </div>
   <div class="pd" id="pdots"></div>
-  <div class="cba">
-    <div class="cbl"><span>Consequence Tracker</span><span id="clevel">Monitoring</span></div>
-    <div class="cts">
-      <div class="ct"><div class="ctl">Life Safety</div><div class="ctb"><div class="ctf" id="cLife" style="width:10%;background:var(--green)"></div></div></div>
-      <div class="ct"><div class="ctl">Infrastructure</div><div class="ctb"><div class="ctf" id="cInfra" style="width:10%;background:var(--green)"></div></div></div>
-      <div class="ct"><div class="ctl">Community</div><div class="ctb"><div class="ctf" id="cComm" style="width:10%;background:var(--green)"></div></div></div>
-      <div class="ct"><div class="ctl">Coordination</div><div class="ctb"><div class="ctf" id="cCoord" style="width:10%;background:var(--green)"></div></div></div>
+  <div class="sp" id="sitPanel">
+    <button type="button" class="spx" id="sitToggle" onclick="toggleSituation()" aria-expanded="true" aria-controls="sitBody">
+      <span class="sph"><span class="spp" id="phaseEl">PHASE 1</span><span class="spt" id="sitTitle">Loading...</span></span>
+      <span class="spchev" aria-hidden="true">&#9650;</span>
+    </button>
+    <div class="spbody" id="sitBody">
+      <div class="sptx" id="sitText"></div>
+      <div class="sr" id="statRow"></div>
     </div>
-  </div>
-  <div class="sp">
-    <div class="sph"><span class="spp" id="phaseEl">PHASE 1</span><span class="spt" id="sitTitle">Loading...</span></div>
-    <div class="sptx" id="sitText"></div>
-    <div class="sr" id="statRow"></div>
   </div>
   <div id="escArea"></div>
   <div class="pra" id="pressArea">
     <div class="prl" id="pressLabel">⚡ DECIDE NOW</div>
     <div class="prt"><div class="prf" id="pressFill" style="width:100%"></div></div>
   </div>
-  <div class="ds"><div class="dl">Your Decision</div><div id="qContainer"></div></div>
-  <div class="ap">
-    <div class="cls">Activated Agencies</div>
-    <div class="ag">
-      <div class="ach" id="agFire">🚒 Fire</div><div class="ach" id="agPol">🚔 Police</div>
-      <div class="ach" id="agAmb">🚑 Ambulance</div><div class="ach" id="agNHS">🏥 NHS</div>
-      <div class="ach" id="agLGA">🏛️ Council</div><div class="ach" id="agUtil">⚡ Utilities</div>
-      <div class="ach" id="agPHE">🧬 Pub.Health</div><div class="ach" id="agVol">🤝 Voluntary</div>
-    </div>
+  <div class="ds">
+    <div class="dl">Your Decision</div>
+    <div id="qContainer"></div>
+    <button type="button" class="ctxbar" onclick="openStatusSheet()" aria-label="Show consequences, agencies and command level">
+      <span>&#127963;&#65039; Agencies &amp; Command Level</span><span class="ctxchev" aria-hidden="true">&#9656;</span>
+    </button>
   </div>
-  <div class="cb">
-    <div class="cls">Command Level</div>
-    <div class="clv">
-      <div class="cl gold" id="clGold">⬛ Gold<div class="clsub">SCG</div></div>
-      <div class="cl silver" id="clSilv">🔘 Silver<div class="clsub">TCG</div></div>
-      <div class="cl bronze on" id="clBron">🔷 Bronze<div class="clsub">Scene</div></div>
+</div>
+
+<!-- STATUS SHEET (consequence tracker + agencies + command) -->
+<div id="statusSheet" class="mo" style="display:none" onclick="if(event.target===this)closeStatusSheet()">
+  <div class="md ss-md">
+    <div class="ss-h"><span>Situation Status</span><button type="button" class="ss-close" onclick="closeStatusSheet()" aria-label="Close status">&#10005;</button></div>
+    <div class="cba ss-sec">
+      <div class="cbl"><span>Consequence Tracker</span><span id="clevel">Monitoring</span></div>
+      <div class="cts">
+        <div class="ct"><div class="ctl">Life Safety</div><div class="ctb"><div class="ctf" id="cLife" style="width:10%;background:var(--green)"></div></div></div>
+        <div class="ct"><div class="ctl">Infrastructure</div><div class="ctb"><div class="ctf" id="cInfra" style="width:10%;background:var(--green)"></div></div></div>
+        <div class="ct"><div class="ctl">Community</div><div class="ctb"><div class="ctf" id="cComm" style="width:10%;background:var(--green)"></div></div></div>
+        <div class="ct"><div class="ctl">Coordination</div><div class="ctb"><div class="ctf" id="cCoord" style="width:10%;background:var(--green)"></div></div></div>
+      </div>
+    </div>
+    <div class="ap ss-sec">
+      <div class="cls">Activated Agencies</div>
+      <div class="ag">
+        <div class="ach" id="agFire">🚒 Fire</div><div class="ach" id="agPol">🚔 Police</div>
+        <div class="ach" id="agAmb">🚑 Ambulance</div><div class="ach" id="agNHS">🏥 NHS</div>
+        <div class="ach" id="agLGA">🏛️ Council</div><div class="ach" id="agUtil">⚡ Utilities</div>
+        <div class="ach" id="agPHE">🧬 Pub.Health</div><div class="ach" id="agVol">🤝 Voluntary</div>
+      </div>
+    </div>
+    <div class="cb ss-sec">
+      <div class="cls">Command Level</div>
+      <div class="clv">
+        <div class="cl gold" id="clGold">⬛ Gold<div class="clsub">SCG</div></div>
+        <div class="cl silver" id="clSilv">🔘 Silver<div class="clsub">TCG</div></div>
+        <div class="cl bronze on" id="clBron">🔷 Bronze<div class="clsub">Scene</div></div>
+      </div>
     </div>
   </div>
 </div>
@@ -2269,8 +2320,11 @@ function loadQ(){
   document.getElementById('phaseEl').textContent=q.phase;
   document.getElementById('sitTitle').textContent=q.title;
   document.getElementById('sitText').textContent=applyBranching(q);
+  var sp=document.getElementById('sitPanel');if(sp)sp.classList.remove('collapsed');
+  var st=document.getElementById('sitToggle');if(st)st.setAttribute('aria-expanded','true');
+  syncGht();
   var stats=(q.stats||[]).concat(getBranchPressure(q));
-  document.getElementById('statRow').innerHTML=stats.map(function(s){return '<div class="chip '+s.t+'">\u25CF '+s.l+'<\/div>';}).join('');
+  renderStatChips(stats);
   var ea=document.getElementById('escArea');
   ea.innerHTML=q.esc?'<div class="eb"><span style="font-size:1.5rem">\uD83D\uDEA8<\/span><div><div class="ebt">'+q.esc.t+'<\/div><div class="ebs">'+q.esc.s+'<\/div><\/div><\/div>':'';
   var agMap={Fire:'fire',Pol:'police',Amb:'ambulance',NHS:'nhs',LGA:'council',Util:'utilities',PHE:'pubhealth',Vol:'voluntary'};
@@ -2393,9 +2447,12 @@ function updateConsBars(){
     el.style.background=v<30?'var(--green)':v<55?'var(--amber)':v<75?'var(--fire)':'var(--red)';
   }
   var avg=tot/4;
-  var lbl=document.getElementById('clevel');if(!lbl)return;
-  lbl.textContent=avg<20?'Controlled':avg<40?'Manageable':avg<60?'Significant':avg<75?'Serious':'\u26A0\uFE0F Critical';
-  lbl.style.color=avg<20?'var(--green)':avg<40?'#8BC34A':avg<60?'var(--amber)':avg<75?'var(--fire)':'var(--red)';
+  var txt=avg<20?'Controlled':avg<40?'Manageable':avg<60?'Significant':avg<75?'Serious':'\u26A0\uFE0F Critical';
+  var col=avg<20?'var(--green)':avg<40?'#8BC34A':avg<60?'var(--amber)':avg<75?'var(--fire)':'var(--red)';
+  var lbl=document.getElementById('clevel');
+  if(lbl){lbl.textContent=txt;lbl.style.color=col;}
+  var pt=document.getElementById('consPillTxt');if(pt)pt.textContent=txt.replace('\u26A0\uFE0F ','');
+  var pd=document.getElementById('consPillDot');if(pd){pd.style.background=col;pd.style.boxShadow='0 0 6px '+col;}
 }
 
 function getOutcome(){
@@ -2489,6 +2546,34 @@ function goHome(){
 
 function openExitConfirm(){var el=document.getElementById('exitConfirm');if(el)el.style.display='flex';}
 function closeExitConfirm(){var el=document.getElementById('exitConfirm');if(el)el.style.display='none';}
+
+function openStatusSheet(){var el=document.getElementById('statusSheet');if(el)el.style.display='flex';}
+function closeStatusSheet(){var el=document.getElementById('statusSheet');if(el)el.style.display='none';}
+
+function syncGht(){
+  var gh=document.querySelector('#game .gh'),sp=document.getElementById('sitPanel');
+  if(gh&&sp&&gh.offsetHeight)sp.style.setProperty('--ght',gh.offsetHeight+'px');
+}
+function toggleSituation(){
+  var sp=document.getElementById('sitPanel'),st=document.getElementById('sitToggle');
+  if(!sp)return;
+  syncGht();
+  var collapsed=sp.classList.toggle('collapsed');
+  if(st)st.setAttribute('aria-expanded',collapsed?'false':'true');
+}
+function renderStatChips(stats){
+  var row=document.getElementById('statRow');if(!row)return;
+  var cap=3;
+  function chip(s){return '<div class="chip '+s.t+'">● '+s.l+'<\/div>';}
+  if(stats.length<=cap){row.innerHTML=stats.map(chip).join('');return;}
+  G._allStats=stats;
+  row.innerHTML=stats.slice(0,cap).map(chip).join('')+'<button type="button" class="chip more" onclick="expandStatChips()">+'+(stats.length-cap)+' more<\/button>';
+}
+function expandStatChips(){
+  var row=document.getElementById('statRow');if(!row||!G._allStats)return;
+  row.innerHTML=G._allStats.map(function(s){return '<div class="chip '+s.t+'">● '+s.l+'<\/div>';}).join('');
+}
+window.addEventListener('resize',syncGht);
 function exitToMenu(){
   goHome();
 }
