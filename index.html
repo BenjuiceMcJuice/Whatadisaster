@@ -84,7 +84,7 @@ body{background:var(--dark);color:var(--text);font-family:'Barlow',sans-serif;mi
 .fmh{font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:900;text-transform:uppercase;margin-bottom:.5rem;}
 .fmd{font-size:.85rem;color:var(--dim);line-height:1.6;margin-bottom:1.5rem;}
 .map-wrap{width:100%;max-width:480px;padding:0 1rem;}
-canvas.firemap{width:100%;height:auto;display:block;border-radius:8px;border:1px solid rgba(255,69,0,.25);image-rendering:pixelated;image-rendering:crisp-edges;background:#0a0806;box-shadow:0 10px 30px rgba(0,0,0,.5),0 0 30px rgba(255,69,0,.12) inset;}
+canvas.firemap{width:100%;height:auto;display:block;border-radius:10px;border:1px solid rgba(255,69,0,.22);background:#0a0806;box-shadow:0 12px 34px rgba(0,0,0,.55);}
 .pxi{display:inline-block;vertical-align:-.16em;shape-rendering:crispEdges;image-rendering:pixelated;}
 .fi .pxi{vertical-align:middle;filter:drop-shadow(0 0 10px rgba(255,69,0,.5));}
 .dw-icon .pxi{vertical-align:middle;}
@@ -352,7 +352,7 @@ canvas.firemap{width:100%;height:auto;display:block;border-radius:8px;border:1px
     <div class="fmd" id="fmDesc">The situation is developing.</div>
   </div>
   <div class="map-wrap">
-    <canvas class="firemap" id="fireCanvas" width="256" height="141" role="img" aria-label="Tactical map showing the incident spreading across the area."></canvas>
+    <canvas class="firemap" id="fireCanvas" width="1024" height="576" role="img" aria-label="Tactical map showing the incident spreading across the area."></canvas>
   </div>
   <div class="fire-fact" id="fireFact" style="display:none">
     <div class="fft"><span id="fmFactLabel">🔥 Fire Behaviour Fact</span></div>
@@ -612,8 +612,27 @@ var PX=(function(){
     [[7,0],[7,1],[7,13],[7,14],[0,7],[1,7],[13,7],[14,7],[2,2],[3,3],[12,12],[11,11],[12,2],[11,3],[2,12],[3,11]].forEach(function(p){s+=rect(p[0],p[1],R);});
     return wrap(w,h,s,size,cls);
   }
+  function beaconSvg(size,cls){
+    // higher-res emergency beacon (24x24): glossy red dome, amber lens band,
+    // dark base, light flashes.
+    var N=24,s='';
+    [[3,3],[6,1],[12,0],[18,1],[21,3],[2,8],[22,8]].forEach(function(p){s+=rect(p[0],p[1],'#fff2c0');});
+    for(var y=2;y<=14;y++)for(var x=2;x<=21;x++){
+      var dxr=(x-11.5)/9.0,dyr=(y-14)/12.0,r=dxr*dxr+dyr*dyr;
+      if(r<=1&&y<=14){var c;
+        if(y>=10&&y<=12)c=(r>0.72)?'#c8900f':'#ffc21e';
+        else if((x-9)*(x-9)+(y-6)*(y-6)<7)c='#ff7a68';
+        else c=(r>0.74)?'#a01e14':'#e0342a';
+        s+=rect(x,y,c);}
+    }
+    for(var ny=15;ny<=16;ny++)for(var nx=8;nx<=15;nx++)s+=rect(nx,ny,'#8a1e14');
+    for(var by=17;by<=21;by++)for(var bx=6;bx<=17;bx++){var c2=(by===17||bx===6||bx===17)?'#3b414d':'#23262e';s+=rect(bx,by,c2);}
+    s+=rect(7,22,'#23262e');s+=rect(16,22,'#23262e');
+    return wrap(N,N,s,size,cls);
+  }
   function icon(name,opts){opts=opts||{};var size=opts.size||16;
     if(name==='sun')return sunSvg(size,opts.cls);
+    if(name==='alert')return beaconSvg(size,opts.cls);
     var ic=ICONS[name];return ic?gridSvg(ic,size,opts.cls):'';
   }
   function hydrate(root){
@@ -2232,169 +2251,217 @@ var mapIdx=0,mapCallback=null;
 // building's outline + a thermometer gauge climb green->amber->red as its
 // heat-health risk rises, under an escalating alert badge (impact, not
 // temperature). Data-driven from MAPS / MAPS2.
+// HIGH-RES TACTICAL MAP ENGINE
+// Renders at 1024x576 with real-font labels (crisp, no pixelated upscale) and
+// smooth CSS downscale. Pixel-art feel comes from chunky blocks + limited
+// palette, not from blowing up a thumbnail. Wildfire = detailed block flames +
+// rising smoke + ember spots that grow each stage. Heatwave = per-site status
+// board (coloured outline + MONITORED/AT RISK/CRITICAL tag) under an escalating
+// alert badge. Data-driven from MAPS / MAPS2.
+// HIGH-RES TACTICAL MAP ENGINE
+// Renders at 1024x576 with real-font labels (crisp, no pixelated upscale) and
+// smooth CSS downscale. Pixel-art feel comes from chunky blocks + limited
+// palette, not from blowing up a thumbnail. Wildfire = detailed block flames +
+// rising smoke + ember spots that grow each stage. Heatwave = per-site status
+// board (coloured outline + MONITORED/AT RISK/CRITICAL tag) under an escalating
+// alert badge. Data-driven from MAPS / MAPS2.
+// HIGH-RES TACTICAL MAP ENGINE
+// Renders at 1024x576 with real-font labels (crisp, no pixelated upscale) and
+// smooth CSS downscale. Pixel-art feel comes from chunky blocks + limited
+// palette, not from blowing up a thumbnail. Wildfire = detailed block flames +
+// rising smoke + ember spots that grow each stage. Heatwave = per-site status
+// board (coloured outline + MONITORED/AT RISK/CRITICAL tag) under an escalating
+// alert badge. Data-driven from MAPS / MAPS2.
 var FMAP=(function(){
-  var COL={
-    bg:'#1e2016',hill:'#2c3020',grid:'rgba(255,255,255,0.03)',
-    tree:'#35482a',tree2:'#2b3a22',trunk:'#243016',
-    road:'#474a44',roadC:'#6a6e5e',mway:'#3d4048',mwayC:'#565a66',
-    estate:'#262b1b',estEdge:'#3a4228',house:'#333a25',houseWin:'#4a5234',door:'#1b2112',
-    asset:'#1f3a40',assetEdge:'#3fc8d8',assetWin:'#5fd8e6',assetLab:'#4fd0e0',
-    infra:'#2a2814',infraEdge:'#e6c024',infraLab:'#d9b820',
-    hosp:'#182a18',hospEdge:'#3a5a3a',cross:'#e8ecec',
-    city:'#2a2418',cityEdge:'#43391f',
-    sun:'#f0b41e',sunEdge:'#7a5200',
-    lab:'#9aa080',labDim:'#8a9078',dark:'#10120c',
-    fR:'#e23a12',fO:'#ff7a1e',fY:'#ffb422',ember:'#ff8a2a',
-    g1:'#46c24a',g2:'#ffb020',g3:'#e23a12'
+  var W=1024,H=576,SCX=W/400,SCY=H/220;
+  function dx(v){return v*SCX;} function dy(v){return v*SCY;}
+  var C={
+    frameStroke:'rgba(120,120,90,0.10)',
+    bgTop:'#26291a',bgBot:'#191c10',
+    glow0:'rgba(96,84,32,.55)',glow1:'rgba(72,68,28,.28)',glow2:'rgba(72,68,28,0)',
+    tree:'#3f5a2c',treeD:'#2f471f',treeL:'#4f6d38',trunk:'#3a2c18',
+    road:'#5a5f56',roadEdge:'#3f443c',roadDash:'#c7cbb0',mway:'#454b63',mwayC:'#6b73a0',
+    estate:'#20402f',estEdge:'#3fa07a',estLab:'#7fe0c0',
+    bldg:'#6b7066',bldgD:'#4a4f46',win:'#2b2f28',door:'#33372e',
+    city:'#2c2618',cityEdge:'#463c22',cityWin:'#241d12',
+    infra:'#c9a41e',hosp:'#e8ecec',hospR:'#d23a2a',
+    sun:'#f4bc26',sunRay:'#8a5c00',
+    lab:'#e8e4d4',labDim:'#c9d2b0',labCyan:'#7fe0c0',labYel:'#e6c85a',
+    fK:'#7a1e06',fR:'#e2320f',fO:'#ff7a1e',fY:'#ffc21e',fW:'#ffe9a0',smoke:'#8a8c86',ember:'#ff9a3a',
+    s1:'#46c24a',s2:'#ffb020',s3:'#ef3b1e',dark:'#0e100a'
   };
-  var W=256,H=141;
-  function mx(v){return Math.round(v*W/400);} function my(v){return Math.round(v*H/220);}
-  function P(g,x,y,w,h,c){g.fillStyle=c;g.fillRect(x|0,y|0,w|0,h|0);}
-  function ring(g,x,y,w,h,c){P(g,x,y,w,1,c);P(g,x,y+h-1,w,1,c);P(g,x,y,1,h,c);P(g,x+w-1,y,1,h,c);}
-  function pixDisc(g,cx,cy,r,c){g.fillStyle=c;var r2=r*r;for(var y=-r;y<=r;y+=2)for(var x=-r;x<=r;x+=2){if(x*x+y*y<=r2)g.fillRect((cx+x)|0,(cy+y)|0,2,2);}}
-  function tree(g,x,y){P(g,x,y,3,3,COL.tree);P(g,x,y,1,3,COL.tree2);P(g,x+1,y+3,1,1,COL.trunk);}
-  function lab(g,t,x,y,c,sz){g.font='bold '+(sz||7)+'px "Courier New",monospace';g.textAlign='center';g.textBaseline='alphabetic';
-    g.fillStyle=COL.dark;g.fillText(t,x-1,y);g.fillText(t,x+1,y);g.fillText(t,x,y-1);g.fillText(t,x,y+1);g.fillStyle=c;g.fillText(t,x,y);}
-  function sevCol(s){return s>=3?COL.g3:s>=2?COL.g2:COL.g1;}
+  function rr(g,x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath();}
+  function txt(g,t,x,y,c,sz,al){g.fillStyle=c;g.font='700 '+sz+'px "Barlow Condensed","Arial Narrow",system-ui,sans-serif';g.textAlign=al||'center';g.textBaseline='alphabetic';g.fillText(t,x,y);}
 
-  var FL=['..R..','.ROR.','.OYO.','ROYOR','RYYYR','ROYOR','.RRR.'];
-  function flame(g,cx,by,sc,flick){
-    var w=5,h=7,base=(cx-(w*sc)/2)|0,oy=(by-h*sc)|0,dx=[-1,0,1][flick||0];
-    for(var r=0;r<h;r++){var row=FL[r],ox=base+(r<2?dx:0);
-      for(var q=0;q<w;q++){var ch=row.charAt(q);if(ch==='.')continue;
-        var c=ch==='R'?COL.fR:ch==='O'?COL.fO:COL.fY;P(g,ox+q*sc,oy+r*sc,sc,sc,c);}}
+  // ── shared sprites ──
+  function tree(g,x,y,s){
+    g.fillStyle=C.trunk;g.fillRect(x-2*s,y,4*s,6*s);
+    for(var i=0;i<3;i++){var w=(22-i*5)*s,h=14*s,ty=y-i*9*s;
+      g.fillStyle=i==2?C.treeL:C.tree;g.beginPath();g.moveTo(x,ty-h);g.lineTo(x-w,ty);g.lineTo(x+w,ty);g.closePath();g.fill();
+      g.fillStyle=C.treeD;g.beginPath();g.moveTo(x,ty-h);g.lineTo(x-w,ty);g.lineTo(x-w*0.2,ty);g.closePath();g.fill();}
   }
-  // thermometer gauge: bulb + stem, fill height & colour by severity (1..3)
-  function gauge(g,x,y,s){
-    var stemH=13,c=sevCol(s),fill=Math.round(stemH*(s/3));
-    P(g,x,y,4,stemH,COL.dark);P(g,x-1,y+stemH-1,6,6,COL.dark);
-    P(g,x-1,y+stemH,4,4,c);P(g,x+1,y+stemH-fill,2,fill,c);
-    P(g,x+1,y+1,2,1,'rgba(255,255,255,0.25)');
+  function bldg(g,x,y,w,h){
+    g.fillStyle=C.bldgD;rr(g,x+3,y+3,w,h,4);g.fill();
+    g.fillStyle=C.bldg;rr(g,x,y,w,h,4);g.fill();
+    g.fillStyle=C.win;var cols=Math.max(1,Math.floor(w/22)),rows=Math.max(1,Math.floor(h/24));
+    for(var a=0;a<cols;a++)for(var b=0;b<rows-1;b++)g.fillRect(x+10+a*22,y+10+b*24,11,12);
+    g.fillStyle=C.door;g.fillRect(x+w/2-7,y+h-16,14,16);
   }
-  // status-coloured outline over a vulnerable building (critical gets inner ring)
-  function statusRing(g,x,y,w,h,s){var c=sevCol(s);
-    P(g,x-1,y-1,w+2,2,c);P(g,x-1,y+h-1,w+2,2,c);P(g,x-1,y-1,2,h+2,c);P(g,x+w-1,y-1,2,h+2,c);
-    if(s>=3){P(g,x+1,y+1,w-2,1,c);P(g,x+1,y+h-2,w-2,1,c);P(g,x+1,y+1,1,h-2,c);P(g,x+w-2,y+1,1,h-2,c);}
-  }
-  function badge(g,st){
-    var x=mx(120),y=2,w=mx(160),h=13;
-    P(g,x,y,w,h,'rgba(16,18,12,0.82)');ring(g,x,y,w,h,st.badge);P(g,x+3,y+3,3,h-6,st.badge);
-    lab(g,st.alert,x+w/2,y+6,'#f2e6cc',7);lab(g,st.temp,x+w/2,y+12,st.badge,6);
+  function hospMark(g,x,y){g.fillStyle=C.hosp;rr(g,x,y,34,34,5);g.fill();g.fillStyle=C.hospR;g.fillRect(x+13,y+8,8,18);g.fillRect(x+8,y+13,18,8);}
+  function smoke(g,cx,topY,n,t){for(var i=0;i<n;i++){var f=i/n,yy=topY-i*18-(t*0.3)%18,r=11+i*3.2,wob=Math.sin(i*0.8+cx*0.01+t*0.02)*16;
+    g.fillStyle='rgba(138,140,134,'+(0.30*(1-f))+')';g.beginPath();g.arc(cx+wob,yy,r,0,7);g.fill();}}
+  function flame(g,cx,baseY,ph,t){
+    var bs=6,rows=Math.round(ph/bs);
+    for(var ry=0;ry<rows;ry++){var tt=ry/rows,yy=baseY-ry*bs;
+      var halfw=(1-tt)*ph*0.36*(0.9+0.1*Math.sin(tt*6+cx));
+      var wob=Math.sin(tt*3.2+cx*0.5+t*0.06)*bs*0.7,cxk=cx+wob;
+      for(var bx=-halfw;bx<=halfw;bx+=bs){var ad=Math.abs(bx),c;
+        if(ad>halfw-bs)c=C.fK;else if(tt<0.32&&ad<halfw*0.34)c=C.fW;else if(ad<halfw*0.42)c=C.fY;else if(tt<0.62)c=C.fO;else c=C.fR;
+        g.fillStyle=c;g.fillRect(Math.round(cxk+bx),Math.round(yy),bs,bs);}
+    }
   }
 
-  var TREES=[[18,44],[27,52],[14,60],[34,46],[24,64],[46,42],[40,58],[54,50],[168,44],[180,52],[160,60],[192,46],[176,64],[204,50],[198,60],[186,40]];
-  function baseAshdown(g){
-    P(g,0,0,W,H,COL.bg);
-    g.fillStyle=COL.hill;for(var y=6;y<80;y+=2){var dy=(y-42)/34,span=Math.sqrt(Math.max(0,1-dy*dy))*116;if(span>0)g.fillRect((128-span)|0,y,(span*2)|0,2);}
-    g.fillStyle=COL.grid;for(var gx=0;gx<W;gx+=16)g.fillRect(gx,0,1,H);for(var gy=0;gy<H;gy+=16)g.fillRect(0,gy,W,1);
-    for(var i=0;i<TREES.length;i++)tree(g,TREES[i][0],TREES[i][1]);
-    P(g,0,my(130),W,my(10),COL.road);for(var rx=2;rx<W;rx+=10)P(g,rx,my(130)+2,5,2,COL.roadC);
-    P(g,mx(340),0,mx(12),H,COL.mway);for(var vy=2;vy<H;vy+=12)P(g,mx(343),vy,2,7,COL.mwayC);
-    P(g,mx(60),my(150),mx(120),my(55),COL.estate);ring(g,mx(60),my(150),mx(120),my(55),COL.estEdge);
-    var hx=[mx(72),mx(90),mx(108),mx(126)],hy=[my(158),my(180)];
-    for(var a=0;a<4;a++)for(var b=0;b<2;b++){var bx=hx[a],by=hy[b];P(g,bx,by,12,9,COL.house);ring(g,bx,by,12,9,'#20261a');P(g,bx+2,by+2,3,3,COL.houseWin);P(g,bx+7,by+2,3,3,COL.houseWin);P(g,bx+5,by+6,3,3,COL.door);}
-    P(g,mx(150),my(150),mx(20),my(40),COL.asset);ring(g,mx(150),my(150),mx(20),my(40),COL.assetEdge);
-    for(var w=0;w<5;w++){P(g,mx(150)+3,my(150)+4+w*4,2,2,COL.assetWin);P(g,mx(150)+8,my(150)+4+w*4,2,2,COL.assetWin);}
-    P(g,mx(268),my(102),mx(26),my(20),COL.infra);ring(g,mx(268),my(102),mx(26),my(20),COL.infraEdge);
-    var bolt=[[0,1],[-1,4],[1,4],[0,7],[-1,9]];g.fillStyle=COL.infraEdge;for(var z=0;z<bolt.length;z++)g.fillRect(mx(281)+bolt[z][0],my(102)+3+bolt[z][1],2,2);
-    P(g,mx(348),my(8),mx(46),my(22),COL.hosp);ring(g,mx(348),my(8),mx(46),my(22),COL.hospEdge);
-    P(g,mx(371)-1,my(8)+4,3,9,COL.cross);P(g,mx(371)-4,my(8)+7,9,3,COL.cross);
+  // ── wildfire base ──
+  var TREES=[[70,150],[150,120],[95,250],[190,210],[60,360],[150,350],[300,120],[770,175],[905,150],[965,250],[885,360],[850,470],[965,470]];
+  function baseAshdown(g,glow){
+    var bg=g.createLinearGradient(0,0,0,H);bg.addColorStop(0,C.bgTop);bg.addColorStop(1,C.bgBot);g.fillStyle=bg;g.fillRect(0,0,W,H);
+    var hg=g.createRadialGradient(glow.cx,glow.cy,20,glow.cx,glow.cy,glow.r);hg.addColorStop(0,C.glow0);hg.addColorStop(.6,C.glow1);hg.addColorStop(1,C.glow2);
+    g.fillStyle=hg;g.beginPath();g.ellipse(glow.cx,glow.cy,glow.r,glow.r*0.46,0,0,7);g.fill();
+    for(var i=0;i<TREES.length;i++)tree(g,TREES[i][0],TREES[i][1],1.2);
+    // main road
+    g.fillStyle=C.roadEdge;g.fillRect(0,dy(128),W,dy(13));g.fillStyle=C.road;g.fillRect(0,dy(130),W,dy(9));
+    g.fillStyle=C.roadDash;for(var x=10;x<W;x+=44)g.fillRect(x,dy(133),24,4);
+    // motorway
+    g.fillStyle=C.mway;g.fillRect(dx(330),0,dx(9),H);g.fillStyle=C.mwayC;for(var y=8;y<H;y+=40)g.fillRect(dx(330)+dx(3),y,4,22);
+    // estate box + road loop + buildings
+    g.fillStyle=C.estate;rr(g,dx(34),dy(150),dx(84),dy(38),10);g.fill();g.strokeStyle=C.estEdge;g.lineWidth=3;rr(g,dx(34),dy(150),dx(84),dy(38),10);g.stroke();
+    g.fillStyle='#123a30';rr(g,dx(92),dy(156),dx(20),dy(26),6);g.fill();g.strokeStyle=C.estEdge;g.lineWidth=3;rr(g,dx(92),dy(156),dx(20),dy(26),6);g.stroke();
+    g.fillStyle=C.estLab;for(var b=0;b<4;b++){g.fillRect(dx(94),dy(159)+b*11,9,6);g.fillRect(dx(103),dy(159)+b*11,9,6);}
+    g.strokeStyle=C.road;g.lineWidth=15;g.lineCap='round';g.lineJoin='round';
+    g.beginPath();g.moveTo(dx(128),dy(178));g.lineTo(dx(150),dy(178));g.lineTo(dx(150),dy(200));g.lineTo(dx(210),dy(200));g.lineTo(dx(210),dy(172));g.lineTo(dx(238),dy(172));g.lineTo(dx(238),dy(158));g.stroke();
+    bldg(g,dx(160),dy(158),dx(22),dy(20));bldg(g,dx(248),dy(154),dx(20),dy(22));bldg(g,dx(214),dy(176),dx(21),dy(19));bldg(g,dx(158),dy(190),dx(21),dy(17));
+    // substation
+    g.strokeStyle=C.infra;g.lineWidth=4;rr(g,dx(250),dy(96),dx(24),dy(20),8);g.stroke();
+    g.fillStyle=C.infra;var bl=dx(234),bt=dy(92);g.beginPath();g.moveTo(bl,bt);g.lineTo(bl-12,bt+26);g.lineTo(bl,bt+26);g.lineTo(bl-10,bt+52);g.lineTo(bl+14,bt+18);g.lineTo(bl+2,bt+18);g.closePath();g.fill();
+    // hospital
+    hospMark(g,dx(300),dy(36));
   }
   function labelsAshdown(g){
-    lab(g,'BRYNMOOR HILL',mx(200),my(58),COL.lab,8);
-    lab(g,'ASHFIELD',mx(120),my(150)+my(55)-5,COL.labDim,7);
-    lab(g,'MERIDIAN',mx(160),H-3,COL.assetLab,7);
-    lab(g,'SUBSTATION',mx(281),my(102)-3,COL.infraLab,7);
-    lab(g,'NORTHGATE',mx(371),my(8)+my(22)+8,COL.labDim,7);
-    lab(g,'B4107',W-18,my(130)-3,COL.labDim,7);
-    lab(g,'M5',mx(346),my(70),COL.labDim,7);
+    txt(g,'BRYNMOOR HILL',dx(200),dy(46),C.lab,30);
+    txt(g,'NORTHGATE',W-16,dy(45),C.labCyan,22,'right');txt(g,'GENERAL',W-16,dy(54),C.labCyan,18,'right');txt(g,'(8 min N)',W-16,dy(63),C.labDim,15,'right');
+    txt(g,'SUBSTAT.',dx(280),dy(108),C.labYel,20,'left');
+    txt(g,'B4107',W-16,dy(126),C.labDim,17,'right');
+    g.save();g.translate(dx(326),dy(122));g.rotate(-Math.PI/2);txt(g,'M5',0,0,C.mwayC,17,'center');g.restore();
+    txt(g,'ASHFIELD',dx(44),dy(166),C.estLab,22,'left');
+    txt(g,'MERIDIAN',dx(102),dy(191),C.labCyan,14,'center');
   }
 
+  // ── heatwave base (Bristol) ──
+  function highrise(g,mx,my,mw,mh){g.fillStyle='#1f3a40';rr(g,dx(mx),dy(my),dx(mw),dy(mh),4);g.fill();g.fillStyle='#5fd8e6';var rows=Math.floor(dy(mh)/16);for(var r=0;r<rows-1;r++)g.fillRect(dx(mx)+7,dy(my)+9+r*16,dx(mw)-14,6);}
   function baseHeat(g){
-    P(g,0,0,W,H,COL.bg);
-    g.fillStyle=COL.grid;for(var gx=0;gx<W;gx+=16)g.fillRect(gx,0,1,H);for(var gy=0;gy<H;gy+=16)g.fillRect(0,gy,W,1);
-    var sx=mx(375),sy=my(22),sr=mx(12);pixDisc(g,sx,sy,sr,COL.sun);
-    var ray=[[0,-sr-3],[0,sr+3],[-sr-3,0],[sr+3,0],[-sr-2,-sr-2],[sr+2,-sr-2],[-sr-2,sr+2],[sr+2,sr+2]];g.fillStyle=COL.sunEdge;for(var r=0;r<ray.length;r++)g.fillRect(sx+ray[r][0],sy+ray[r][1],2,2);
-    P(g,mx(120),my(80),mx(160),my(80),COL.city);ring(g,mx(120),my(80),mx(160),my(80),COL.cityEdge);
-    for(var cx=0;cx<6;cx++)for(var cy=0;cy<3;cy++)P(g,mx(120)+8+cx*mx(24),my(80)+8+cy*my(22),mx(14),my(12),'#231d12');
-    P(g,mx(60),my(90),mx(18),my(50),COL.asset);ring(g,mx(60),my(90),mx(18),my(50),COL.assetEdge);
-    for(var w=0;w<7;w++)P(g,mx(60)+3,my(90)+4+w*4,mx(12),2,COL.assetWin);
-    P(g,mx(318),my(85),mx(18),my(55),COL.asset);ring(g,mx(318),my(85),mx(18),my(55),COL.assetEdge);
-    for(var w2=0;w2<8;w2++)P(g,mx(318)+3,my(85)+4+w2*4,mx(12),2,COL.assetWin);
-    P(g,mx(30),my(150),mx(90),my(45),COL.estate);ring(g,mx(30),my(150),mx(90),my(45),COL.estEdge);
-    var ex=[mx(38),mx(58),mx(78),mx(98)];for(var e=0;e<4;e++){P(g,ex[e],my(158),12,9,COL.house);ring(g,ex[e],my(158),12,9,'#20261a');P(g,ex[e]+2,my(158)+2,3,3,COL.houseWin);P(g,ex[e]+5,my(158)+5,3,3,COL.door);}
-    P(g,mx(260),my(150),mx(55),my(30),COL.hosp);ring(g,mx(260),my(150),mx(55),my(30),'#3a4a2a');
-    P(g,mx(340),my(10),mx(55),my(26),COL.hosp);ring(g,mx(340),my(10),mx(55),my(26),COL.hospEdge);
-    P(g,mx(367)-1,my(10)+5,3,9,COL.cross);P(g,mx(367)-4,my(10)+8,9,3,COL.cross);
-    P(g,mx(5),my(10),mx(65),my(26),COL.asset);ring(g,mx(5),my(10),mx(65),my(26),COL.assetEdge);
+    var bg=g.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#2a2416');bg.addColorStop(1,'#1a150d');g.fillStyle=bg;g.fillRect(0,0,W,H);
+    var sx=dx(388),sy=dy(26),sr=30;
+    var sg=g.createRadialGradient(sx,sy,4,sx,sy,105);sg.addColorStop(0,'rgba(244,188,38,.5)');sg.addColorStop(1,'rgba(244,188,38,0)');g.fillStyle=sg;g.beginPath();g.arc(sx,sy,105,0,7);g.fill();
+    g.fillStyle=C.sun;g.beginPath();g.arc(sx,sy,sr,0,7);g.fill();
+    g.strokeStyle=C.sunRay;g.lineWidth=4;for(var a=0;a<8;a++){var an=a*Math.PI/4;g.beginPath();g.moveTo(sx+Math.cos(an)*(sr+8),sy+Math.sin(an)*(sr+8));g.lineTo(sx+Math.cos(an)*(sr+17),sy+Math.sin(an)*(sr+17));g.stroke();}
+    // roads
+    g.fillStyle=C.road;g.fillRect(0,dy(115),W,dy(6));g.fillRect(dx(200)-4,dy(66),8,dy(56));
+    // city centre
+    g.fillStyle=C.city;rr(g,dx(120),dy(78),dx(160),dy(70),8);g.fill();g.strokeStyle=C.cityEdge;g.lineWidth=3;rr(g,dx(120),dy(78),dx(160),dy(70),8);g.stroke();
+    g.fillStyle=C.cityWin;for(var cx=0;cx<6;cx++)for(var cy=0;cy<3;cy++)g.fillRect(dx(120)+22+cx*dx(24),dy(78)+18+cy*dy(18),dx(14),dy(9));
+    // ── vulnerable building bodies (status outline added on top per stage) ──
+    // care home
+    g.fillStyle='#243c42';rr(g,dx(10),dy(10),dx(66),dy(26),5);g.fill();
+    g.fillStyle='#3fa6b6';for(var i=0;i<5;i++){g.fillRect(dx(15)+i*dx(12),dy(16),dx(7),dy(5));g.fillRect(dx(15)+i*dx(12),dy(26),dx(7),dy(5));}
+    // high-rises
+    highrise(g,58,86,20,52);highrise(g,318,82,20,56);
+    // school
+    bldg(g,dx(258),dy(150),dx(58),dy(30));
+    // hospital
+    g.fillStyle='#2a3a2a';rr(g,dx(326),dy(14),dx(50),dy(24),5);g.fill();
+    g.fillStyle=C.hospR;g.fillRect(dx(348),dy(19),dx(4),dy(15));g.fillRect(dx(344),dy(24),dx(12),dy(5));
+    // ashfield estate + little houses
+    g.fillStyle=C.estate;rr(g,dx(28),dy(152),dx(92),dy(42),8);g.fill();
+    var hxs=[36,54,72,90];for(var q=0;q<4;q++)bldg(g,dx(hxs[q]),dy(170),dx(15),dy(20));
   }
-  function labelsHeat(g){
-    lab(g,'CITY CENTRE',mx(200),my(122),COL.labDim,8);
-    lab(g,'MERIDIAN',mx(69),my(150),COL.assetLab,7);
-    lab(g,'NORTHGATE',mx(327),my(150),COL.assetLab,7);
-    lab(g,'ASHFIELD',mx(75),my(150)+my(45)-4,COL.labDim,7);
-    lab(g,'SCHOOL',mx(287),my(150)+my(30)-4,COL.labDim,7);
-    lab(g,'HOSPITAL',mx(367),my(10)+my(26)+8,COL.labDim,6);
-    lab(g,'CARE HOME',mx(37),my(10)+my(26)+8,COL.assetLab,6);
-  }
-
-  // heatwave site-severity board (independent of MAPS2 blob geometry)
+  // vulnerable sites: rect(map) + name/tag positions
   var HEAT_SITES={
-    careHome:{r:[mx(5),my(10),mx(65),my(26)],g:[mx(70)+3,my(11)]},
-    meridian:{r:[mx(60),my(90),mx(18),my(50)],g:[mx(78)+4,my(94)]},
-    northgate:{r:[mx(318),my(85),mx(18),my(55)],g:[mx(318)-9,my(90)]},
-    school:{r:[mx(260),my(150),mx(55),my(30)],g:[mx(315)+3,my(153)]},
-    hospital:{r:[mx(340),my(10),mx(55),my(26)],g:[mx(340)-9,my(12)]},
-    ashfield:{r:[mx(30),my(150),mx(90),my(45)],g:[mx(120)+3,my(153)]}
+    careHome:{r:[10,10,66,26],name:'CARE HOME',np:[43,50,'center'],tag:[80,32,'left']},
+    meridian:{r:[58,86,20,52],name:'MERIDIAN',np:[82,118,'left'],tag:[68,82,'center']},
+    northgate:{r:[318,82,20,56],name:'NORTHGATE',np:[342,116,'left'],tag:[328,78,'center']},
+    school:{r:[258,150,58,30],name:'SCHOOL',np:[287,196,'center'],tag:[287,146,'center']},
+    hospital:{r:[326,14,50,24],name:'HOSPITAL',np:[351,54,'center'],tag:[322,32,'right']},
+    ashfield:{r:[28,152,92,42],name:'ASHFIELD',np:[74,210,'center'],tag:[74,148,'center']}
   };
   var HEAT_STAGES=[
-    {alert:'LEVEL 4  DAYTIME PEAK',temp:'15:00  ·  40C',badge:'#e8901e',sev:{careHome:2,meridian:2,northgate:2,school:2,hospital:1,ashfield:1}},
-    {alert:'LEVEL 4  CASUALTIES',temp:'21:00  ·  32C',badge:'#e0641a',sev:{careHome:3,meridian:2,northgate:3,school:2,hospital:2,ashfield:2}},
-    {alert:'LEVEL 4  TROPICAL NIGHT',temp:'02:00  ·  28C',badge:'#d5240c',sev:{careHome:3,meridian:3,northgate:3,school:1,hospital:3,ashfield:3}}
+    {alert:'LEVEL 4 · DAYTIME PEAK',temp:'15:00   40°C',bc:'#e8901e',sev:{careHome:2,meridian:2,northgate:2,school:2,hospital:1,ashfield:1}},
+    {alert:'LEVEL 4 · CASUALTIES',temp:'21:00   32°C',bc:'#e0641a',sev:{careHome:3,meridian:2,northgate:3,school:2,hospital:2,ashfield:2}},
+    {alert:'LEVEL 4 · TROPICAL NIGHT',temp:'02:00   28°C',bc:'#d5240c',sev:{careHome:3,meridian:3,northgate:3,school:1,hospital:3,ashfield:3}}
   ];
+  var SEV_WORD={1:'MONITORED',2:'AT RISK',3:'CRITICAL'};
+  function sevCol(s){return s>=3?C.s3:s>=2?C.s2:C.s1;}
+  function statusTag(g,mapx,mapy,al,s){
+    var word=SEV_WORD[s],c=sevCol(s),sz=15,pad=7;
+    g.font='700 '+sz+'px "Barlow Condensed","Arial Narrow",system-ui,sans-serif';
+    var tw=g.measureText(word).width,bw=tw+pad*2,bh=22,x=dx(mapx),y=dy(mapy);
+    if(al==='right')x-=bw;
+    g.fillStyle='rgba(14,16,10,0.86)';rr(g,x,y-bh+5,bw,bh,4);g.fill();g.strokeStyle=c;g.lineWidth=2;rr(g,x,y-bh+5,bw,bh,4);g.stroke();
+    g.fillStyle=c;g.fillRect(x+3,y-bh+8,3,bh-6);
+    txt(g,word,x+pad+2,y-1,c,sz,'left');
+  }
+  function labelsHeat(g){
+    txt(g,'CITY CENTRE',dx(200),dy(118),C.labDim,22);
+    for(var k in HEAT_SITES){if(!HEAT_SITES.hasOwnProperty(k))continue;var S=HEAT_SITES[k];
+      txt(g,S.name,dx(S.np[0]),dy(S.np[1]),(k==='careHome'||k==='meridian'||k==='northgate')?C.labCyan:C.labDim,16,S.np[2]);}
+  }
 
-  var cv,ctx,bg,bx,raf=0,reduced,scen,frame,flames,embers,spreads,curIdx;
-  var OFF=[[0,0],[-6,2],[6,1],[-3,-4],[4,-3],[0,-6],[-8,-1],[8,-2]];
+  var cv,ctx,bg,bx,raf=0,reduced,scen,frame,flames,smokes,embers,glow,curIdx;
   function build(scenario,m,idx){
-    scen=scenario;curIdx=Math.max(0,Math.min(2,idx||0));flames=[];embers=[];spreads=[];
+    scen=scenario;curIdx=Math.max(0,Math.min(2,idx||0));flames=[];smokes=[];embers=[];
     if(scenario!=='hotwells'){
-      m.fires.forEach(function(f){
-        var cx=mx(f.cx),cy=my(f.cy),rx=mx(f.rx);
-        spreads.push({cx:cx,cy:cy,r:rx*1.5,c:'rgba(226,90,20,0.10)'});
-        spreads.push({cx:cx,cy:cy,r:rx*0.9,c:'rgba(220,55,12,0.16)'});
-        var n=Math.max(2,Math.min(6,Math.round(rx/4)));
-        for(var k=0;k<n;k++){var o=OFF[k%OFF.length];flames.push({x:cx+o[0],y:cy+o[1]+3,sc:(k===0?2:1),seed:k*3+((cx*7)%5)});}
-      });
-      (m.embers||[]).forEach(function(e){embers.push({x:mx(e.cx),y:my(e.cy),seed:(e.cx*3)%6});});
+      var minx=1e9,maxx=-1e9,miny=1e9,maxy=-1e9;
+      m.fires.forEach(function(f){var cx=dx(f.cx),cy=dy(f.cy),rx=dx(f.rx),ph=rx*1.5;
+        flames.push({cx:cx,baseY:cy+dy(f.ry)*0.3,ph:ph,seed:cx});
+        if(f.rx>24)flames.push({cx:cx+rx*0.5,baseY:cy+dy(f.ry)*0.15,ph:ph*0.7,seed:cx+40});
+        smokes.push({cx:cx,topY:cy-ph*0.5,n:Math.round(f.rx/8)+2});
+        minx=Math.min(minx,cx-rx);maxx=Math.max(maxx,cx+rx);miny=Math.min(miny,cy-rx);maxy=Math.max(maxy,cy+rx);});
+      (m.embers||[]).forEach(function(e){embers.push({x:dx(e.cx),y:dy(e.cy),seed:e.cx});});
+      glow={cx:(minx+maxx)/2,cy:(miny+maxy)/2,r:Math.max(220,(maxx-minx)*0.9)};
     }
   }
   function paintBase(){
     if(scen==='hotwells'){baseHeat(bx);return;}
-    baseAshdown(bx);
-    for(var s=0;s<spreads.length;s++)pixDisc(bx,spreads[s].cx,spreads[s].cy,spreads[s].r,spreads[s].c);
+    baseAshdown(bx,glow);
   }
   function drawIncident(){
     if(scen==='hotwells'){
-      var st=HEAT_STAGES[curIdx],pulseOn=reduced||((frame%36)<24);
+      var st=HEAT_STAGES[curIdx],ga=reduced?0.5:(0.28+0.30*Math.sin(frame*0.14));
       for(var k in HEAT_SITES){if(!HEAT_SITES.hasOwnProperty(k))continue;var s=st.sev[k],S=HEAT_SITES[k];if(!s)continue;
-        if((s<3)||pulseOn)statusRing(ctx,S.r[0],S.r[1],S.r[2],S.r[3],s);
-        gauge(ctx,S.g[0],S.g[1],s);}
-      badge(ctx,st);
+        var r=S.r,x=dx(r[0]),y=dy(r[1]),w=dx(r[2]),h=dy(r[3]),c=sevCol(s);
+        if(s>=3){ctx.strokeStyle='rgba(239,59,30,'+ga+')';ctx.lineWidth=7;rr(ctx,x-5,y-5,w+10,h+10,7);ctx.stroke();}
+        ctx.strokeStyle=c;ctx.lineWidth=3;rr(ctx,x-2,y-2,w+4,h+4,5);ctx.stroke();
+        statusTag(ctx,S.tag[0],S.tag[1],S.tag[2],s);}
+      // alert badge
+      var bx0=dx(118),by0=dy(4),bw=dx(164),bh=40;
+      ctx.fillStyle='rgba(14,16,10,0.82)';rr(ctx,bx0,by0,bw,bh,6);ctx.fill();ctx.strokeStyle=st.bc;ctx.lineWidth=3;rr(ctx,bx0,by0,bw,bh,6);ctx.stroke();
+      ctx.fillStyle=st.bc;ctx.fillRect(bx0+5,by0+6,5,bh-12);
+      txt(ctx,st.alert,bx0+bw/2,by0+19,'#f2e6cc',18);txt(ctx,st.temp,bx0+bw/2,by0+35,st.bc,16);
     } else {
-      for(var f=0;f<flames.length;f++){var F=flames[f],flick=((frame>>3)+F.seed)%3;flame(ctx,F.x,F.y,F.sc,flick);}
-      for(var e=0;e<embers.length;e++){var E=embers[e],a=0.35+0.35*Math.sin(frame*0.18+E.seed);
-        P(ctx,E.x-1,E.y-1,3,3,'rgba(255,120,40,'+(a*0.6)+')');P(ctx,E.x,E.y,2,2,COL.ember);}
+      for(var i=0;i<smokes.length;i++)smoke(ctx,smokes[i].cx,smokes[i].topY,smokes[i].n,frame);
+      for(var f=0;f<flames.length;f++)flame(ctx,flames[f].cx,flames[f].baseY,flames[f].ph,frame+flames[f].seed);
+      for(var e=0;e<embers.length;e++){var E=embers[e],a=0.4+0.4*Math.sin(frame*0.15+E.seed);
+        ctx.fillStyle='rgba(255,154,58,'+a+')';ctx.fillRect(E.x,E.y,4,4);}
     }
   }
-  function frameDraw(){ctx.drawImage(bg,0,0);drawIncident();if(scen==='hotwells')labelsHeat(ctx);else labelsAshdown(ctx);}
+  function drawLabels(){if(scen==='hotwells')labelsHeat(ctx);else labelsAshdown(ctx);}
+  function frameDraw(){ctx.drawImage(bg,0,0);drawIncident();drawLabels();}
   function loop(){frame++;frameDraw();raf=requestAnimationFrame(loop);}
   function render(scenario,m,idx){
     stop();cv=document.getElementById('fireCanvas');if(!cv)return;
-    ctx=cv.getContext('2d');ctx.imageSmoothingEnabled=false;
-    if(!bg){bg=document.createElement('canvas');bg.width=W;bg.height=H;}bx=bg.getContext('2d');bx.imageSmoothingEnabled=false;
-    frame=0;build(scenario,m,idx);
+    ctx=cv.getContext('2d');
+    if(!bg){bg=document.createElement('canvas');bg.width=W;bg.height=H;}bx=bg.getContext('2d');
+    frame=0;build(scenario,m,idx);paintBase();
     try{reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){reduced=false;}
-    paintBase();
     if(reduced){frameDraw();return;}
     loop();
   }
