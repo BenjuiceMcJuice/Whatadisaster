@@ -2,7 +2,18 @@
 
 All notable changes to the Emergency Exercise Simulator.
 
-`APP_VERSION` in `index.html` tracks the current release (now `1.7.1`). Versions 1.2.0–1.5.0 below were backfilled on 2026-07-19 from the `DEVLOG.md` milestones, which the changelog had fallen behind.
+`APP_VERSION` in `index.html` tracks the current release (now `1.8.0`). Versions 1.2.0–1.5.0 below were backfilled on 2026-07-19 from the `DEVLOG.md` milestones, which the changelog had fallen behind.
+
+## [1.8.0] — 2026-07-20
+
+### Changed (graphics overhaul)
+- **Rebuilt the phase-transition maps as high-resolution tactical graphics (both scenarios).** Replaced the growing-ellipse SVG maps with a `<canvas>` engine rendered at 1024×576 with real-font labels (crisp, no more upscaled-thumbnail blur):
+  - *Operation Ashdown (wildfire)* — a **spreading fire**: flame clusters, rising smoke and ember spot-fires grow across the three phase maps, over conifer terrain, a building road-network and a widening burn glow.
+  - *Operation Solstice (heatwave)* — a **site-severity board**: each vulnerable site (care home, high-rise blocks, hospital ED, school, estate) carries a `MONITORED` / `AT RISK` / `CRITICAL` status tag + colour-coded outline that escalate each stage, under a rising Heat-Health Alert badge and time·temp readout. Represents cumulative impact, not spatial spread — the tropical-night stage stays critical though the temperature falls.
+- **Pixel-art UI icons** replace the prominent emoji: splash emergency beacon, scenario fire/sun buttons, briefing & disclaimer document, dev-build warning, and the fire-map fact label.
+- Respects `prefers-reduced-motion` (renders a static map frame; no continuous animation). Still one self-contained HTML file, no new dependencies.
+
+---
 
 ## [1.7.1] — 2026-07-19
 
