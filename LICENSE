@@ -1,0 +1,47 @@
+Copyright © 2026 Heather Griffin and Ben Phipps. All rights reserved.
+
+This project — the "What a Disaster?" Emergency Exercise Simulator, including
+its source code, scenario content, question banks, consequence models, maps,
+copy, and all associated materials (the "Work") — is proprietary. It is NOT
+released under an open-source licence. No rights are granted except those set
+out explicitly below.
+
+PERMITTED USE
+
+The Work is made freely available, at no cost, for non-commercial training and
+awareness use. You may access and use the hosted tool, and run it for your own
+or your team's training, learning, and discussion purposes.
+
+RESTRICTIONS
+
+Without the prior written permission of the copyright holders, you may NOT:
+
+  1. Reproduce, copy, redistribute, host, or publish the Work or any
+     substantial part of it;
+  2. Modify, adapt, translate, or create derivative works from it;
+  3. Use the Work, or any part of it, for commercial purposes; or
+  4. Use the Work as part of a formal, accredited, or certified training
+     programme.
+
+LICENSING AND COMMISSIONING
+
+Commercial use, adaptation, or inclusion in formal/accredited training
+programmes may be available under separate agreement. To discuss licensing or
+commissioning, contact the copyright holders at benjuice.apps@gmail.com.
+
+NO WARRANTY
+
+The Work is provided "AS IS", without warranty of any kind, express or implied,
+including but not limited to the warranties of merchantability, fitness for a
+particular purpose, accuracy, completeness, and non-infringement. In no event
+shall the copyright holders be liable for any claim, damages, or other
+liability, whether in an action of contract, tort, or otherwise, arising from,
+out of, or in connection with the Work or the use of or other dealings in the
+Work. See disclaimer.html for the full disclaimer that accompanies the tool.
+
+THIRD-PARTY COMPONENTS
+
+This project loads the Barlow and Barlow Condensed typefaces from Google Fonts,
+which are licensed under the SIL Open Font License. Those fonts remain the
+property of their respective authors and are used under that licence; nothing
+in this LICENSE alters your rights or obligations in respect of them.
