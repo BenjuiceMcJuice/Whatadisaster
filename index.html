@@ -517,7 +517,8 @@ window.logEvent=function(type,extra){
 <script defer src="https://benjuicey-feedback.benjuicemcjuice.workers.dev/widget.js" data-app-id="whatadisaster" data-accent="#FF4500"></script>
 <script>
 
-if(location.hostname.includes('pages.dev')){document.getElementById('devWarning').classList.add('show');}
+if(location.hostname==='whatadisaster.pages.dev'){location.replace('https://whatadisaster.uk'+location.pathname+location.search+location.hash);}
+else if(location.hostname.includes('pages.dev')){document.getElementById('devWarning').classList.add('show');}
 window.addEventListener('benjuiceyfeedback:submitted',function(e){logEventSafe('feedback_submitted',{role:G.roleKey,scenario:G.scenario});});
 
 const APP_VERSION='1.8.0';
