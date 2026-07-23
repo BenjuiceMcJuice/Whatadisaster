@@ -56,6 +56,25 @@ tr:last-child td{border-bottom:none}
 .loading{text-align:center;color:var(--dim);padding:3rem 1rem}
 .foot{color:var(--dim);font-size:.72rem;text-align:center;margin-top:1.5rem}
 .hidden{display:none!important}
+@media print{
+  @page{margin:14mm}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff;color:#1a1a1a;padding:0}
+  #refreshBtn,#pdfBtn,#signoutBtn,#sub{display:none!important}
+  h1{color:#1a1a1a}
+  .bar{margin-bottom:1rem;border-bottom:2px solid var(--fire);padding-bottom:.5rem}
+  .stat,.card{background:#fff;border:1px solid #ccc;break-inside:avoid;box-shadow:none}
+  .stat .n{color:#1a1a1a}
+  .stat.hero{background:#fff5f0;border-color:var(--fire)}
+  .stat.hero .n{color:var(--fire)}
+  .stat .l,.card h2,th,.legend,.foot{color:#555}
+  td{border-color:#e5e5e5}
+  tr:not(:last-child) td{border-bottom:1px solid #e5e5e5}
+  .trk{background:#eee}.trk>span{background:var(--fire)}
+  .recent li{border-color:#e5e5e5}
+  .card,.grid{page-break-inside:avoid}
+  .foot{margin-top:1rem;border-top:1px solid #ccc;padding-top:.5rem}
+}
 </style>
 </head>
 <body>
@@ -67,6 +86,7 @@ tr:last-child td{border-bottom:none}
     </div>
     <div class="spacer"></div>
     <button id="refreshBtn" class="hidden" onclick="window.__reload()">↻ Refresh</button>
+    <button id="pdfBtn" class="hidden" onclick="window.print()">⭳ PDF</button>
     <button id="signoutBtn" class="hidden" onclick="window.__signout()">Sign out</button>
   </div>
 
@@ -114,8 +134,8 @@ window.__signout=()=>signOut(auth);
 window.__reload=()=>load();
 
 onAuthStateChanged(auth,user=>{
-  if(!user){show("gate",true);show("dash",false);show("loading",false);show("denied",false);show("refreshBtn",false);show("signoutBtn",false);$("foot").textContent="";return;}
-  show("gate",false);show("signoutBtn",true);$("sub").textContent="Signed in as "+user.email;
+  if(!user){show("gate",true);show("dash",false);show("loading",false);show("denied",false);show("refreshBtn",false);show("pdfBtn",false);show("signoutBtn",false);$("foot").textContent="";return;}
+  show("gate",false);show("signoutBtn",true);show("pdfBtn",true);$("sub").textContent="Signed in as "+user.email;
   load();
 });
 
