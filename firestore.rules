@@ -18,7 +18,7 @@ service cloud.firestore {
       allow update, delete: if false;
       allow read: if request.auth != null
         && request.auth.token.email_verified == true
-        && request.auth.token.email in ['bennyphipps@gmail.com'];
+        && request.auth.token.email in ['benjuicemcjuice@gmail.com'];
       allow create: if
         request.resource.data.keys().hasAll(['type','createdAt']) &&
         request.resource.data.keys().hasOnly(['type','role','scenario','qIdx','score','createdAt']) &&
