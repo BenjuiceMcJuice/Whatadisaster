@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Usage — What a Disaster</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--fire:#FF4500;--gold:#FFB800;--dark:#0D0D0D;--dark2:#1A1A1A;--dark3:#252525;--card:#1E1E1E;--text:#F0EDE8;--dim:#9A9080;--green:#2ECC71;--red:#E74C3C;--blue:#3498DB;--amber:#F39C12}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--dark);color:var(--text);font-family:'Barlow',system-ui,sans-serif;line-height:1.4;padding:max(1rem,env(safe-area-inset-top)) 1rem calc(2rem + env(safe-area-inset-bottom));-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto}
+h1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.9rem;letter-spacing:.5px;text-transform:uppercase;line-height:1}
+h1 span{color:var(--fire)}
+.sub{color:var(--dim);font-size:.85rem;margin-top:.25rem}
+.bar{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:1.25rem}
+.bar .spacer{flex:1}
+button{font-family:'Barlow',sans-serif;font-weight:600;font-size:.85rem;color:var(--text);background:var(--dark3);border:1px solid #3a3a3a;border-radius:8px;padding:.5rem .85rem;cursor:pointer}
+button:hover{border-color:var(--fire)}
+button.primary{background:var(--fire);border-color:var(--fire);color:#fff;font-size:1rem;padding:.8rem 1.4rem}
+button:disabled{opacity:.5;cursor:default}
+.gate{text-align:center;padding:4rem 1rem}
+.gate p{color:var(--dim);margin:.75rem 0 1.5rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem;margin-bottom:1.5rem}
+.stat{background:var(--card);border:1px solid #2c2c2c;border-radius:12px;padding:.9rem 1rem}
+.stat .n{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2rem;line-height:1;color:var(--text)}
+.stat .l{color:var(--dim);font-size:.7rem;text-transform:uppercase;letter-spacing:.6px;margin-top:.35rem;font-weight:600}
+.stat.hero{grid-column:1/-1;background:linear-gradient(135deg,rgba(255,69,0,.16),rgba(255,184,0,.06));border-color:rgba(255,69,0,.4)}
+.stat.hero .n{font-size:3rem;color:var(--fire)}
+.card{background:var(--card);border:1px solid #2c2c2c;border-radius:12px;padding:1rem 1.1rem;margin-bottom:1.25rem}
+.card h2{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.1rem;text-transform:uppercase;letter-spacing:.5px;color:var(--dim);margin-bottom:.85rem}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{text-align:left;color:var(--dim);font-weight:600;font-size:.7rem;text-transform:uppercase;letter-spacing:.5px;padding-bottom:.5rem;border-bottom:1px solid #2c2c2c}
+th.r,td.r{text-align:right}
+td{padding:.55rem 0;border-bottom:1px solid #232323}
+tr:last-child td{border-bottom:none}
+.row-label{font-weight:600}
+.trk{position:relative;height:6px;background:var(--dark3);border-radius:3px;overflow:hidden;margin-top:.4rem}
+.trk>span{position:absolute;inset:0 auto 0 0;background:var(--fire);border-radius:3px}
+.rate{font-weight:700}
+.rate.good{color:var(--green)}.rate.mid{color:var(--amber)}.rate.low{color:var(--red)}
+.recent{list-style:none;font-size:.85rem}
+.recent li{display:flex;align-items:center;gap:.6rem;padding:.45rem 0;border-bottom:1px solid #232323}
+.recent li:last-child{border-bottom:none}
+.dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+.recent .meta{color:var(--dim);margin-left:auto;font-size:.75rem;white-space:nowrap}
+.msg{background:var(--card);border:1px solid #2c2c2c;border-radius:12px;padding:1.5rem;text-align:center;color:var(--dim)}
+.msg code{color:var(--amber);background:var(--dark3);padding:.15rem .4rem;border-radius:4px;font-size:.85em;word-break:break-all}
+.err{border-color:rgba(231,76,60,.5)}
+.loading{text-align:center;color:var(--dim);padding:3rem 1rem}
+.foot{color:var(--dim);font-size:.72rem;text-align:center;margin-top:1.5rem}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar">
+    <div>
+      <h1>What a <span>Disaster</span> · Usage</h1>
+      <div class="sub" id="sub">Anonymous exercise analytics</div>
+    </div>
+    <div class="spacer"></div>
+    <button id="refreshBtn" class="hidden" onclick="window.__reload()">↻ Refresh</button>
+    <button id="signoutBtn" class="hidden" onclick="window.__signout()">Sign out</button>
+  </div>
+
+  <div id="gate" class="gate hidden">
+    <h1 style="font-size:1.4rem">Private dashboard</h1>
+    <p>Sign in with the owner account to view usage.</p>
+    <button class="primary" onclick="window.__signin()">Sign in with Google</button>
+  </div>
+
+  <div id="loading" class="loading hidden">Loading exercise data…</div>
+  <div id="denied" class="msg err hidden"></div>
+  <div id="dash" class="hidden"></div>
+
+  <div class="foot" id="foot"></div>
+</div>
+
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import{getFirestore,collection,query,where,orderBy,limit,getDocs,getCountFromServer}from"https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+import{getAuth,GoogleAuthProvider,signInWithPopup,onAuthStateChanged,signOut}from"https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+
+const firebaseConfig={
+  apiKey:"AIzaSyA5VeKRJRHM2P5mA9MnaRBu64Unh5sUEGY",
+  authDomain:"whatadisaster.firebaseapp.com",
+  projectId:"whatadisaster",
+  storageBucket:"whatadisaster.firebasestorage.app",
+  messagingSenderId:"185957961974",
+  appId:"1:185957961974:web:a86983ad6ebe59bf3b5cd7"
+};
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+const auth=getAuth(app);
+const provider=new GoogleAuthProvider();
+
+const ROLE_NAMES={strategic:"Strategic (Gold)",tactical:"Tactical (Silver)",fire:"Fire & Rescue",police:"Police",council:"Local Authority",nhs:"NHS / Health",utilities:"Utilities",ambulance:"Ambulance",voluntary:"Voluntary Agencies"};
+const SCEN_NAMES={ashdown:"Operation Ashdown 🔥",hotwells:"Operation Solstice ☀️"};
+const TYPE_COLOR={role_selected:"#3498DB",scenario_started:"#F39C12",question_answered:"#9A9080",scenario_completed:"#2ECC71",feedback_submitted:"#FFB800"};
+
+const $=id=>document.getElementById(id);
+const show=(id,on=true)=>$(id).classList.toggle("hidden",!on);
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+window.__signin=()=>signInWithPopup(auth,provider).catch(e=>alert("Sign-in failed: "+e.message));
+window.__signout=()=>signOut(auth);
+window.__reload=()=>load();
+
+onAuthStateChanged(auth,user=>{
+  if(!user){show("gate",true);show("dash",false);show("loading",false);show("denied",false);show("refreshBtn",false);show("signoutBtn",false);$("foot").textContent="";return;}
+  show("gate",false);show("signoutBtn",true);$("sub").textContent="Signed in as "+user.email;
+  load();
+});
+
+async function typeCount(t){
+  const s=await getCountFromServer(query(collection(db,"events"),where("type","==",t)));
+  return s.data().count;
+}
+
+async function load(){
+  show("loading",true);show("dash",false);show("denied",false);show("refreshBtn",false);
+  try{
+    const[roleSel,started,answered,completed,feedback]=await Promise.all([
+      typeCount("role_selected"),typeCount("scenario_started"),typeCount("question_answered"),
+      typeCount("scenario_completed"),typeCount("feedback_submitted")
+    ]);
+
+    // completed docs → breakdown by scenario/role + avg score
+    const compSnap=await getDocs(query(collection(db,"events"),where("type","==","scenario_completed")));
+    const byScenComp={},byRole={};let scoreSum=0,scoreN=0;
+    compSnap.forEach(d=>{const x=d.data();
+      byScenComp[x.scenario]=(byScenComp[x.scenario]||0)+1;
+      byRole[x.role]=(byRole[x.role]||0)+1;
+      if(typeof x.score==="number"){scoreSum+=x.score;scoreN++;}
+    });
+    // started docs → by scenario (for per-scenario completion rate)
+    const startSnap=await getDocs(query(collection(db,"events"),where("type","==","scenario_started")));
+    const byScenStart={};
+    startSnap.forEach(d=>{const x=d.data();byScenStart[x.scenario]=(byScenStart[x.scenario]||0)+1;});
+    // recent activity
+    const recentSnap=await getDocs(query(collection(db,"events"),orderBy("createdAt","desc"),limit(20)));
+    const recent=[];recentSnap.forEach(d=>recent.push(d.data()));
+
+    render({roleSel,started,answered,completed,feedback,byScenComp,byRole,byScenStart,scoreSum,scoreN,recent});
+    show("loading",false);show("dash",true);show("refreshBtn",true);
+    $("foot").textContent="Updated "+new Date().toLocaleString("en-GB")+" · Cloudflare Web Analytics covers raw visitors/referrers separately.";
+  }catch(e){
+    show("loading",false);
+    if((e.code||"").includes("permission-denied")||/insufficient|permission/i.test(e.message||"")){
+      $("denied").innerHTML="<h2 style='color:var(--red);font-family:Barlow Condensed;text-transform:uppercase'>Not authorised</h2><p style='margin:.75rem 0'>You're signed in as <code>"+esc(auth.currentUser&&auth.currentUser.email)+"</code>, but the security rules don't allow this account to read the data.</p><p>Add that exact email to <code>firestore.rules</code> (the <code>allow read</code> line) and publish, then Refresh.</p>";
+      show("denied",true);show("refreshBtn",true);
+    }else{
+      $("denied").innerHTML="<p style='color:var(--red)'>Couldn't load data.</p><p style='margin-top:.5rem'><code>"+esc(e.message||e)+"</code></p>";
+      show("denied",true);show("refreshBtn",true);
+    }
+  }
+}
+
+function rateClass(r){return r>=60?"good":r>=30?"mid":"low";}
+
+function render(d){
+  const rate=d.started?Math.round(d.completed/d.started*100):0;
+  const avg=d.scoreN?Math.round(d.scoreSum/d.scoreN):null;
+
+  let html="<div class='grid'>";
+  html+=stat(d.started,"Scenarios started");
+  html+=stat(d.completed,"Scenarios completed");
+  html+="<div class='stat hero'><div class='n'>"+rate+"%</div><div class='l'>Completion rate — "+d.completed+" of "+d.started+" finished</div></div>";
+  html+=stat(d.roleSel,"Roles selected");
+  html+=stat(d.answered,"Questions answered");
+  html+=stat(avg==null?"—":avg,"Avg score (of 20/Q)");
+  html+=stat(d.feedback,"Feedback submitted");
+  html+="</div>";
+
+  // by scenario
+  const scens=Object.keys(SCEN_NAMES).filter(s=>d.byScenStart[s]||d.byScenComp[s]);
+  if(scens.length){
+    html+="<div class='card'><h2>By scenario</h2><table><thead><tr><th>Scenario</th><th class='r'>Started</th><th class='r'>Completed</th><th class='r'>Rate</th></tr></thead><tbody>";
+    scens.forEach(s=>{const st=d.byScenStart[s]||0,cp=d.byScenComp[s]||0,rt=st?Math.round(cp/st*100):0;
+      html+="<tr><td class='row-label'>"+esc(SCEN_NAMES[s]||s)+"</td><td class='r'>"+st+"</td><td class='r'>"+cp+"</td><td class='r rate "+rateClass(rt)+"'>"+rt+"%</td></tr>";});
+    html+="</tbody></table></div>";
+  }
+
+  // by role (completions)
+  const roles=Object.keys(d.byRole).sort((a,b)=>d.byRole[b]-d.byRole[a]);
+  if(roles.length){
+    const max=Math.max(...roles.map(r=>d.byRole[r]));
+    html+="<div class='card'><h2>Completions by role</h2><table><tbody>";
+    roles.forEach(r=>{const c=d.byRole[r];
+      html+="<tr><td class='row-label'>"+esc(ROLE_NAMES[r]||r)+"<div class='trk'><span style='width:"+(c/max*100)+"%'></span></div></td><td class='r' style='vertical-align:top'>"+c+"</td></tr>";});
+    html+="</tbody></table></div>";
+  }
+
+  // recent
+  if(d.recent.length){
+    html+="<div class='card'><h2>Recent activity</h2><ul class='recent'>";
+    d.recent.forEach(x=>{const when=x.createdAt&&x.createdAt.toDate?x.createdAt.toDate().toLocaleString("en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}):"";
+      const label=(x.type||"").replace(/_/g," ");
+      const ctx=[ROLE_NAMES[x.role]||x.role,SCEN_NAMES[x.scenario]||x.scenario].filter(Boolean).join(" · ");
+      html+="<li><span class='dot' style='background:"+(TYPE_COLOR[x.type]||"#666")+"'></span><span><strong>"+esc(label)+"</strong>"+(ctx?" <span style='color:var(--dim)'>— "+esc(ctx)+"</span>":"")+"</span><span class='meta'>"+esc(when)+"</span></li>";});
+    html+="</ul></div>";
+  }
+
+  $("dash").innerHTML=html;
+}
+function stat(n,l){return "<div class='stat'><div class='n'>"+n+"</div><div class='l'>"+l+"</div></div>";}
+</script>
+</body>
+</html>

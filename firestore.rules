@@ -11,9 +11,14 @@ service cloud.firestore {
     // project is only for this app's own anonymous usage events.
 
     // Anonymous usage events (role played, scenario, completion, drop-off).
-    // No PII, no auth — write-only from the client.
+    // No PII. Write-only for the public client; read is limited to the
+    // owner account (signed in via Google) so the /stats.html dashboard
+    // can aggregate them. Add authorised emails to the list below.
     match /events/{id} {
-      allow read, update, delete: if false;
+      allow update, delete: if false;
+      allow read: if request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email in ['bennyphipps@gmail.com'];
       allow create: if
         request.resource.data.keys().hasAll(['type','createdAt']) &&
         request.resource.data.keys().hasOnly(['type','role','scenario','qIdx','score','createdAt']) &&
