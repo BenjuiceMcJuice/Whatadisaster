@@ -42,6 +42,9 @@ tr:last-child td{border-bottom:none}
 .trk>span{position:absolute;inset:0 auto 0 0;background:var(--fire);border-radius:3px}
 .rate{font-weight:700}
 .rate.good{color:var(--green)}.rate.mid{color:var(--amber)}.rate.low{color:var(--red)}
+.chart{overflow-x:auto}
+.legend{display:flex;flex-wrap:wrap;gap:.4rem .9rem;margin-top:.65rem;font-size:.72rem;color:var(--dim)}
+.legend .lg{display:inline-flex;align-items:center;gap:.35rem}
 .recent{list-style:none;font-size:.85rem}
 .recent li{display:flex;align-items:center;gap:.6rem;padding:.45rem 0;border-bottom:1px solid #232323}
 .recent li:last-child{border-bottom:none}
@@ -145,7 +148,15 @@ async function load(){
     const recentSnap=await getDocs(query(collection(db,"events"),orderBy("createdAt","desc"),limit(20)));
     const recent=[];recentSnap.forEach(d=>recent.push(d.data()));
 
-    render({roleSel,started,answered,completed,feedback,byScenComp,byRole,byScenStart,scoreSum,scoreN,recent});
+    // activity over time — last 14 days, bucketed by local day + type
+    const DAYS=14;
+    const since=new Date();since.setHours(0,0,0,0);since.setDate(since.getDate()-(DAYS-1));
+    const tsSnap=await getDocs(query(collection(db,"events"),where("createdAt",">=",since),orderBy("createdAt","asc")));
+    const daily={};
+    tsSnap.forEach(d=>{const x=d.data();if(!x.createdAt||!x.createdAt.toDate)return;
+      const k=dayKey(x.createdAt.toDate());(daily[k]=daily[k]||{})[x.type]=((daily[k]&&daily[k][x.type])||0)+1;});
+
+    render({roleSel,started,answered,completed,feedback,byScenComp,byRole,byScenStart,scoreSum,scoreN,recent,daily,days:DAYS,since});
     show("loading",false);show("dash",true);show("refreshBtn",true);
     $("foot").textContent="Updated "+new Date().toLocaleString("en-GB")+" · Cloudflare Web Analytics covers raw visitors/referrers separately.";
   }catch(e){
@@ -161,6 +172,25 @@ async function load(){
 }
 
 function rateClass(r){return r>=60?"good":r>=30?"mid":"low";}
+function dayKey(dt){return dt.getFullYear()+"-"+String(dt.getMonth()+1).padStart(2,"0")+"-"+String(dt.getDate()).padStart(2,"0");}
+
+const CHART_TYPES=[["role_selected","Role picks"],["scenario_started","Starts"],["question_answered","Answers"],["scenario_completed","Completions"],["feedback_submitted","Feedback"]];
+function renderChart(d){
+  const days=d.days,since=d.since;
+  const keys=[];for(let i=0;i<days;i++){const dt=new Date(since);dt.setDate(since.getDate()+i);keys.push({k:dayKey(dt),dt});}
+  const totals=keys.map(o=>{const day=d.daily[o.k]||{};let t=0;for(const ty in day)t+=day[ty];return t;});
+  const max=Math.max(1,...totals);
+  const W=700,H=200,padL=8,padR=8,padT=12,padB=28,plotH=H-padT-padB,bw=(W-padL-padR)/days,barW=Math.min(bw*0.66,36);
+  let svg="";
+  keys.forEach((o,i)=>{const day=d.daily[o.k]||{},cx=padL+bw*i+bw/2;let yB=padT+plotH;
+    CHART_TYPES.forEach(([ty])=>{const c=day[ty]||0;if(!c)return;const h=c/max*plotH;yB-=h;
+      svg+="<rect x='"+(cx-barW/2).toFixed(1)+"' y='"+yB.toFixed(1)+"' width='"+barW.toFixed(1)+"' height='"+h.toFixed(1)+"' fill='"+TYPE_COLOR[ty]+"'><title>"+o.dt.toLocaleDateString("en-GB",{day:"numeric",month:"short"})+" · "+ty.replace(/_/g," ")+": "+c+"</title></rect>";});
+    if(i%2===0||i===days-1)svg+="<text x='"+cx.toFixed(1)+"' y='"+(H-9)+"' fill='#9A9080' font-size='12' text-anchor='middle'>"+o.dt.getDate()+"</text>";});
+  svg+="<line x1='"+padL+"' y1='"+(padT+plotH)+"' x2='"+(W-padR)+"' y2='"+(padT+plotH)+"' stroke='#2c2c2c'/>";
+  const leg=CHART_TYPES.map(([ty,l])=>"<span class='lg'><span class='dot' style='background:"+TYPE_COLOR[ty]+"'></span>"+l+"</span>").join("");
+  const tot=totals.reduce((a,b)=>a+b,0);
+  return "<div class='card'><h2>Activity · last "+days+" days</h2><div class='chart'><svg viewBox='0 0 "+W+" "+H+"' style='width:100%;height:auto;display:block'>"+svg+"</svg></div><div class='legend'>"+leg+"</div><div class='sub' style='margin-top:.5rem'>"+tot+" events over "+days+" days · busiest day "+max+"</div></div>";
+}
 
 function render(d){
   const rate=d.started?Math.round(d.completed/d.started*100):0;
@@ -175,6 +205,8 @@ function render(d){
   html+=stat(avg==null?"—":avg,"Avg score (of 20/Q)");
   html+=stat(d.feedback,"Feedback submitted");
   html+="</div>";
+
+  html+=renderChart(d);
 
   // by scenario
   const scens=Object.keys(SCEN_NAMES).filter(s=>d.byScenStart[s]||d.byScenComp[s]);
