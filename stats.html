@@ -175,21 +175,27 @@ function rateClass(r){return r>=60?"good":r>=30?"mid":"low";}
 function dayKey(dt){return dt.getFullYear()+"-"+String(dt.getMonth()+1).padStart(2,"0")+"-"+String(dt.getDate()).padStart(2,"0");}
 
 const CHART_TYPES=[["role_selected","Role picks"],["scenario_started","Starts"],["question_answered","Answers"],["scenario_completed","Completions"],["feedback_submitted","Feedback"]];
+function niceStep(range,target){const raw=Math.max(1,range)/target;const pow=Math.pow(10,Math.floor(Math.log10(raw)));const n=raw/pow;const s=n<=1?1:n<=2?2:n<=5?5:10;return s*pow;}
+function fmtY(v){return v>=1000?(v/1000).toFixed(v%1000?1:0)+"k":""+v;}
 function renderChart(d){
   const days=d.days,since=d.since;
   const keys=[];for(let i=0;i<days;i++){const dt=new Date(since);dt.setDate(since.getDate()+i);keys.push({k:dayKey(dt),dt});}
   const totals=keys.map(o=>{const day=d.daily[o.k]||{};let t=0;for(const ty in day)t+=day[ty];return t;});
   const max=Math.max(1,...totals);
-  const W=700,H=200,padL=8,padR=8,padT=12,padB=28,plotH=H-padT-padB,bw=(W-padL-padR)/days,barW=Math.min(bw*0.66,36);
+  const step=niceStep(max,4),niceMax=Math.ceil(max/step)*step;
+  const W=380,H=182,padL=40,padR=10,padT=12,padB=26,plotH=H-padT-padB,bw=(W-padL-padR)/days,barW=Math.min(bw*0.62,22);
+  let grid="";
+  for(let v=0;v<=niceMax+1e-6;v+=step){const y=padT+plotH-(v/niceMax)*plotH;
+    grid+="<line x1='"+padL+"' y1='"+y.toFixed(1)+"' x2='"+(W-padR)+"' y2='"+y.toFixed(1)+"' stroke='#242424'/>";
+    grid+="<text x='"+(padL-6)+"' y='"+(y+3.5).toFixed(1)+"' fill='#9A9080' font-size='10' text-anchor='end'>"+fmtY(v)+"</text>";}
   let svg="";
   keys.forEach((o,i)=>{const day=d.daily[o.k]||{},cx=padL+bw*i+bw/2;let yB=padT+plotH;
-    CHART_TYPES.forEach(([ty])=>{const c=day[ty]||0;if(!c)return;const h=c/max*plotH;yB-=h;
+    CHART_TYPES.forEach(([ty])=>{const c=day[ty]||0;if(!c)return;const h=c/niceMax*plotH;yB-=h;
       svg+="<rect x='"+(cx-barW/2).toFixed(1)+"' y='"+yB.toFixed(1)+"' width='"+barW.toFixed(1)+"' height='"+h.toFixed(1)+"' fill='"+TYPE_COLOR[ty]+"'><title>"+o.dt.toLocaleDateString("en-GB",{day:"numeric",month:"short"})+" · "+ty.replace(/_/g," ")+": "+c+"</title></rect>";});
-    if(i%2===0||i===days-1)svg+="<text x='"+cx.toFixed(1)+"' y='"+(H-9)+"' fill='#9A9080' font-size='12' text-anchor='middle'>"+o.dt.getDate()+"</text>";});
-  svg+="<line x1='"+padL+"' y1='"+(padT+plotH)+"' x2='"+(W-padR)+"' y2='"+(padT+plotH)+"' stroke='#2c2c2c'/>";
+    if(i%2===0||i===days-1)svg+="<text x='"+cx.toFixed(1)+"' y='"+(H-8)+"' fill='#9A9080' font-size='10' text-anchor='middle'>"+o.dt.getDate()+"</text>";});
   const leg=CHART_TYPES.map(([ty,l])=>"<span class='lg'><span class='dot' style='background:"+TYPE_COLOR[ty]+"'></span>"+l+"</span>").join("");
   const tot=totals.reduce((a,b)=>a+b,0);
-  return "<div class='card'><h2>Activity · last "+days+" days</h2><div class='chart'><svg viewBox='0 0 "+W+" "+H+"' style='width:100%;height:auto;display:block'>"+svg+"</svg></div><div class='legend'>"+leg+"</div><div class='sub' style='margin-top:.5rem'>"+tot+" events over "+days+" days · busiest day "+max+"</div></div>";
+  return "<div class='card'><h2>Activity · last "+days+" days</h2><div class='chart'><svg viewBox='0 0 "+W+" "+H+"' style='width:100%;height:auto;display:block'>"+grid+svg+"</svg></div><div class='legend'>"+leg+"</div><div class='sub' style='margin-top:.5rem'>"+tot+" events over "+days+" days · busiest day "+max+"</div></div>";
 }
 
 function render(d){
